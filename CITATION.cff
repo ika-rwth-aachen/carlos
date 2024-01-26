@@ -1,0 +1,36 @@
+cff-version: 1.2.0
+message: "We hope that our simulation framework can help your research. If this is the case, please cite it using the following metadata."
+
+title: carodo
+type: software
+repository-code: "https://github.com/carla-compose/carla-compose"
+date-released: 2024-02-01
+authors:
+  - given-names: Christian
+    family-names: Geller
+  - given-names: Benedik
+    family-names: Haas
+  - given-names: Amarin
+    family-names: Kloeker
+
+preferred-citation:
+  title: "Enabling the Deployment of Any-Scale Robotic Applications in Microservice Architectures through Automated Containerization"
+  type: generic
+  # conference:
+  #   name:
+  # month:
+  year: 2024
+  doi: "TODO"
+  url: "TODO"
+  authors:
+    - given-names: Christian
+      family-names: Geller
+      orcid: "https://orcid.org/TODO"
+    - given-names: Benedikat
+      family-names: Haas
+      orcid: "https://orcid.org/TODO"
+    - given-names: Amarin
+      family-names: Kloeker
+      orcid: "https://orcid.org/TODO"
+    - given-names: Lutz
+      family-names: Eckstein
