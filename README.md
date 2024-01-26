@@ -2,7 +2,7 @@
 
 <img src="utils/images/logo.png" height=180 align="right">
 
-This repository accompanies our paper on an open, modular and scalable simulation architecture in the context of automated vehicles. It provides a containerized and modular simulation framework based on the open-source simulator CARLA and utilizes a simple integration of ROS applications. Following our paper, it provides useful examples for the three use cases:
+This repository accompanies our paper on an open, modular and scalable simulation architecture in the context of automated vehicles. It provides a containerized and modular simulation framework based on the open-source simulator CARLA and utilizes a simple integration of ROS applications. Following our paper, we provide useful examples for the three use cases:
   - [Software Prototyping](./software-prototyping/)
   - [Data-Driven Development](./data-driven-development/)
   - [Automated Testing](./automated-testing/)
@@ -13,8 +13,8 @@ The repository is structured as follows:
   - [Getting Started](#getting-started)
   - [Simulation Architecture](#simulation-architecture)
     - [Simulation Core: ***carla-simulator***](#simulation-core-carla-simulator)
-    - [Communication Module: ***carla-ros-bridge***](#communication-module-carla-ros-bridge)
-    - [Control Module: ***carla-scenario-runner***](#control-module-carla-scenario-runner)
+    - [Communication Actor: ***carla-ros-bridge***](#communication-actor-carla-ros-bridge)
+    - [Control Actor: ***carla-scenario-runner***](#control-actor-carla-scenario-runner)
   - [Acknowledgements](#acknowledgements)
 
 ## Publication
@@ -50,12 +50,12 @@ After you are done, hitting <kbd>CTRL</kbd> + <kbd>C</kbd> twice is enough becau
 
 ## Simulation Architecture
 
-<img src="utils/images/architecture.pdf" height=500 align="left">
+<img src="utils/images/architecture.png" height=500 align="left">
 
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
 
 
-**Note**: For all of our use case examples we will be utilizing predefined Docker services, listed in [carla-components.yml](./carla-components.yml) and further described in the [carla-components overview](./utils/carla-components.md).
+**Note**: For all of our use case examples we will be utilizing predefined Docker services, listed in [carla-components.yml](./utils/components.yml) and further described in the [carla-components overview](./utils/components.md).
 
 The proposed architecture uses basic components which mainly rely on public forks of the original [CARLA ecosystem](https://github.com/carla-simulator/). We extended those repository by additional GitHub CI workflows to generate minimal Docker images used in the overall architecture.
 
@@ -69,7 +69,7 @@ The proposed architecture uses basic components which mainly rely on public fork
   <img src="https://img.shields.io/github/stars/carla-compose/carla-simulator?style=social"/>
 </p>
 
-### Communication Module: [***carla-ros-bridge***](https://github.com/carla-compose/carla-ros-bridge)
+### Communication Actor: [***carla-ros-bridge***](https://github.com/carla-compose/carla-ros-bridge)
 <p align="left">
   <img src="https://img.shields.io/github/v/release/carla-compose/carla-ros-bridge"/></a>
   <img src="https://img.shields.io/github/license/carla-compose/carla-ros-bridge"/>
@@ -78,7 +78,7 @@ The proposed architecture uses basic components which mainly rely on public fork
   <img src="https://img.shields.io/github/stars/carla-compose/carla-ros-bridge?style=social"/>
 </p>
 
-### Control Module: [***carla-scenario-runner***](https://github.com/carla-compose/carla-scenario-runner)
+### Control Actor: [***carla-scenario-runner***](https://github.com/carla-compose/carla-scenario-runner)
 <p align="left">
   <img src="https://img.shields.io/github/v/release/carla-compose/carla-scenario-runner"/>
   <img src="https://img.shields.io/github/license/carla-compose/carla-scenario-runner"/>
@@ -91,4 +91,4 @@ The proposed architecture uses basic components which mainly rely on public fork
 
 ## Acknowledgements
 
-This work is accomplished within the project [AUTOtech.*agil*](https://www.ika.rwth-aachen.de/en/competences/projects/automated-driving/autotech-agil-en.html) (FKZ 01IS22088A). We acknowledge the financial support for the projects by the Federal Ministry of Education and Research of Germany (BMBF).
+This research is accomplished within the project [AUTOtech.*agil*](https://www.ika.rwth-aachen.de/en/competences/projects/automated-driving/autotech-agil-en.html) (FKZ 01IS22088A). We acknowledge the financial support for the project by the Federal Ministry of Education and Research of Germany (BMBF).
