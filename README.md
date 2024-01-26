@@ -39,9 +39,9 @@ The repository is structured as follows:
 
 ## Getting Started
 
-**Note:** Check out the comprehensive [tutorial](./utils/tutorial.md), which gives an overview of the main simulation framework features, combining CARLA, Docker and ROS.
+**Note:** Check out the [requirements](./utils/requirements.md) and the comprehensive [tutorial](./utils/tutorial.md), which gives an overview of the main simulation framework features, combining CARLA and ROS in a containerized composition.
 
-This repository provides demos which can be used as example or initial starting point. They contain the CARLA server GUI, but also ROS based components. A demo can be started using the provided script:
+This repository provides demonstrations which can be used as example or initial starting point. A specific demo can be started using the provided script:
 
 ```bash
 ./run-demo.sh software-prototyping
