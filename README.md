@@ -1,12 +1,19 @@
+<img src="./utils/images/logo.png" height=130 align="right">
+
 # **CARLOS** - An Open, Modular, and Scalable Simulation Architecture for the Development and Testing of Automated Vehicles
 
-<img src="utils/images/logo.png" height=180 align="right">
+This repository contains the official reference implementation of our open, modular and scalable simulation architecture. It provides a containerized simulation framework based on the open-source simulator CARLA and enables simple integration of custom ROS applications. We provide useful examples for the three use cases as presented in our [paper](TODO):
+- [Software Prototyping](./software-prototyping/)
+- [Data-Driven Development](./data-driven-development/)
+- [Automated Testing](./automated-testing/)
 
-This repository accompanies our paper on an open, modular and scalable simulation architecture in the context of automated vehicles. It provides a containerized and modular simulation framework based on the open-source simulator CARLA and utilizes a simple integration of ROS applications. Following our paper, we provide useful examples for the three use cases:
-
-  - [Software Prototyping](./software-prototyping/)
-  - [Data-Driven Development](./data-driven-development/)
-  - [Automated Testing](./automated-testing/)
+> [!IMPORTANT]  
+> This repository is open-sourced and maintained by the [**Institute for Automotive Engineering (ika) at RWTH Aachen University**](https://www.ika.rwth-aachen.de/).  
+> **Simulation, Containerization and DevOps for Automated Driving** are some of many research topics within our [*Vehicle Intelligence & Automated Driving*](https://www.ika.rwth-aachen.de/en/competences/fields-of-research/vehicle-intelligence-automated-driving.html) domain.  
+> If you would like to learn more about how we can support your DevOps or automated driving efforts, feel free to reach out to us!  
+> &nbsp;&nbsp;&nbsp;&nbsp; *Timo Woopen - Manager Research Area Vehicle Intelligence & Automated Driving*  
+> &nbsp;&nbsp;&nbsp;&nbsp; *+49 241 80 23549*  
+> &nbsp;&nbsp;&nbsp;&nbsp; *timo.woopen@ika.rwth-aachen.de*
 
 The repository is structured as follows:
 - [**CARLOS** - An Open, Modular, and Scalable Simulation Architecture for the Development and Testing of Automated Vehicles](#carlos---an-open-modular-and-scalable-simulation-architecture-for-the-development-and-testing-of-automated-vehicles)
