@@ -31,6 +31,9 @@ services:
   ros-monitoring:
     extends:
       service: gpu-x11-service
+    depends_on:
+      carla-simulator:
+        condition: service_healthy
     image: rwthika/ros2-cuda:humble-desktop-full
 
   gpu-service:
