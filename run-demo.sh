@@ -1,5 +1,5 @@
 #!/bin/bash
-default_demo="agile-development"
+default_demo="software-prototyping"
 selected_demo=""
 
 docker_compose_command="docker compose" # change to docker-compose if old version is used

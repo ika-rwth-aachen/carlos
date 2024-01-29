@@ -1,6 +1,6 @@
 # Tutorial: Simulative Development and Testing with CARLA and ROS
 
-> **Note**: This repository provides a comprehensive and containerized simulation framework based on the open-source [CARLA simulator](https://github.com/carla-compose/carla-simulator). This framework can be used to develop and test C-ITS functions in a closed-loop simulation environment. Have a closer look at the [README](../README.md) to get a first overview of the provided demo use cases.
+> **Note**: This repository provides a comprehensive and containerized simulation framework based on the open-source [CARLA simulator](https://github.com/ika-rwth-aachen/carla-simulator). This framework can be used to develop and test C-ITS functions in a closed-loop simulation environment. Have a closer look at the [README](../README.md) to get a first overview of the provided demo use cases.
 
 
 ---

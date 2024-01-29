@@ -1,36 +1,44 @@
 cff-version: 1.2.0
 message: "We hope that our simulation framework can help your research. If this is the case, please cite it using the following metadata."
 
-title: carodo
+title: carlos
 type: software
-repository-code: "https://github.com/carla-compose/carla-compose"
+repository-code: "https://github.com/ika-rwth-aachen/carlos"
 date-released: 2024-02-01
 authors:
   - given-names: Christian
     family-names: Geller
-  - given-names: Benedik
+  - given-names: Benedikt
     family-names: Haas
   - given-names: Amarin
     family-names: Kloeker
+  - given-names: Jona
+    family-names: Hermens
+  - given-names: Bastian
+    family-names: Lampe
 
 preferred-citation:
-  title: "Enabling the Deployment of Any-Scale Robotic Applications in Microservice Architectures through Automated Containerization"
+  title: "CARLOS: An Open, Modular, and Scalable Simulation Architecture for the Development and Testing of Automated Vehicles"
   type: generic
   # conference:
   #   name:
   # month:
   year: 2024
   doi: "TODO"
-  url: "TODO"
+  url: "https://github.com/ika-rwth-aachen/carlos"
   authors:
     - given-names: Christian
       family-names: Geller
-      orcid: "https://orcid.org/TODO"
-    - given-names: Benedikat
+      orcid: "https://orcid.org/0000-0001-8655-3201"
+    - given-names: Benedikt
       family-names: Haas
-      orcid: "https://orcid.org/TODO"
     - given-names: Amarin
       family-names: Kloeker
-      orcid: "https://orcid.org/TODO"
+      orcid: "https://orcid.org/0000-0003-4984-2797"
+    - given-names: Jona
+      family-names: Hermens
+    - given-names: Bastian
+      family-names: Lampe
+      orcid: "https://orcid.org/0000-0002-4414-6947"
     - given-names: Lutz
       family-names: Eckstein

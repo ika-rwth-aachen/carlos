@@ -71,39 +71,40 @@ This is especially true if said components are containerized, which opens up the
 
 CARLOS is a framework that implements this architecture to enhance CARLA as a simulator core and that has proven itself during extensive usage in our research and work. Some additional components within the rich CARLA ecosystem are crucial to our framework and available as specified GitHub forks. We extended those repository by additional GitHub CI workflows to generate minimal Docker images used within the provided use case examples.
 
-### Simulation Core: [***carla-simulator***](https://github.com/carla-compose/carla-simulator)
+### Simulation Core: [***carla-simulator***](https://github.com/ika-rwth-aachen/carla-simulator)
 <p align="left">
-  <img src="https://img.shields.io/github/v/release/carla-compose/carla-simulator"/></a>
-  <img src="https://img.shields.io/github/license/carla-compose/carla-simulator"/>
-  <a href="https://github.com/carla-compose/carla-simulator/actions/workflows/docker.yml"><img src="https://github.com/carla-compose/carla-simulator/actions/workflows/docker.yml/badge.svg"/></a>
+  <img src="https://img.shields.io/github/v/release/ika-rwth-aachen/carla-simulator"/></a>
+  <img src="https://img.shields.io/github/license/ika-rwth-aachen/carla-simulator"/>
+  <a href="https://github.com/ika-rwth-aachen/carla-simulator/actions/workflows/docker.yml"><img src="https://github.com/ika-rwth-aachen/carla-simulator/actions/workflows/docker.yml/badge.svg"/></a>
   <img src="https://img.shields.io/badge/CARLA-0.9.15-blueviolet"/>
-  <img src="https://img.shields.io/github/stars/carla-compose/carla-simulator?style=social"/>
+  <img src="https://img.shields.io/github/stars/ika-rwth-aachen/carla-simulator?style=social"/>
 </p>
 The carla-simulator constitutes the central element of the framework and handles all graphical and dynamic calculations in the individual simulation time steps. Within our GitHub repository, we extend the pre-existing Dockerfiles to create enhanced Ubuntu-based container images of CARLA via novel CI pipelines.
 
-### Communication Actor: [***carla-ros-bridge***](https://github.com/carla-compose/carla-ros-bridge)
+### Communication Actor: [***carla-ros-bridge***](https://github.com/ika-rwth-aachen/carla-ros-bridge)
 <p align="left">
-  <img src="https://img.shields.io/github/v/release/carla-compose/carla-ros-bridge"/></a>
-  <img src="https://img.shields.io/github/license/carla-compose/carla-ros-bridge"/>
-  <a href="https://github.com/carla-compose/carla-ros-bridge/actions/workflows/docker.yml"><img src="https://github.com/carla-compose/carla-ros-bridge/actions/workflows/docker.yml/badge.svg"/></a>
+  <img src="https://img.shields.io/github/v/release/ika-rwth-aachen/carla-ros-bridge"/></a>
+  <img src="https://img.shields.io/github/license/ika-rwth-aachen/carla-ros-bridge"/>
+  <a href="https://github.com/ika-rwth-aachen/carla-ros-bridge/actions/workflows/docker.yml"><img src="https://github.com/ika-rwth-aachen/carla-ros-bridge/actions/workflows/docker.yml/badge.svg"/></a>
   <img src="https://img.shields.io/badge/ROS 2-humble-blueviolet"/>
-  <img src="https://img.shields.io/github/stars/carla-compose/carla-ros-bridge?style=social"/>
+  <img src="https://img.shields.io/github/stars/ika-rwth-aachen/carla-ros-bridge?style=social"/>
 </p>
 The carla-ros-bridge is the component that facilitates the powerful combination of CARLA and ROS. It retrieves data from the simulation to publish it over ROS topics while simultaneously listening on different topics for requested actions, which are translated to commands to be executed in CARLA. It does this by using both the ROS communication standard DDS, as well as RPC via the CARLA Python API, in tandem, effectively bridging the two. Here, [docker-ros](https://github.com/ika-rwth-aachen/docker-ros) enables a continual building of container images with recent versions of ROS, Python, and Ubuntu.
 
-### Control Actor: [***carla-scenario-runner***](https://github.com/carla-compose/carla-scenario-runner)
+### Control Actor: [***carla-scenario-runner***](https://github.com/ika-rwth-aachen/carla-scenario-runner)
 <p align="left">
-  <img src="https://img.shields.io/github/v/release/carla-compose/carla-scenario-runner"/>
-  <img src="https://img.shields.io/github/license/carla-compose/carla-scenario-runner"/>
-  <a href="https://github.com/carla-compose/carla-scenario-runner/actions/workflows/docker.yml"><img src="https://github.com/carla-compose/carla-scenario-runner/actions/workflows/docker.yml/badge.svg"/></a>
+  <img src="https://img.shields.io/github/v/release/ika-rwth-aachen/carla-scenario-runner"/>
+  <img src="https://img.shields.io/github/license/ika-rwth-aachen/carla-scenario-runner"/>
+  <a href="https://github.com/ika-rwth-aachen/carla-scenario-runner/actions/workflows/docker.yml"><img src="https://github.com/ika-rwth-aachen/carla-scenario-runner/actions/workflows/docker.yml/badge.svg"/></a>
   <img src="https://img.shields.io/badge/CARLA-0.9.15-blueviolet"/>
   <img src="https://img.shields.io/badge/Python-3.10-blueviolet"/>
-  <img src="https://img.shields.io/github/stars/carla-compose/carla-scenario-runner?style=social"/>
+  <img src="https://img.shields.io/github/stars/ika-rwth-aachen/carla-scenario-runner?style=social"/>
 </p>
 To enable scenario-based testing and evaluation, the carla-scenario-runner is used. It is a powerful engine that follows the OpenSCENARIO standard for scenario definitions. An additional ROS service allows other ROS nodes to dynamically issue the execution of a specified scenario using the mentioned Scenario Runner. For the creation of more modern and light-weight container images, a custom Dockerfile was written, which is published alongside this paper.
 
 
-**Note**: For all of our use case examples we will be utilizing predefined Docker services, listed in [carla-components.yml](./utils/components.yml) and further described in the [carla-components overview](./utils/components.md).
+> [!NOTE]
+> For all of our use case examples we will be utilizing predefined Docker services, listed in [carla-components.yml](./utils/components.yml) and further described in the [carla-components overview](./utils/components.md).
 
 ## Acknowledgements
 

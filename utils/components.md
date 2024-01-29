@@ -39,7 +39,7 @@ Including a `carla-ros-bridge` into your setup is mandatory when said setup uses
 
 ## carla-scenario-runner
 
-Simulators like CARLA are often used to run, monitor and evaluate pre-defined scenarios. This is where the [carla-scenario-runner](https://github.com/carla-compose/carla-scenario-runner) comes in. It allows you to run scenarios defined through a Python interface, or under the [OpenSCENARIO](https://www.asam.net/standards/detail/openscenario/) standard.
+Simulators like CARLA are often used to run, monitor and evaluate pre-defined scenarios. This is where the [carla-scenario-runner](https://github.com/ika-rwth-aachen/carla-scenario-runner) comes in. It allows you to run scenarios defined through a Python interface, or under the [OpenSCENARIO](https://www.asam.net/standards/detail/openscenario/) standard.
 
 [comment]: # (The `carla-scenario-runner-ros` service extends this to ROS by adding a node that provides a ROS service through which other ROS nodes can request execution of specified scenarios and publishing the status of the execution via a topic. It also provides a compact launch file with which the scenario runner will be launched and a specified scenario could instantly be executed.)
 
