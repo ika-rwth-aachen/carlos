@@ -4,12 +4,7 @@ services:
     extends:
       service: gpu-x11-service
     privileged: True
-    #healthcheck:
-    #  test: ["CMD-SHELL", "bash -ic \"python util/test_connection.py --host $$CARLA_SERVER_NAME --timeout 5\""]
-    #  interval: 1s
-    #  start_period: 5s
-    #  retries: 3
-    image: cgellerac/carla # TODO rename to cgellerac/carla-simulator
+    image: rwthika/carla-simulator
     command: bash -ic './CarlaUE4.sh -nosound 2>/dev/null'
   
   carla-simulator-offscreen:
@@ -20,18 +15,18 @@ services:
   carla-scenario-runner:
     extends:
       service: gpu-x11-service
-    #depends_on:
-    #  carla-simulator:
-    #    condition: service_healthy
-    image: cgellerac/carla-scenario-runner
+    depends_on:
+      carla-simulator:
+        condition: service_healthy
+    image: rwthika/carla-scenario-runner
 
   carla-ros-bridge:
     extends:
       service: gpu-x11-service
-    #depends_on:
-    #  carla-simulator:
-    #    condition: service_healthy
-    image: cgellerac/carla-ros-bridge:latest_docker_ci-amd64  # TODO rename to cgellerac/carla-simulator
+    depends_on:
+      carla-simulator:
+        condition: service_healthy
+    image: rwthika/carla-ros-bridge:latest
 
   ros-monitoring:
     extends:
