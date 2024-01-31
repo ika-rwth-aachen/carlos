@@ -21,3 +21,36 @@ Directly start the use case demonstration using the top-level `run-demo.sh` scri
 ./run-demo.sh software-prototyping
 ```
 
+This example demonstrates a basic CARLA simulation in tandem with the widely used Robot Operations System ([ROS](https://www.ros.org/)). Besides a CARLA simulation core, the ROS bridge enables communication between CARLA and ROS by translating simulation outputs (e.g. sensor data) to ROS topics. In addition, RViz is used as a visualization component within this demo.
+
+Specifically, there are three main components contained in the `software-prototyping` demo:
+- carla-simulator
+- carla-ros-bridge
+- ros-monitoring
+
+> [!NOTE]
+> A detailed description of the individual components can be found in [components.md](../utils/components.md).
+
+After starting the `software-prototyping` demo a CARLA GUI opens up where you can look around by using <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd>, holding the left or right mousebutton and moving the mouse in the desired direction. After an initialization phase, a second RViz window visualizes a variety of sensor raw data within ROS. Multiple RGB cameras, a depth and semantic camera, as well as a lidar sensor are attached to a vehicle, covering the enviroment in rich detail. The vehicle it self is controlled using the official [carla_ad_agent](https://github.com/carla-simulator/ros-bridge/tree/master/carla_ad_agent) package. However, you can also override the controls using the manual control PyGame window. After hitting <kbd>B</kbd> the manual transmission mode is enables and allows to drive the vehicle using <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd>.
+
+[<p align="center"><img src="./images/software-prototyping.png" width="800"/>](./images/software-prototyping.png)
+
+### Integration of Custom Software Components
+As described above, this demo should emphasize a simple integration of novel, developed software components. Hence, we integrate a new component, an image segmentation function. Following modularization and containerization within CARLOS, the integration of a novel component only includes a new entry within the Docker Compose file.
+
+```bash
+image-segmentation:
+    image: rwthika/carlos-image-segmentation
+    command: ros2 launch image_segmentation image_segmentation_launch.py image_topic:=/carla/ego_vehicle/rgb_front/image
+```
+
+Here, we use the public available Docker image of our image_segmentation ROS 2 package on [Docker Hub](https://hub.docker.com/r/rwthika/carlos-image-segmentation). Using [docker-ros](https://github.com/ika-rwth-aachen/docker-ros) enables a simple generation of Docker images for your custom ROS packages and thus, a straighforward integration into the simulation framework CARLOS. However, we have to make sure that the ROS node subscribes an available ROS topic with correct message type. Here, we use the sensor_msgs/Image topic of a simulated front-facing camera attached on the ego vehicle. As an output, our custom image segmentation provides an additional `/image_segmentation/segmentation` topic which can be visualized within RViz.
+
+[<p align="center"><img src="./images/image-segmentation.png" width="800"/>](./images/image-segmentation.png)
+
+> [!NOTE]
+> The image segmentation provided here uses only a small and simplified model, so the results are not satisfying. However, this example shows a simple integration of a custom function within our simulation framework.
+
+Feel free to play around with RViz or change the provided example according to your needs. You can also integrate your own function within this simulation setup. 
+
+When you are done, go back to the terminal and hit <kbd>CTRL</kbd>+<kbd>C</kbd> twice so the Compose setup and its container stops. This automatically clean up the stopped container and restrict access to the X server again.
