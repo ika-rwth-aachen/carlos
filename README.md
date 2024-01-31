@@ -108,6 +108,17 @@ To enable scenario-based testing and evaluation, the carla-scenario-runner is us
 > [!NOTE]
 > For all of our use case examples we will be utilizing predefined Docker services, listed in [carla-components.yml](./utils/components.yml) and further described in the [carla-components overview](./utils/components.md).
 
+## Citation
+We hope that our simulation framework CARLOS can help your research. If this is the case, please cite it using the following metadata.
+```
+@inproceedings{CARLOS24,
+author = {Geller, Christian and Haas, Benedikt and Kloeker, Amarin and Hermens, Jona and Lampe, Bastian and Eckstein, Lutz},
+title = {{CARLOS: An Open, Modular, and Scalable Simulation Architecture for the Development and Testing of Automated Driving Systems}},
+url = {https://github.com/ika-rwth-aachen/carlos},
+year = {2024}
+}
+```
+
 ## Acknowledgements
 
 This research is accomplished within the project [AUTOtech.*agil*](https://www.ika.rwth-aachen.de/en/competences/projects/automated-driving/autotech-agil-en.html) (FKZ 01IS22088A). We acknowledge the financial support for the project by the Federal Ministry of Education and Research of Germany (BMBF).
