@@ -1,5 +1,5 @@
-# Use Case: *Software Prototyping*
 <img src="../utils/images/software-prototyping-icon.png" height=130 align="right">
+# Use Case: *Software Prototyping*
 
 >[!NOTE]
 > **Background**: The *software prototyping* use case addresses the initial development phase of an automated driving function, where developers aim for simple and quick experimenting. It focuses on the flawless integrability of the component under test and ensures general operability within the overall system. An early integration facilitates interface harmonization, which is particularly important when assembling modules from different entities. In many cases, a single example scenario is sufficient to carry out initial tests. However, high simulation fidelity is required in many cases, which implies realistic simulation conditions, ranging from realistic environments to accurate sensor, vehicle, or driver models.
@@ -54,6 +54,7 @@ Here, we use the public available Docker image of our [image segmentation ROS 2 
 However, we have to make sure that the ROS node subscribes an available topic with correct message type. Here, we use the [sensor_msgs/Image](https://github.com/ros/common_msgs/blob/noetic-devel/sensor_msgs/msg/Image.msg) topic of a simulated front-facing RGB camera attached the ego vehicle. As an output, the image segmentation provides an additional [sensor_msgs/Image](https://github.com/ros/common_msgs/blob/noetic-devel/sensor_msgs/msg/Image.msg) topic which can be visualized within RViz.
 
 <img src="../utils/images/image-segmentation.png" width=800 align="center">
+
 
 > [!NOTE]
 > The provided image segmentation only uses a small and simplified model, so the results are not really satisfying. However, this example shows a simple integration of a custom function within our simulation framework CARLOS.
