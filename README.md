@@ -39,7 +39,7 @@ The repository is structured as follows:
 
 ## Getting Started
 
-> [!NOTE]
+> [!TIP]
 > Check out the [requirements](./utils/requirements.md) and the comprehensive [tutorial](./utils/tutorial.md), which gives an overview of the main simulation framework features, combining CARLA and ROS in a containerized composition.
 
 This repository provides demonstrations which can be used as example or initial starting point. A specific demo can be started using the provided script:
