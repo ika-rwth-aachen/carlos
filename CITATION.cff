@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: "We hope that our simulation framework CARLOS can help your research. If this is the case, please cite it using the following metadata."
 
-title: "CARLOS
+title: "CARLOS"
 type: software
 repository-code: "https://github.com/ika-rwth-aachen/carlos"
 date-released: 2024-02-01
