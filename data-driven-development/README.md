@@ -1,4 +1,4 @@
-<img src="../utils/images/data-drive-development-icon.png" height=70 align="right">
+<img src="../utils/images/data-driven-development-icon.png" height=100 align="right">
 
 # Use Case: *Data-Driven Development*
 

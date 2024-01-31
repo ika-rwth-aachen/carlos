@@ -1,4 +1,4 @@
-<img src="../utils/images/software-prototyping-icon.png" height=70 align="right">
+<img src="../utils/images/software-prototyping-icon.png" height=100 align="right">
 
 # Use Case: *Software Prototyping*
 
