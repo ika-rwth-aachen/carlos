@@ -26,7 +26,7 @@ services:
     depends_on:
       carla-simulator:
         condition: service_healthy
-    image: rwthika/carla-ros-bridge:latest
+    image: rwthika/carla-ros-bridge
 
   ros-monitoring:
     extends:

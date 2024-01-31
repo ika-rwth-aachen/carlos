@@ -27,3 +27,7 @@ services:
     volumes:
       - *rviz-config-mount
     command: bash -ic 'rviz2 -d /config.rviz --ros-args -p use_sim_time:=true &> /dev/null'
+
+  image-segmentation:
+    image: gitlab.ika.rwth-aachen.de:5050/fb-fi/its-modules/perception/image_segmentation:latest_feature-carlos_ci
+    command: ros2 launch image_segmentation image_segmentation_launch.py image_topic:=/carla/ego_vehicle/rgb_front/image
