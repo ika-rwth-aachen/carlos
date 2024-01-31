@@ -77,6 +77,7 @@ CARLOS is a framework that implements this architecture to enhance CARLA as a si
   <img src="https://img.shields.io/github/license/ika-rwth-aachen/carla-simulator"/>
   <a href="https://github.com/ika-rwth-aachen/carla-simulator/actions/workflows/docker.yml"><img src="https://github.com/ika-rwth-aachen/carla-simulator/actions/workflows/docker.yml/badge.svg"/></a>
   <img src="https://img.shields.io/badge/CARLA-0.9.15-blueviolet"/>
+  <img src="https://img.shields.io/badge/Python-3.10-blueviolet"/>
   <img src="https://img.shields.io/github/stars/ika-rwth-aachen/carla-simulator?style=social"/>
 </p>
 The carla-simulator constitutes the central element of the framework and handles all graphical and dynamic calculations in the individual simulation time steps. Within our GitHub repository, we extend the pre-existing Dockerfiles to create enhanced Ubuntu-based container images of CARLA via novel CI pipelines.
@@ -86,6 +87,7 @@ The carla-simulator constitutes the central element of the framework and handles
   <img src="https://img.shields.io/github/v/release/ika-rwth-aachen/carla-ros-bridge"/></a>
   <img src="https://img.shields.io/github/license/ika-rwth-aachen/carla-ros-bridge"/>
   <a href="https://github.com/ika-rwth-aachen/carla-ros-bridge/actions/workflows/docker.yml"><img src="https://github.com/ika-rwth-aachen/carla-ros-bridge/actions/workflows/docker.yml/badge.svg"/></a>
+    <img src="https://img.shields.io/badge/CARLA-0.9.15-blueviolet"/>
   <img src="https://img.shields.io/badge/ROS 2-humble-blueviolet"/>
   <img src="https://img.shields.io/github/stars/ika-rwth-aachen/carla-ros-bridge?style=social"/>
 </p>
