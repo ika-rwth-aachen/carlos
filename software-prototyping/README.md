@@ -1,4 +1,5 @@
 <img src="../utils/images/software-prototyping-icon.png" height=130 align="right">
+
 # Use Case: *Software Prototyping*
 
 >[!NOTE]
