@@ -40,7 +40,7 @@ After a short initialization phase, a second RViz window visualizes a variety of
 The vehicle itself is controlled using the official [carla_ad_agent](https://github.com/carla-simulator/ros-bridge/tree/master/carla_ad_agent) package. However, you can also override the controls using the manual control PyGame window. After hitting <kbd>B</kbd> the manual transmission mode is enabled and allows to drive the vehicle using <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd>.
 
 
-<p align="center"><img src="../utils/images/software-prototyping.png" width=800></p>
+<p align="center"><img src="../utils/images/software-prototyping-rviz.png" width=800></p>
 
 ### Integration of Custom Software Components
 As described above, this demo should emphasize a simple integration of novel, developed software components. Hence, we integrate a new component, an image segmentation perception function. Following modularization and containerization within CARLOS, the integration of a novel component only includes a new entry within the Docker Compose file:
@@ -55,7 +55,7 @@ Here, we use the public available Docker image of our [image segmentation ROS 2 
 
 However, we have to make sure that the ROS node subscribes an available topic with correct message type. Here, we use the [sensor_msgs/Image](https://github.com/ros/common_msgs/blob/noetic-devel/sensor_msgs/msg/Image.msg) topic of a simulated front-facing RGB camera attached the ego vehicle. As an output, the image segmentation provides an additional [sensor_msgs/Image](https://github.com/ros/common_msgs/blob/noetic-devel/sensor_msgs/msg/Image.msg) topic which can be visualized within RViz.
 
-<p align="center"><img src="../utils/images/image-segmentation.png" width=800></p>
+<p align="center"><img src="../utils/images/software-prototyping-image-segmentation.png" width=800></p>
 
 > [!NOTE]
 > The provided image segmentation only uses a small and simplified model, so the results are not really satisfying. However, this example shows a simple integration of a custom function within our simulation framework CARLOS.

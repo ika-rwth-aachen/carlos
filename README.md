@@ -16,13 +16,14 @@ This repository contains the official reference implementation of our open, modu
 > &nbsp;&nbsp;&nbsp;&nbsp; *timo.woopen@ika.rwth-aachen.de*
 
 The repository is structured as follows:
-- [**CARLOS** - An Open, Modular, and Scalable Simulation Architecture for the Development and Testing of Automated Vehicles](#carlos---an-open-modular-and-scalable-simulation-architecture-for-the-development-and-testing-of-automated-vehicles)
+- [**CARLOS** - An Open, Modular, and Scalable Simulation Architecture for the Development and Testing of Automated Driving Systems](#carlos---an-open-modular-and-scalable-simulation-architecture-for-the-development-and-testing-of-automated-driving-systems)
   - [Publication](#publication)
   - [Getting Started](#getting-started)
   - [Simulation Architecture](#simulation-architecture)
     - [Simulation Core: ***carla-simulator***](#simulation-core-carla-simulator)
     - [Communication Actor: ***carla-ros-bridge***](#communication-actor-carla-ros-bridge)
     - [Control Actor: ***carla-scenario-runner***](#control-actor-carla-scenario-runner)
+  - [Citation](#citation)
   - [Acknowledgements](#acknowledgements)
 
 ## Publication
@@ -40,7 +41,7 @@ The repository is structured as follows:
 ## Getting Started
 
 > [!TIP]
-> Check out the [requirements](./utils/requirements.md) and the comprehensive [tutorial](./utils/tutorial.md), which gives an overview of the main simulation framework features, combining CARLA and ROS in a containerized composition.
+> Check out the [requirements](./utils/requirements.md) and the comprehensive [tutorial](./utils/tutorial/README.md), which gives an overview of the main simulation framework features, combining CARLA and ROS in a containerized composition.
 
 This repository provides demonstrations which can be used as example or initial starting point. A specific demo can be started using the provided script:
 
@@ -92,7 +93,7 @@ The carla-simulator constitutes the central element of the framework and handles
   <img src="https://img.shields.io/badge/ROS 2-humble-blueviolet"/>
   <img src="https://img.shields.io/github/stars/ika-rwth-aachen/carla-ros-bridge?style=social"/>
 </p>
-The carla-ros-bridge is the component that facilitates the powerful combination of CARLA and ROS. It retrieves data from the simulation to publish it over ROS topics while simultaneously listening on different topics for requested actions, which are translated to commands to be executed in CARLA. It does this by using both the ROS communication standard DDS, as well as RPC via the CARLA Python API, in tandem, effectively bridging the two. Here, [docker-ros](https://github.com/ika-rwth-aachen/docker-ros) enables a continual building of container images with recent versions of ROS, Python, and Ubuntu.
+The carla-ros-bridge is the component that facilitates the powerful combination of CARLA and ROS. It retrieves data from the simulation to publish it on ROS topics while simultaneously listening on different topics for requested actions, which are translated to commands to be executed in CARLA. It does this by using both the ROS communication standard DDS, as well as RPC via the CARLA Python API, in tandem, effectively bridging the two. Here, [docker-ros](https://github.com/ika-rwth-aachen/docker-ros) enables a continual building of container images with recent versions of ROS, Python, and Ubuntu.
 
 ### Control Actor: [***carla-scenario-runner***](https://github.com/ika-rwth-aachen/carla-scenario-runner)
 <p align="left">
