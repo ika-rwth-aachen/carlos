@@ -5,7 +5,7 @@ This document aims to give a brief overview of the various Docker services provi
 ## Component List
 
 | Service Name | Repository | Docker Image |
-| --- | --- | --- | --- |
+| --- | --- | --- |
 | `carla-simulator` | [ika-rwth-aachen/carla](https://github.com/ika-rwth-aachen/carla) | rwthika/carla-simulator |
 | `carla-ros-bridge` | [ika-rwth-aachen/ros-bridge](https://github.com/ika-rwth-aachen/ros-bridge) | rwthika/carla-ros-bridge |
 | `carla-scenario-runner` | [ika-rwth-aachen/carla_scenario_runner_ros](https://github.com/ika-rwth-aachen/carla_scenario_runner_ros) | rwthika/carla-scenario-runner |
