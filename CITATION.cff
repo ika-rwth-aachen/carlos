@@ -18,7 +18,7 @@ authors:
     family-names: Lampe
 
 preferred-citation:
-  title: "CARLOS: An Open, Modular, and Scalable Simulation Architecture for the Development and Testing of Automated Driving Systems"
+  title: "CARLOS: An Open, Modular, and Scalable Simulation Framework for the Development and Testing of Software for C-ITS"
   type: conference-paper
   # conference:
   #   name:
