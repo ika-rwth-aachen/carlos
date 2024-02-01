@@ -78,6 +78,7 @@ CARLOS is a framework that implements this architecture to enhance CARLA as a si
   <img src="https://img.shields.io/github/v/release/ika-rwth-aachen/carla-simulator"/></a>
   <img src="https://img.shields.io/github/license/ika-rwth-aachen/carla-simulator"/>
   <a href="https://github.com/ika-rwth-aachen/carla-simulator/actions/workflows/docker.yml"><img src="https://github.com/ika-rwth-aachen/carla-simulator/actions/workflows/docker.yml/badge.svg"/></a>
+  <img src="https://img.shields.io/badge/Ubuntu-22.04-E95420"/>
   <img src="https://img.shields.io/badge/CARLA-0.9.15-blueviolet"/>
   <img src="https://img.shields.io/badge/Python-3.10-blueviolet"/>
   <img src="https://img.shields.io/github/stars/ika-rwth-aachen/carla-simulator?style=social"/>
@@ -89,7 +90,8 @@ The carla-simulator constitutes the central element of the framework and handles
   <img src="https://img.shields.io/github/v/release/ika-rwth-aachen/carla-ros-bridge"/></a>
   <img src="https://img.shields.io/github/license/ika-rwth-aachen/carla-ros-bridge"/>
   <a href="https://github.com/ika-rwth-aachen/carla-ros-bridge/actions/workflows/docker.yml"><img src="https://github.com/ika-rwth-aachen/carla-ros-bridge/actions/workflows/docker.yml/badge.svg"/></a>
-    <img src="https://img.shields.io/badge/CARLA-0.9.15-blueviolet"/>
+  <img src="https://img.shields.io/badge/Ubuntu-22.04-E95420"/>
+  <img src="https://img.shields.io/badge/CARLA-0.9.15-blueviolet"/>
   <img src="https://img.shields.io/badge/ROS 2-humble-blueviolet"/>
   <img src="https://img.shields.io/github/stars/ika-rwth-aachen/carla-ros-bridge?style=social"/>
 </p>
@@ -100,6 +102,7 @@ The carla-ros-bridge is the component that facilitates the powerful combination 
   <img src="https://img.shields.io/github/v/release/ika-rwth-aachen/carla-scenario-runner"/>
   <img src="https://img.shields.io/github/license/ika-rwth-aachen/carla-scenario-runner"/>
   <a href="https://github.com/ika-rwth-aachen/carla-scenario-runner/actions/workflows/docker.yml"><img src="https://github.com/ika-rwth-aachen/carla-scenario-runner/actions/workflows/docker.yml/badge.svg"/></a>
+  <img src="https://img.shields.io/badge/Ubuntu-22.04-E95420"/>
   <img src="https://img.shields.io/badge/CARLA-0.9.15-blueviolet"/>
   <img src="https://img.shields.io/badge/Python-3.10-blueviolet"/>
   <img src="https://img.shields.io/github/stars/ika-rwth-aachen/carla-scenario-runner?style=social"/>
