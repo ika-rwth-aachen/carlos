@@ -1,0 +1,28 @@
+{
+    "settings":
+    {
+        "max_simulation_time": "30",
+        "max_real_time": "300",
+        "simulation_services": ["carla-server", "carla-health-check", "time-health-check", "spawned-vehicle-check", "carla-ros-bridge", "carla-simulation-controller", "rosbag-record"],
+        "convert_services": ["ros2disk"],
+        "record_topics": 
+            {
+                "topic_segmentation": "/carla/ego_vehicle/semantic_segmentation",
+                "topic_tf": "/tf"
+            },
+        "output_path": "./data/temp/"
+    },
+    "simulation_configs":
+    {
+        "permutation_configs":
+        {
+            "num_executions": 1,
+            "sensors_config_files": ["./config/sensors/semantic_camera.json"],
+            "spawn_point": ["1"],
+            "town": ["Town10HD"],
+            "vehicle_occupancy": ["0.5"],
+            "walker_number": ["50"],
+            "weather": ["ClearSunset"]
+        }
+    }
+}

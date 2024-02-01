@@ -1,0 +1,6 @@
+name: carlos_data_driven_development
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12.1
+  - python-on-whales=0.68.0

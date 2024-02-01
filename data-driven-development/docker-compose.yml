@@ -1,0 +1,21 @@
+x-scenario-mount: &scenario-mount ./config/scenarios:/scenarios
+x-sensors-mount:  &sensors-mount  ./${sensors_config}:/sensors.json
+
+# ==============================================================================
+
+services:
+
+  carla-simulator:
+    extends:
+      file: ../utils/components.yml
+      service: carla-simulator-offscreen
+    tty: true
+
+  carla-ros-bridge:
+    extends:
+      file: ../utils/components.yml
+      service: carla-ros-bridge
+    volumes:
+      - *sensors-mount
+      - ./launch/demo.launch.py:/demo.launch.py
+    command: bash -ic "ros2 launch /demo.launch.py town:=${town}"
