@@ -1,7 +1,7 @@
 # Tutorial: Simulative Development and Testing with CARLA and ROS
 
 > [!NOTE]
-> This repository provides CARLOS, an open, modular and scalable simulation framework based on the open-source [CARLA simulator](https://github.com/ika-rwth-aachen/carla-simulator). The framework can be used to develop and test C-ITS software in a closed-loop simulation environment. Have a closer look at the [README](../README.md) to get a first overview of the provided demo use cases.
+> This repository provides CARLOS, an open, modular and scalable simulation framework based on the open-source [CARLA simulator](https://github.com/ika-rwth-aachen/carla-simulator). The framework can be used to develop and test C-ITS software in a closed-loop simulation environment. Have a closer look at the top-level [README](../README.md) to get a first overview of the provided demo use cases.
 
 ---
 
@@ -13,7 +13,7 @@ The core requirements for using and testing the simulation framework are provide
 
 ### Creating a Compose File
 
-The backbone of the proposed simulation framework is based on Docker Compose, enabling modular plugging of different Docker services. All described [components](../components.md) can be integrated in a custom Docker compose file. Feel free to set up your own custom [`docker-compose.yml`](./docker-compose.yml) within the directory of this tutorial:
+The backbone of the proposed simulation framework is based on Docker Compose, enabling modular plugging of different Docker services. All described [components](../components.md) can be integrated in a custom Docker Compose file. Feel free to set up your own custom [`docker-compose.yml`](./docker-compose.yml) within the directory of this tutorial:
 
 ```yml
 # you can utilize yaml features to avoid repeating yourself and centralizing configurations
@@ -72,7 +72,7 @@ In the first example, we are starting a CARLA server and its GUI along with a Py
 > Make sure that your machine has access to its X server to enable graphical output.
 > ```bash
 > xhost +local:
-> ``
+> ```
 
 Then, you can launch the carla-simulator using the `docker compose up` command:
 ```bash
@@ -122,7 +122,7 @@ python3 ./PythonAPI/examples/dynamic_weather.py
 
 This example script changes the weather settings of the CARLA server dynamically. It's a simle example for an interaction between the CARLA server and a Python client. The processes can be stopped using <kbd>CTRL</kbd>+<kbd>C</kbd>.
 
-The running `carla-simulator` container can be stopped by terminating the Docker compose setup with <kbd>CTRL</kbd>+<kbd>C</kbd> in the first terminal. In addition, remove the stopped container with
+The running `carla-simulator` container can be stopped by terminating the Docker Compose setup with <kbd>CTRL</kbd>+<kbd>C</kbd> in the first terminal. In addition, remove the stopped container with
 ```bash
 # stops all specified services and removes their containers completely
 docker compose down
@@ -153,7 +153,7 @@ Within this tutorial, the `carla-ros-bridge` container offers another GUI, enabl
 [<p align="center"><img src="../images/tutorial-pygame.png" width="800"/>](../images/tutorial-pygame.png)
 
 
-The entire compose setup including all running containers can be stopped with <kbd>CTRL</kbd>+<kbd>C</kbd> and removed with
+The entire Docker Compose setup including all running containers can be stopped with <kbd>CTRL</kbd>+<kbd>C</kbd> and removed with
 ```bash
 # stops all specified services and removes their containers completely
 docker compose down
