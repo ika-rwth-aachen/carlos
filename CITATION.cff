@@ -1,0 +1,46 @@
+cff-version: 1.2.0
+message: "We hope that our simulation framework CARLOS can help your research. If this is the case, please cite it using the following metadata."
+
+title: "CARLOS"
+type: software
+repository-code: "https://github.com/ika-rwth-aachen/carlos"
+date-released: 2024-02-01
+authors:
+  - given-names: Christian
+    family-names: Geller
+  - given-names: Benedikt
+    family-names: Haas
+  - given-names: Amarin
+    family-names: Kloeker
+  - given-names: Jona
+    family-names: Hermens
+  - given-names: Bastian
+    family-names: Lampe
+
+preferred-citation:
+  title: "CARLOS: An Open, Modular, and Scalable Simulation Framework for the Development and Testing of Software for C-ITS"
+  type: conference-paper
+  # conference:
+  #   name:
+  # month:
+  year: 2024
+  # doi:
+  url: "https://github.com/ika-rwth-aachen/carlos"
+  authors:
+    - given-names: Christian
+      family-names: Geller
+      orcid: "https://orcid.org/0000-0001-8655-3201"
+    - given-names: Benedikt
+      family-names: Haas
+      orcid: "https://orcid.org/0009-0004-4842-9997"
+    - given-names: Amarin
+      family-names: Kloeker
+      orcid: "https://orcid.org/0000-0003-4984-2797"
+    - given-names: Jona
+      family-names: Hermens
+      orcid: "https://orcid.org/0009-0005-9193-3336"
+    - given-names: Bastian
+      family-names: Lampe
+      orcid: "https://orcid.org/0000-0002-4414-6947"
+    - given-names: Lutz
+      family-names: Eckstein

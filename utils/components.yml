@@ -1,0 +1,54 @@
+services:
+
+  carla-simulator:
+    extends:
+      service: gpu-x11-service
+    privileged: True
+    image: rwthika/carla-simulator
+    command: bash -ic './CarlaUE4.sh -nosound 2>/dev/null'
+  
+  carla-simulator-offscreen:
+    extends:
+      service: carla-simulator
+    command: bash -ic './CarlaUE4.sh -nosound -RenderOffScreen 2>/dev/null'
+
+  carla-scenario-runner:
+    extends:
+      service: gpu-x11-service
+    depends_on:
+      carla-simulator:
+        condition: service_healthy
+    image: rwthika/carla-scenario-runner
+
+  carla-ros-bridge:
+    extends:
+      service: gpu-x11-service
+    depends_on:
+      carla-simulator:
+        condition: service_healthy
+    image: rwthika/carla-ros-bridge
+
+  ros-monitoring:
+    extends:
+      service: gpu-x11-service
+    depends_on:
+      carla-simulator:
+        condition: service_healthy
+    image: rwthika/ros2-cuda:humble-desktop-full
+
+  gpu-service:
+    deploy:
+      resources:
+          reservations:
+            devices:
+              - driver: nvidia
+                count: 1
+                capabilities: [gpu]
+
+  gpu-x11-service:
+    extends:
+      service: gpu-service
+    environment:
+      DISPLAY: $DISPLAY
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix

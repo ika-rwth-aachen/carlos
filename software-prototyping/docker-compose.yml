@@ -1,0 +1,39 @@
+x-launch-mount: &launch-mount           ./carla-ros-bridge.launch.py:/demo.launch.py
+x-sensors-mount: &sensors-mount         ./sensors.json:/sensors.json
+x-rviz-config-mount: &rviz-config-mount ./config.rviz:/config.rviz
+
+# ==============================================================================
+
+services:
+
+  carla-simulator:
+    extends:
+      file: ../utils/components.yml
+      service: carla-simulator
+
+  carla-ros-bridge:
+    extends:
+      file: ../utils/components.yml
+      service: carla-ros-bridge
+    volumes:
+      - *launch-mount
+      - *sensors-mount
+    command: bash -ic 'ros2 launch /demo.launch.py'
+    
+  ros-monitoring:
+    extends:
+      file: ../utils/components.yml
+      service: ros-monitoring
+    volumes:
+      - *rviz-config-mount
+    command: bash -ic 'rviz2 -d /config.rviz --ros-args -p use_sim_time:=true &> /dev/null'
+
+  image-segmentation:
+    image: rwthika/carlos-image-segmentation
+    command: ros2 launch image_segmentation image_segmentation_launch.py image_topic:=/carla/ego_vehicle/rgb_front/image
+    
+  # <custom-component-name>
+  #   image: <custom-image-name>
+  #   command: <custom-command>
+  
+  

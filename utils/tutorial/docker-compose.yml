@@ -1,0 +1,33 @@
+# you can utilize yaml features to avoid repeating yourself and centralizing configurations
+x-rviz-config-mount: &rviz-config-mount ./config.rviz:/config.rviz
+
+# ==============================================================================
+
+services:
+
+  # starts a CARLA simulator instance named 'carla-simulator' with a GUI window 
+  carla-simulator:
+    extends:
+      file: ../components.yml
+      service: carla-simulator
+
+  # starts the carla-ros-bridge
+  carla-ros-bridge:
+    extends:
+      file: ../components.yml
+      service: carla-ros-bridge
+    # ...and then execute them. Note the -ic flag for an interactive bash!
+    # Without an interactive bash, many important env vars wouldn't be working or even set
+    command: bash -ic 'ros2 launch carla_ros_bridge carla_ros_bridge_with_example_ego_vehicle.launch.py host:=carla-simulator'
+    # .. note that the host name is explictly set to the name of the carla-simulator Docker service!
+
+  # starts rviz with a GUI window named 'ros-monitoring'
+  ros-monitoring:
+    extends:
+      file: ../components.yml
+      service: ros-monitoring
+    volumes:
+      # you can mount custom rviz configs...
+      - *rviz-config-mount
+    # ...and then use them when starting up rviz with the -d flag
+    command: bash -ic 'rviz2 -d /config.rviz --ros-args -p use_sim_time:=true &> /dev/null'
