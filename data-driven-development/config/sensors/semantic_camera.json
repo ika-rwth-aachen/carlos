@@ -7,12 +7,19 @@
             "sensors": 
             [  
                 {
+                    "type": "sensor.camera.rgb",
+                    "id": "rgb_view",
+                    "spawn_point": {"x": 1, "y": 0.0, "z": 1.7, "roll": 0.0, "pitch": 0.0, "yaw": 0.0},
+                    "image_size_x": 1024,
+                    "image_size_y": 512
+                },
+                {
                     "type": "sensor.camera.semantic_segmentation",
                     "id": "semantic_segmentation",
                     "spawn_point": {"x": 1, "y": 0.0, "z": 1.7, "roll": 0.0, "pitch": 0.0, "yaw": 0.0},
                     "fov": 90,
-                    "image_size_x": 480,
-                    "image_size_y": 270
+                    "image_size_x": 1024,
+                    "image_size_y": 512
                 },
                 {
                     "type": "sensor.pseudo.tf",
