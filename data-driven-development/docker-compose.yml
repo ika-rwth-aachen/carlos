@@ -69,7 +69,7 @@ services:
         condition: service_healthy
     volumes:
       - *scenario-mount
-    command: bash -ic "python ./scenario_runner.py --host carla-simulator --waitForEgo --openscenario /scenarios/${scenario}"
+    command: bash -ic "python ./scenario_runner.py --host carla-simulator --waitForEgo --output --openscenario /scenarios/${scenario}"
 
   # --------------------------------------
   # Recording service

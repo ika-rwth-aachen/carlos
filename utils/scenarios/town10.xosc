@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <OpenSCENARIO>
-  <FileHeader revMajor="1" revMinor="0" date="2023-02-26T10:38:22" description="autopilot_town10" author=""/>
+  <FileHeader revMajor="1" revMinor="0" date="2023-02-26T10:38:22" description="town10" author=""/>
   <CatalogLocations>
     <VehicleCatalog>
       <Directory path="catalogs"/>

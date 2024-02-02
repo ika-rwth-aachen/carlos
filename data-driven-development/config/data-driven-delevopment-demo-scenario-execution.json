@@ -18,7 +18,7 @@
         "scenario_configs": 
         {
             "execution_number": 1,
-            "scenario_files": ["./config/scenarios/town10.xosc"],
+            "scenario_files": ["../utils/scenarios/town01.xosc", "../utils/scenarios/town10.xosc"],
             "sensors_config_files": ["./config/sensors/rgb_segmentation_camera.json"]
         }
     }
