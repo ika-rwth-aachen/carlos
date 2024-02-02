@@ -27,7 +27,7 @@ services:
       service: carla-client
     volumes:
       - ./src/time_controller.py:/opt/carla/PythonAPI/time_controller.py
-    command: python time_controller.py --host carla-simulator ${max_simulation_time} ${max_real_time}
+    command: bash -ic "python time_controller.py --host carla-simulator ${max_simulation_time} ${max_real_time}"
 
   spawned-vehicle-check:
     extends:
@@ -54,7 +54,7 @@ services:
     volumes:
       - ./src/simulation_controller.py:/opt/carla/PythonAPI/simulation_controller.py
       - *sensors-mount
-    command: python simulation_controller.py --host carla-simulator ${key_config_string}
+    command: bash -ic "python simulation_controller.py --host carla-simulator ${key_config_string}"
 
   # --------------------------------------
   
