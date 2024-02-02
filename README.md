@@ -1,6 +1,6 @@
 <img src="./utils/images/logo.png" height=130 align="right">
 
-# **CARLOS** - An Open, Modular, and Scalable Simulation Architecture for the Development and Testing of Automated Vehicles
+# **CARLOS** - An Open, Modular, and Scalable Simulation Framework for the Development and Testing of Software for C-ITS
 
 This repository contains the official reference implementation of our open, modular and scalable simulation architecture. It provides a containerized simulation framework based on the open-source simulator CARLA and enables simple integration of custom ROS applications. We provide useful examples for the three use cases as presented in our [paper](TODO):
 - [Software Prototyping](./software-prototyping/)
@@ -16,30 +16,32 @@ This repository contains the official reference implementation of our open, modu
 > &nbsp;&nbsp;&nbsp;&nbsp; *timo.woopen@ika.rwth-aachen.de*
 
 The repository is structured as follows:
-- [**CARLOS** - An Open, Modular, and Scalable Simulation Architecture for the Development and Testing of Automated Vehicles](#carlos---an-open-modular-and-scalable-simulation-architecture-for-the-development-and-testing-of-automated-vehicles)
+- [**CARLOS** - An Open, Modular, and Scalable Simulation Framework for the Development and Testing of Software for C-ITS](#carlos---an-open-modular-and-scalable-simulation-framework-for-the-development-and-testing-of-software-for-c-its)
   - [Publication](#publication)
   - [Getting Started](#getting-started)
   - [Simulation Architecture](#simulation-architecture)
     - [Simulation Core: ***carla-simulator***](#simulation-core-carla-simulator)
     - [Communication Actor: ***carla-ros-bridge***](#communication-actor-carla-ros-bridge)
     - [Control Actor: ***carla-scenario-runner***](#control-actor-carla-scenario-runner)
+  - [Citation](#citation)
   - [Acknowledgements](#acknowledgements)
 
 ## Publication
 
-> **CARLOS: An Open, Modular, and Scalable Simulation Architecture for the Development and Testing of Automated Vehicles**  
-> ([*arXiv*](TODO))
+> **CARLOS: An Open, Modular, and Scalable Simulation Framework for the Development and Testing of Software for C-ITS**  
+> ([*arXiv link follows*](TODO))
 >
 > [Christian Geller](https://www.ika.rwth-aachen.de/de/institut/team/fahrzeugintelligenz-automatisiertes-fahren/geller.html), [Benedikt Haas](TODO), [Amarin Kloeker](https://www.ika.rwth-aachen.de/en/institute/team/vehicle-intelligence-automated-driving/kloeker-amarin.html), [Jona Hermens](TODO), [Bastian Lampe](https://www.ika.rwth-aachen.de/en/institute/team/vehicle-intelligence-automated-driving/lampe.html), [Lutz Eckstein](https://www.ika.rwth-aachen.de/en/institute/team/univ-prof-dr-ing-lutz-eckstein.html)
 > [Institute for Automotive Engineering (ika), RWTH Aachen University](https://www.ika.rwth-aachen.de/en/)
 > 
-> <sup>*Abstract* – Future mobility systems and their components are increasingly defined by their software. The complexity of these systems and the ever changing requirements posed at the software require continuous software updates. The dynamic nature of the system and the practically innumerable scenarios in which different software components work together necessitate efficient and automated development and testing procedures that use simulations as one core methodology. The availability of such simulation architectures is a common interest among many stakeholders, especially in the field of automated driving. That is why we propose CARLOS - an open and modular simulation framework for the development and testing of automated vehicles that leverages the rich CARLA ecosystem. We provide core building blocks for this framework and explain how it can be used and extended by the community. Its architecture builds upon modern microservice and DevOps principles such as containerization, and continuous integration and delivery. In our paper, we motivate the architecture by describing important design principles, and showcasing three major use cases  - software prototyping, data-driven development, and automated testing. We make CARLOS and example implementations of the use cases available at GitHub: [https://github.com/ika-rwthaachen/carlos](https://github.com/ika-rwthaachen/carlos).</sup>
+> <sup>*Abstract* – Future mobility systems and their components are increasingly defined by their software. The complexity of these cooperative intelligent transport systems (C-ITS)  and the ever-changing requirements posed at the software require continual software updates. The dynamic nature of the system and the practically innumerable scenarios in which different software components work together necessitate efficient and automated development and testing procedures that use simulations as one core methodology. The availability of such simulation architectures is a common interest among many stakeholders, especially in the field of automated driving. That is why we propose CARLOS - an open, modular, and scalable simulation framework for the development and testing of software in C-ITS that leverages the rich CARLA and ROS ecosystems. We provide core building blocks for this framework and explain how it can be used and extended by the community. Its architecture builds upon modern microservice and DevOps principles such as containerization and continuous integration. In our paper, we motivate the architecture by describing important design principles and showcasing three major use cases - software prototyping, data-driven development, and automated testing. We make CARLOS and example implementations of the three use cases publicly available at [https://github.com/ika-rwth-aachen/carlos](https://github.com/ika-rwth-aachen/carlos).</sup>
 
 ---
 
 ## Getting Started
 
-**Note:** Check out the [requirements](./utils/requirements.md) and the comprehensive [tutorial](./utils/tutorial.md), which gives an overview of the main simulation framework features, combining CARLA and ROS in a containerized composition.
+> [!TIP]
+> Check out the [requirements](./utils/requirements.md) and the comprehensive [tutorial](./utils/tutorial/README.md), which gives an overview of the main simulation framework features, combining CARLA and ROS in a containerized composition.
 
 This repository provides demonstrations which can be used as example or initial starting point. A specific demo can be started using the provided script:
 
@@ -76,7 +78,9 @@ CARLOS is a framework that implements this architecture to enhance CARLA as a si
   <img src="https://img.shields.io/github/v/release/ika-rwth-aachen/carla-simulator"/></a>
   <img src="https://img.shields.io/github/license/ika-rwth-aachen/carla-simulator"/>
   <a href="https://github.com/ika-rwth-aachen/carla-simulator/actions/workflows/docker.yml"><img src="https://github.com/ika-rwth-aachen/carla-simulator/actions/workflows/docker.yml/badge.svg"/></a>
+  <img src="https://img.shields.io/badge/Ubuntu-22.04-E95420"/>
   <img src="https://img.shields.io/badge/CARLA-0.9.15-blueviolet"/>
+  <img src="https://img.shields.io/badge/Python-3.10-blueviolet"/>
   <img src="https://img.shields.io/github/stars/ika-rwth-aachen/carla-simulator?style=social"/>
 </p>
 The carla-simulator constitutes the central element of the framework and handles all graphical and dynamic calculations in the individual simulation time steps. Within our GitHub repository, we extend the pre-existing Dockerfiles to create enhanced Ubuntu-based container images of CARLA via novel CI pipelines.
@@ -86,16 +90,19 @@ The carla-simulator constitutes the central element of the framework and handles
   <img src="https://img.shields.io/github/v/release/ika-rwth-aachen/carla-ros-bridge"/></a>
   <img src="https://img.shields.io/github/license/ika-rwth-aachen/carla-ros-bridge"/>
   <a href="https://github.com/ika-rwth-aachen/carla-ros-bridge/actions/workflows/docker.yml"><img src="https://github.com/ika-rwth-aachen/carla-ros-bridge/actions/workflows/docker.yml/badge.svg"/></a>
+  <img src="https://img.shields.io/badge/Ubuntu-22.04-E95420"/>
+  <img src="https://img.shields.io/badge/CARLA-0.9.15-blueviolet"/>
   <img src="https://img.shields.io/badge/ROS 2-humble-blueviolet"/>
   <img src="https://img.shields.io/github/stars/ika-rwth-aachen/carla-ros-bridge?style=social"/>
 </p>
-The carla-ros-bridge is the component that facilitates the powerful combination of CARLA and ROS. It retrieves data from the simulation to publish it over ROS topics while simultaneously listening on different topics for requested actions, which are translated to commands to be executed in CARLA. It does this by using both the ROS communication standard DDS, as well as RPC via the CARLA Python API, in tandem, effectively bridging the two. Here, [docker-ros](https://github.com/ika-rwth-aachen/docker-ros) enables a continual building of container images with recent versions of ROS, Python, and Ubuntu.
+The carla-ros-bridge is the component that facilitates the powerful combination of CARLA and ROS. It retrieves data from the simulation to publish it on ROS topics while simultaneously listening on different topics for requested actions, which are translated to commands to be executed in CARLA. It does this by using both the ROS communication standard DDS, as well as RPC via the CARLA Python API, in tandem, effectively bridging the two. Here, [docker-ros](https://github.com/ika-rwth-aachen/docker-ros) enables a continual building of container images with recent versions of ROS, Python, and Ubuntu.
 
 ### Control Actor: [***carla-scenario-runner***](https://github.com/ika-rwth-aachen/carla-scenario-runner)
 <p align="left">
   <img src="https://img.shields.io/github/v/release/ika-rwth-aachen/carla-scenario-runner"/>
   <img src="https://img.shields.io/github/license/ika-rwth-aachen/carla-scenario-runner"/>
   <a href="https://github.com/ika-rwth-aachen/carla-scenario-runner/actions/workflows/docker.yml"><img src="https://github.com/ika-rwth-aachen/carla-scenario-runner/actions/workflows/docker.yml/badge.svg"/></a>
+  <img src="https://img.shields.io/badge/Ubuntu-22.04-E95420"/>
   <img src="https://img.shields.io/badge/CARLA-0.9.15-blueviolet"/>
   <img src="https://img.shields.io/badge/Python-3.10-blueviolet"/>
   <img src="https://img.shields.io/github/stars/ika-rwth-aachen/carla-scenario-runner?style=social"/>
@@ -105,6 +112,17 @@ To enable scenario-based testing and evaluation, the carla-scenario-runner is us
 
 > [!NOTE]
 > For all of our use case examples we will be utilizing predefined Docker services, listed in [carla-components.yml](./utils/components.yml) and further described in the [carla-components overview](./utils/components.md).
+
+## Citation
+We hope that our simulation framework CARLOS can help your research. If this is the case, please cite it using the following metadata.
+```
+@inproceedings{CARLOS24,
+author = {Geller, Christian and Haas, Benedikt and Kloeker, Amarin and Hermens, Jona and Lampe, Bastian and Eckstein, Lutz},
+title = {{CARLOS: An Open, Modular, and Scalable Simulation Framework for the Development and Testing of Software for C-ITS}},
+url = {https://github.com/ika-rwth-aachen/carlos},
+year = {2024}
+}
+```
 
 ## Acknowledgements
 
