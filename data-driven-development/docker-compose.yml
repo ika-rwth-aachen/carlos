@@ -9,7 +9,7 @@ services:
   carla-simulator:
     extends:
       file: ../utils/components.yml
-      service: carla-simulator
+      service: carla-simulator-offscreen
 
   carla-ros-bridge:
     extends:
