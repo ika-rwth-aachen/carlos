@@ -20,10 +20,10 @@
             "num_executions": 1,
             "sensors_config_files": ["./config/sensors/rgb_segmentation_camera.json"],
             "spawn_point": ["1", "2", "3"],
-            "town": ["Town10HD"],
+            "town": ["Town01", "Town10HD"],
             "vehicle_occupancy": ["0.5"],
             "walker_number": ["50"],
-            "weather": ["ClearSunset"]
+            "weather": ["ClearSunset", "WetCloudyNoon"]
         }
     }
 }
