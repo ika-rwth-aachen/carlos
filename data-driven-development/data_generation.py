@@ -7,6 +7,7 @@ import xml.etree.ElementTree as ET
 from python_on_whales import DockerClient, DockerException
 
 def start_permutation_simulations(docker, permutation_configs, setting_configs):
+    
     # get different sensor.json configs
     sensors_config_files = getFilePathList(permutation_configs, "sensors_config_files", "sensors_config_folder", ".json")
     permutation_configs.pop("sensors_config_files", None)
