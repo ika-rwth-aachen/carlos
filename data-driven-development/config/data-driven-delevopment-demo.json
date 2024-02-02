@@ -3,11 +3,12 @@
     {
         "max_simulation_time": "30",
         "max_real_time": "300",
-        "simulation_services": ["carla-server", "carla-health-check", "time-health-check", "spawned-vehicle-check", "carla-ros-bridge", "carla-simulation-controller", "rosbag-record"],
+        "simulation_services": ["carla-simulator", "time-health-check", "spawned-vehicle-check", "carla-ros-bridge", "carla-simulation-controller", "rosbag-record"],
         "convert_services": ["ros2disk"],
         "record_topics": 
             {
-                "topic_segmentation": "/carla/ego_vehicle/semantic_segmentation",
+                "topic_rgb": "/carla/ego_vehicle/rgb_view/image",
+                "topic_segmentation": "/carla/ego_vehicle/semantic_segmentation/image",
                 "topic_tf": "/tf"
             },
         "output_path": "./data/temp/"
