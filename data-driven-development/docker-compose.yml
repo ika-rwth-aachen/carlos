@@ -5,10 +5,11 @@ x-sensors-mount:  &sensors-mount  ./${sensors_config}:/sensors.json
 
 services:
 
+  # Core services
   carla-simulator:
     extends:
       file: ../utils/components.yml
-      service: carla-simulator-offscreen
+      service: carla-simulator
 
   carla-ros-bridge:
     extends:
@@ -20,7 +21,7 @@ services:
     command: bash -ic "ros2 launch /demo.launch.py town:=${town}"
 
   # ----------------------------------------------------------------------------------------------
-  # checks
+  # Checking services
   time-health-check:
     extends:
       file: ../utils/components.yml
@@ -43,14 +44,14 @@ services:
       retries: 3
 
   # ----------------------------------------------------------------------------------------------
-  # modify simulations setup
+  # Option A: apply random permutation setups
   carla-simulation-controller:
     extends:
       file: ../utils/components.yml
       service: carla-client
     depends_on:
-        spawned-vehicle-check:
-          condition: service_healthy
+      spawned-vehicle-check:
+        condition: service_healthy
     volumes:
       - ./src/simulation_controller.py:/opt/carla/PythonAPI/simulation_controller.py
       - ./src/set_environment.py:/opt/carla/PythonAPI/set_environment.py
@@ -58,19 +59,20 @@ services:
     command: bash -ic "python simulation_controller.py --host carla-simulator ${key_config_string}"
 
   # ------------------------------
-  # possible scenario_runner setup
-  carla-scenario-runner-ros:
+  # Option B: apply concrete scenario setups
+  carla-scenario-runner:
     extends:
       file: ../utils/components.yml
       service: carla-scenario-runner
     depends_on:
-      carla-ros-bridge:
-        condition: service_started
+      spawned-vehicle-check:
+        condition: service_healthy
     volumes:
       - *scenario-mount
-    command: bash -ic "ros2 launch carla_ros_scenario_runner carla_ros_scenario_runner_with_scenario.launch.py host:=carla-server scenario_runner_path:=$${SCENARIO_RUNNER_ROOT} scenario:=${scenario}"
+    command: bash -ic "python ./scenario_runner.py --host carla-simulator --waitForEgo --openscenario /scenarios/${scenario}"
 
   # --------------------------------------
+  # Recording service
   rosbag-record:
     extends:
       file: ../utils/components.yml
@@ -80,4 +82,4 @@ services:
           condition: service_healthy
     volumes:
       - ${output_path}:/docker-ros/ws/data
-    command: bash -ic "ros2 bag record -o /docker-ros/ws/data/ros2/bags/${run_name}_$(date +%Y-%m-%d-%H-%M) ${record_topics_arg}"
+    command: bash -ic "ros2 bag record -o /docker-ros/ws/data/bags/${run_name}_$(date +%Y-%m-%d-%H-%M) ${record_topics_arg}"

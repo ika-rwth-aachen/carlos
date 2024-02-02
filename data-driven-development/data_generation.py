@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import os
 import glob
 import json
@@ -91,8 +93,7 @@ def start_scenario_runner_simulations(docker, scenario_configs, setting_configs)
                         root = tree.getroot()
                         logic_file_elem = root.find('./RoadNetwork/LogicFile')
                         town = logic_file_elem.get('filepath')
-                        filename = os.path.splitext(scenario_filepath.split('/')[-1])[0]
-                            
+                        filename = scenario_filepath.split('/')[-1]
                         settings_configs_edit = setting_configs.copy()
                         settings_configs_edit.pop("simulation_services", None)
                         settings_configs_edit.pop("convert_services", None)
@@ -176,8 +177,9 @@ def main():
     argparser.add_argument(
         '--config',
         metavar='C',
-        default='./config/data-driven-delevopment-demo.json',
-        help='Config file which should be used (default: ./config/data-driven-delevopment-demo.json)')
+        default='./config/data-driven-delevopment-demo-image-segmentation.json',
+        help='Config file which should be used (default: ./config/data-driven-delevopment-demo-image-segmentation.json)'
+    )
     args = argparser.parse_args()
 
     # get configs from json file
@@ -185,7 +187,6 @@ def main():
     
     try:
         # Start scenarios from path if path is set
-        # TODO
         if "scenario_configs" in simulation_configs:
             print("Simulating scenarios with scenario_runner...")
             start_scenario_runner_simulations(docker, simulation_configs["scenario_configs"], setting_configs)
