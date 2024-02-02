@@ -24,7 +24,7 @@ def main():
         '--host',
         metavar='H',
         default='carla-simulator',
-        help='IP of the host server (default: carla-server)')
+        help='IP of the host server (default: carla-simulator)')
     argparser.add_argument(
         '--spawn_point',
         metavar='S',
@@ -123,8 +123,8 @@ def main():
                     tm_list.extend(["--number-of-vehicles", str(int(len(spawn_points)*vehicle_occupancy))])
 
         # spawn traffic if it is set (filter out twowheeled vehicle which have no boundingbox)
-        if "--number-of-vehicles" in tm_list or "--number-of-walkers" in tm_list:
-            subprocess.run(["python", "ika_scripts/set_environment.py", "--asynch", "--filterv", 'vehicle.*[!vehicle.bh.crossbike][!vehicle.diamondback.century][!vehicle.harley-davidson.low_rider][!vehicle.gazelle.omafiets][!vehicle.kawasaki.ninja][!vehicle.yamaha.yzf]'] + tm_list)
+        #if "--number-of-vehicles" in tm_list or "--number-of-walkers" in tm_list:
+        #    subprocess.run(["python", "ika_scripts/set_environment.py", "--asynch", "--filterv", 'vehicle.*[!vehicle.bh.crossbike][!vehicle.diamondback.century][!vehicle.harley-davidson.low_rider][!vehicle.gazelle.omafiets][!vehicle.kawasaki.ninja][!vehicle.yamaha.yzf]'] + tm_list)
 
         while True:
             world.wait_for_tick()

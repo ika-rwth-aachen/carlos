@@ -10,7 +10,7 @@ def generate_launch_description():
     # CARLA Args
     host_launch_arg = launch.actions.DeclareLaunchArgument(
         name='host',
-        default_value='carla-server'
+        default_value='carla-simulator'
     )
 
     port_launch_arg = launch.actions.DeclareLaunchArgument(

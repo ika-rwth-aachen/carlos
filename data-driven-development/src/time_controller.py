@@ -15,8 +15,8 @@ def main():
     argparser.add_argument(
         '--host',
         metavar='H',
-        default='carla-server',
-        help='IP of the host server (default: 127.0.0.1)')
+        default='carla-simulator',
+        help='IP of the host server (default: carla-simulator)')
     argparser.add_argument(
         '--max_simulation_time',
         metavar='T',

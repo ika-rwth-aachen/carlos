@@ -4,7 +4,7 @@
         "max_simulation_time": "30",
         "max_real_time": "300",
         "simulation_services": ["carla-simulator", "time-health-check", "spawned-vehicle-check", "carla-ros-bridge", "carla-simulation-controller", "rosbag-record"],
-        "convert_services": ["ros2disk"],
+        "convert_services": [],
         "record_topics": 
             {
                 "topic_rgb": "/carla/ego_vehicle/rgb_view/image",
