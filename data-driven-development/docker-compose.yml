@@ -5,11 +5,12 @@ x-sensors-mount:  &sensors-mount  ./${sensors_config}:/sensors.json
 
 services:
 
-  # Core services
+  # --- core services ----------------------------------------------------------
+  
   carla-simulator:
     extends:
       file: ../utils/components.yml
-      service: carla-simulator-offscreen
+      service: carla-simulator
 
   carla-ros-bridge:
     extends:
@@ -20,8 +21,9 @@ services:
       - ./launch/demo.launch.py:/demo.launch.py
     command: bash -ic "ros2 launch /demo.launch.py town:=${town}"
 
-  # ----------------------------------------------------------------------------------------------
-  # Checking services
+  # ----------------------------------------------------------------------------
+  # --- checking services ------------------------------------------------------
+
   time-health-check:
     extends:
       file: ../utils/components.yml
@@ -43,8 +45,8 @@ services:
       start_period: 10s
       retries: 3
 
-  # ----------------------------------------------------------------------------------------------
-  # Option A: apply random permutation setups
+  # ----------------------------------------------------------------------------
+  # --- Option A: apply random permutation setups ------------------------------
   carla-simulation-controller:
     extends:
       file: ../utils/components.yml
@@ -58,8 +60,7 @@ services:
       - *sensors-mount
     command: bash -ic "python simulation_controller.py --host carla-simulator ${key_config_string}"
 
-  # ------------------------------
-  # Option B: apply concrete scenario setups
+  # --- Option B: apply concrete scenario setups -------------------------------
   carla-scenario-runner:
     extends:
       file: ../utils/components.yml
@@ -69,10 +70,10 @@ services:
         condition: service_healthy
     volumes:
       - *scenario-mount
-    command: bash -ic "python ./scenario_runner.py --host carla-simulator --waitForEgo --output --openscenario /scenarios/${scenario}"
+    command: bash -ic "python ./scenario_runner.py --host carla-simulator --openscenario /scenarios/${scenario} --waitForEgo --output"
 
-  # --------------------------------------
-  # Recording service
+  # ----------------------------------------------------------------------------
+  # --- recording services -----------------------------------------------------
   rosbag-record:
     extends:
       file: ../utils/components.yml
