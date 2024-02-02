@@ -28,6 +28,13 @@ services:
     extends:
       file: ../components.yml
       service: carla-simulator
+  
+  # starts a client instance named 'carla-client' to connect with CARLA via PythonAPI
+  carla-client:
+    extends:
+      file: ../components.yml
+      service: carla-client
+    command: sleep infinity
 
   # starts the carla-ros-bridge
   carla-ros-bridge:
@@ -62,11 +69,11 @@ docker compose pull
 
 ## Running the Compose Setup
 
-### CARLA Server
+### CARLA Server + Client
 
 The [CARLA simulator](https://github.com/carla-simulator/carla) is a powerful open-source simulation tool based on Unreal Engine. It uses a server-client architecture providing APIs for Python, C++ and ROS applications.
 
-In the first example, we are starting a CARLA server and its GUI along with a Python API client. Both processes are running in the carla-simulator container which can be launched via Docker Compose. Detailed information about Docker Compose can be found in the official [documentation](https://docs.docker.com/compose/).
+In the first example, we are starting a CARLA serveralong with a Python API client. The two processes are running in dedicated containers which can be launched via Docker Compose. Detailed information about Docker Compose can be found in the official [documentation](https://docs.docker.com/compose/).
 
 > [!IMPORTANT]
 > Make sure that your machine has access to its X server to enable graphical output.
@@ -74,15 +81,15 @@ In the first example, we are starting a CARLA server and its GUI along with a Py
 > xhost +local:
 > ```
 
-Then, you can launch the carla-simulator using the `docker compose up` command:
+Then, you can launch the two containers using the `docker compose up` command:
 ```bash
-# launch compose setup including carla-simulator
-docker compose up carla-simulator 
+# launch compose setup including carla-simulator and carla-client
+docker compose up carla-simulator carla-client
 ```
 
-This should bring up a CARLA server running a map called [Town 10](https://carla.readthedocs.io/en/latest/map_town10/). You can look around by using <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd>, holding the left or right mousebutton and moving the mouse in the desired direction.
+This should bring up a CARLA server GUI running a map called [Town 10](https://carla.readthedocs.io/en/latest/map_town10/). You can look around by using <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd>, holding the left or right mousebutton and moving the mouse in the desired direction.
 
-In a second terminal, run `docker ps` which shows a container named `carlos-carla-simulator-1`.
+In a second terminal, run `docker ps` which shows all containers, one of them named `tutorial-carla-client-1`.
 We can use the tool [docker-run](https://github.com/ika-rwth-aachen/docker-run) CLI for direct interaction with this container:
 
 If not already installed, you can install `docker-run` directly with pip:
@@ -106,23 +113,23 @@ source ~/.bashrc
 > You can also use `docker exec -it` to interact with the running container using the standard Docker CLI. Nevertheless, we highly recommend to use the useful features of [docker-run](https://github.com/ika-rwth-aachen/docker-run).
 
 
-Now, use `docker-run` to directly attach to the running `carla-simulator` container:
+Now, use `docker-run` to directly attach to the running `carla-client` container:
 ```bash
-# attach to the carla-simulator container
-docker-run --name carlos-carla-simulator-1
+# attach to the carla-client container
+docker-run --name tutorial-carla-client-1
 ```
 
-Inside of the container, we can interact with the CARLA world:
+Inside of the container, we can interact with the `carla-simulator` container:
 
 ```bash
 # changes weather settings dynamically
-python3 ./PythonAPI/examples/dynamic_weather.py
+python3 ./PythonAPI/examples/dynamic_weather.py --host carla-simulator
 ```
 [<p align="center"><img src="../images/tutorial-dynamic-weather.png" width="800"/>](../images/tutorial-dynamic-weather.png)
 
-This example script changes the weather settings of the CARLA server dynamically. It's a simle example for an interaction between the CARLA server and a Python client. The processes can be stopped using <kbd>CTRL</kbd>+<kbd>C</kbd>.
+This example script changes the weather settings of the CARLA server dynamically. It's a simple example for an interaction between the CARLA server and a Python client communicating over two separate Docker containers. The processes can be stopped using <kbd>CTRL</kbd>+<kbd>C</kbd>.
 
-The running `carla-simulator` container can be stopped by terminating the Docker Compose setup with <kbd>CTRL</kbd>+<kbd>C</kbd> in the first terminal. In addition, remove the stopped container with
+The running `carla-simulator` and `carla-client` containers can be stopped by terminating the Docker Compose setup with <kbd>CTRL</kbd>+<kbd>C</kbd> in the first terminal. In addition, remove the stopped containers with
 ```bash
 # stops all specified services and removes their containers completely
 docker compose down
