@@ -15,7 +15,7 @@ services:
     extends:
       file: ../components.yml
       service: carla-client
-    command: sleep inifinity
+    command: sleep infinity
 
   # starts the carla-ros-bridge
   carla-ros-bridge:
