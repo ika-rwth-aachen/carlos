@@ -123,7 +123,7 @@ Inside of the container, we can interact with the `carla-simulator` container:
 
 ```bash
 # changes weather settings dynamically
-python3 ./PythonAPI/examples/dynamic_weather.py --host carla-simulator
+./examples/dynamic_weather.py --host carla-simulator
 ```
 [<p align="center"><img src="../images/tutorial-dynamic-weather.png" width="800"/>](../images/tutorial-dynamic-weather.png)
 
