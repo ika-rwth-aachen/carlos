@@ -56,64 +56,64 @@ def start_permutation_simulations(docker, permutation_configs, setting_configs):
                 print("Starting data generation with Config: {}".format(simulation_args))
                 os.environ.update(simulation_args)
                 docker.compose.up(abort_on_container_exit=True, services=setting_configs["simulation_services"], pull='always')
-                docker.compose.down() 
+                docker.compose.down()
 
                 print("Config finished!")
 
             except DockerException:
                 docker.compose.down() 
 
-# def start_scenario_runner_simulations(docker, scenario_configs, setting_configs):
-#     sensors_config_files = getFilePathList(scenario_configs, "sensors_config_files", "sensors_config_folder", ".json")
-#     scenario_files = getFilePathList(scenario_configs, "scenario_files", "scenario_folder", ".xosc")
+def start_scenario_runner_simulations(docker, scenario_configs, setting_configs):
+    sensors_config_files = getFilePathList(scenario_configs, "sensors_config_files", "sensors_config_folder", ".json")
+    scenario_files = getFilePathList(scenario_configs, "scenario_files", "scenario_folder", ".xosc")
 
-#     if "num_executions" in scenario_configs:
-#         num_executions = int(scenario_configs["num_executions"])
-#     else:
-#         num_executions = 1
+    if "num_executions" in scenario_configs:
+        num_executions = int(scenario_configs["num_executions"])
+    else:
+        num_executions = 1
 
-#     print("Number of Scenarios executed: {}".format(len(scenario_files) * len(sensors_config_files) * num_executions))
+    print("Number of Scenarios executed: {}".format(len(scenario_files) * len(sensors_config_files) * num_executions))
     
-#     # loop over execution number, sensor.json files and scenarios
-#     for i in range(num_executions):
-#         for sensors_config_filepath in sensors_config_files:
-#             # get role names from sensor.json file
-#             with open(sensors_config_filepath) as sensors_config_file:
-#                 sensors_config = json.load(sensors_config_file)
-#                 vehicle_ids = ','.join([obj['id'] for obj in sensors_config['objects'] if obj['type'].startswith('vehicle.')])
-#                 setting_configs["role_names"] = vehicle_ids
+    # loop over execution number, sensor.json files and scenarios
+    for i in range(num_executions):
+        for sensors_config_filepath in sensors_config_files:
+            # get role names from sensor.json file
+            with open(sensors_config_filepath) as sensors_config_file:
+                sensors_config = json.load(sensors_config_file)
+                vehicle_ids = ','.join([obj['id'] for obj in sensors_config['objects'] if obj['type'].startswith('vehicle.')])
+                setting_configs["role_names"] = vehicle_ids
             
-#             for scenario_filepath in scenario_files:
-#                 if scenario_filepath.endswith(".xosc"):
-#                     try:
-#                         # get name of the town from xosc file
-#                         tree = ET.parse(scenario_filepath)
-#                         root = tree.getroot()
-#                         logic_file_elem = root.find('./RoadNetwork/LogicFile')
-#                         town = logic_file_elem.get('filepath')
-#                         filename = os.path.splitext(scenario_filepath.split('/')[-1])[0]
+            for scenario_filepath in scenario_files:
+                if scenario_filepath.endswith(".xosc"):
+                    try:
+                        # get name of the town from xosc file
+                        tree = ET.parse(scenario_filepath)
+                        root = tree.getroot()
+                        logic_file_elem = root.find('./RoadNetwork/LogicFile')
+                        town = logic_file_elem.get('filepath')
+                        filename = os.path.splitext(scenario_filepath.split('/')[-1])[0]
                             
-#                         settings_configs_edit = setting_configs.copy()
-#                         settings_configs_edit.pop("simulation_services", None)
-#                         settings_configs_edit.pop("convert_services", None)
-#                         settings_configs_edit["scenario_folder"] = os.path.dirname(scenario_filepath)
+                        settings_configs_edit = setting_configs.copy()
+                        settings_configs_edit.pop("simulation_services", None)
+                        settings_configs_edit.pop("convert_services", None)
+                        settings_configs_edit["scenario_folder"] = os.path.dirname(scenario_filepath)
 
-#                         scenario_args = {
-#                             "run_name": filename,
-#                             "town": town,
-#                             "scenario": filename,
-#                             "sensors_config": sensors_config_filepath,
-#                             **settings_configs_edit
-#                         }
+                        scenario_args = {
+                            "run_name": filename,
+                            "town": town,
+                            "scenario": filename,
+                            "sensors_config": sensors_config_filepath,
+                            **settings_configs_edit
+                        }
 
-#                         print("Starting data generation with scenario: {}".format(filename))
-#                         os.environ.update(scenario_args)
-#                         docker.compose.up(abort_on_container_exit=True, services=setting_configs["simulation_services"], pull='always')
-#                         docker.compose.down() 
-#                         print("Finished scenario: {} with sensors_config: {}".format(filename, sensors_config_filepath))
+                        print("Starting data generation with scenario: {}".format(filename))
+                        os.environ.update(scenario_args)
+                        docker.compose.up(abort_on_container_exit=True, services=setting_configs["simulation_services"], pull='always')
+                        docker.compose.down() 
+                        print("Finished scenario: {} with sensors_config: {}".format(filename, sensors_config_filepath))
 
-#                     except DockerException:
-#                         docker.compose.down() 
+                    except DockerException:
+                        docker.compose.down() 
 
 def getFilePathList(configs, file_configs, folder_config, file_extension):
     filepaths = []
@@ -186,9 +186,9 @@ def main():
     try:
         # Start scenarios from path if path is set
         # TODO
-        # if "scenario_configs" in simulation_configs:
-        #     print("Simulating scenarios with scenario_runner...")
-        #     start_scenario_runner_simulations(docker, simulation_configs["scenario_configs"], setting_configs)
+        if "scenario_configs" in simulation_configs:
+            print("Simulating scenarios with scenario_runner...")
+            start_scenario_runner_simulations(docker, simulation_configs["scenario_configs"], setting_configs)
 
         # Start the simulations defined in config
         if "permutation_configs" in simulation_configs:

@@ -1,4 +1,4 @@
-x-scenario-mount: &scenario-mount ./config/scenarios:/scenarios
+x-scenario-mount: &scenario-mount ./${scenario_folder}:/scenarios
 x-sensors-mount:  &sensors-mount  ./${sensors_config}:/sensors.json
 
 # ==============================================================================
@@ -9,7 +9,6 @@ services:
     extends:
       file: ../utils/components.yml
       service: carla-simulator-offscreen
-    tty: true
 
   carla-ros-bridge:
     extends:
@@ -57,6 +56,19 @@ services:
       - ./src/set_environment.py:/opt/carla/PythonAPI/set_environment.py
       - *sensors-mount
     command: bash -ic "python simulation_controller.py --host carla-simulator ${key_config_string}"
+
+  # ------------------------------
+  # possible scenario_runner setup
+  carla-scenario-runner-ros:
+    extends:
+      file: ../utils/components.yml
+      service: carla-scenario-runner
+    depends_on:
+      carla-ros-bridge:
+        condition: service_started
+    volumes:
+      - *scenario-mount
+    command: bash -ic "ros2 launch carla_ros_scenario_runner carla_ros_scenario_runner_with_scenario.launch.py host:=carla-server scenario_runner_path:=$${SCENARIO_RUNNER_ROOT} scenario:=${scenario}"
 
   # --------------------------------------
   rosbag-record:
