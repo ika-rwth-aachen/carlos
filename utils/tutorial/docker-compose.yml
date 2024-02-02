@@ -9,7 +9,13 @@ services:
   carla-simulator:
     extends:
       file: ../components.yml
-      service: carla-simulator
+      service: carla-simulator  
+      
+  carla-client:
+    extends:
+      file: ../components.yml
+      service: carla-client
+    command: sleep inifinity
 
   # starts the carla-ros-bridge
   carla-ros-bridge:

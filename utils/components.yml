@@ -4,13 +4,22 @@ services:
     extends:
       service: gpu-x11-service
     privileged: True
-    image: rwthika/carla-simulator
+    image: rwthika/carla-simulator:server
     command: bash -ic './CarlaUE4.sh -nosound 2>/dev/null'
   
   carla-simulator-offscreen:
     extends:
       service: carla-simulator
     command: bash -ic './CarlaUE4.sh -nosound -RenderOffScreen 2>/dev/null'
+
+  carla-client:
+    extends:
+      service: gpu-x11-service
+    depends_on:
+      carla-simulator:
+        condition: service_healthy
+    image: rwthika/carla-simulator:client
+    command: sleep infinity
 
   carla-scenario-runner:
     extends:
@@ -31,6 +40,14 @@ services:
   ros-monitoring:
     extends:
       service: gpu-x11-service
+    depends_on:
+      carla-simulator:
+        condition: service_healthy
+    image: rwthika/ros2-cuda:humble-desktop-full
+
+  ros-monitoring-offscreen:
+    extends:
+      service: gpu-service
     depends_on:
       carla-simulator:
         condition: service_healthy

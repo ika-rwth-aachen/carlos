@@ -6,7 +6,8 @@ This document aims to give a brief overview of the various Docker services provi
 
 | Service Name | Repository | Docker Image |
 | --- | --- | --- |
-| `carla-simulator` | [ika-rwth-aachen/carla](https://github.com/ika-rwth-aachen/carla) | rwthika/carla-simulator |
+| `carla-simulator` | [ika-rwth-aachen/carla](https://github.com/ika-rwth-aachen/carla) | rwthika/carla-simulator:server |
+| `carla-client` | [ika-rwth-aachen/carla](https://github.com/ika-rwth-aachen/carla) | rwthika/carla-simulator:client |
 | `carla-ros-bridge` | [ika-rwth-aachen/ros-bridge](https://github.com/ika-rwth-aachen/ros-bridge) | rwthika/carla-ros-bridge |
 | `carla-scenario-runner` | [ika-rwth-aachen/carla_scenario_runner_ros](https://github.com/ika-rwth-aachen/carla_scenario_runner_ros) | rwthika/carla-scenario-runner |
 | `ros-monitoring` | [ika-rwth-aachen/docker-ros-ml-images](https://github.com/ika-rwth-aachen/docker-ros-ml-images?tab=readme-ov-file#rwthikaros2-cuda-ros-2--cuda) | rwthika/ros2-cuda:humble-desktop-full |
@@ -29,6 +30,10 @@ This Docker service is a variation of the previous carla-simulator service, with
 The upside to this is that this service is a bit lighter on the GPU and does not clutter up your screen as much. Especially useful when only interested in simulation without direct graphical output.
 
 
+## carla-client
+The carla-client Docker services provides a minimal solution to interact with the CARLA server via PythonAPI. In addition, all example scripts are contained and can be used even with GUI access enabled. Thus, powerful demonstrations can be shown solely with a server and this carla-client Docker service.
+
+
 ## carla-ros-bridge
 The carla-ros-bridge is the Docker service that facilitates the powerful combination of CARLA and ROS  by acting as an interface. It retrieves relevant data (e.g. [sensor data](https://carla.readthedocs.io/projects/ros-bridge/en/latest/ros_sensors/)) from the simulation to publish it on ROS topics in the [CARLA messages](https://carla.readthedocs.io/projects/ros-bridge/en/latest/ros_msgs/) format. Simultaneously the service is listening on different topics for requested actions, which are translated to commands to be executed in CARLA.
 
@@ -43,3 +48,6 @@ Including a carla-scenario-runner into your setup is mandatory when you want to 
 
 ## ros-monitoring
 This services provides a possibility for monitoring data within the ROS world. All [common_msgs](http://wiki.ros.org/common_msgs) definitions are preinstalled together with monitoring tools such as RViz. Make sure that all GUI forwarding settings are enabled.
+
+### ros-monitoring-offscreen
+This Docker service is a variation of the previous ros-monitoring service, with the exception that no GUI window is opened and thus one cannot use visualization tools such as RViz. However, this is sufficient for any other lightweight ROS tasks.
