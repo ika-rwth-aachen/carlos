@@ -43,9 +43,6 @@ def main():
     while world.get_snapshot().timestamp.elapsed_seconds - delta_elapsed_seconds <= float(args.max_simulation_time) and time.time() - start_time  <= float(args.max_real_time):
         pass
     
-    # if world.get_snapshot().timestamp.elapsed_seconds <= float(args.max_simulation_time):
-    #     return 0
-
     if not world.get_snapshot().timestamp.elapsed_seconds - delta_elapsed_seconds <= float(args.max_simulation_time):
         print("Maximum simulation time of {} reached. Stopping the run...".format(args.max_simulation_time))
     if not time.time() - start_time <= float(args.max_real_time):

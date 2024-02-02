@@ -155,7 +155,7 @@ def setup(config_file_path):
             setting_configs["output_path"] = "./data/"
         
         if "record_topics" in setting_configs:
-            output_bag_path = setting_configs["output_path"] + "bags"
+            output_bag_path = setting_configs["output_path"]
             if not os.path.exists(output_bag_path):
                 os.makedirs(output_bag_path)
             setting_configs["output_bag_path"] = output_bag_path

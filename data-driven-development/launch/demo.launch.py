@@ -47,18 +47,13 @@ def generate_launch_description():
     objects_definition_file_launch_arg = launch.actions.DeclareLaunchArgument(
         name='objects_definition_file',
         default_value=os.path.join(
-        '/sensors.json'
+            '/sensors.json'
         )
     )
 
     role_name_launch_arg = launch.actions.DeclareLaunchArgument(
         name='role_name',
         default_value="ego_vehicle"
-    )
-
-    publish_static_vehicles_arg = launch.actions.DeclareLaunchArgument(
-        name='publish_static_vehicles',
-        default_value='True'
     )
 
     # Included launch files
@@ -77,8 +72,7 @@ def generate_launch_description():
             'timeout': launch.substitutions.LaunchConfiguration('timeout'),
             'passive': launch.substitutions.LaunchConfiguration('passive'),
             'synchronous_mode_wait_for_vehicle_control_command': launch.substitutions.LaunchConfiguration('synchronous_mode_wait_for_vehicle_control_command'),
-            'fixed_delta_seconds': launch.substitutions.LaunchConfiguration('fixed_delta_seconds'),
-            'publish_static_vehicles': launch.substitutions.LaunchConfiguration('publish_static_vehicles')
+            'fixed_delta_seconds': launch.substitutions.LaunchConfiguration('fixed_delta_seconds')
         }.items()
     )
 
@@ -106,7 +100,6 @@ def generate_launch_description():
         synchronous_mode_wait_launch_arg,
         fixed_delta_seconds_launch_arg,
         town_launch_arg,
-        publish_static_vehicles_arg,
         objects_definition_file_launch_arg,
         role_name_launch_arg,
         ros_bridge_launch_include,

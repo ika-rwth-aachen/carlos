@@ -8,14 +8,6 @@ import json
 import argparse
 import time
 
-try:
-    sys.path.append(glob.glob('../carla/dist/carla-*%d.%d-%s.egg' % (
-        sys.version_info.major,
-        sys.version_info.minor,
-        'win-amd64' if os.name == 'nt' else 'linux-x86_64'))[0])
-except IndexError:
-    pass
-
 import carla
 
 def main():
@@ -80,10 +72,12 @@ def main():
             if world.get_map().name == args.town or world.get_map().name == "Carla/Maps/{}".format(args.town):
                 break
 
-        # setup the carla simulation
+        # --- set weather ---
+        # setup the carla simulation config
         res = subprocess.call(["python", "util/config.py"] + config_list)
         print("Setups in config.py done")
 
+        # --- enable autopilot for main vehicles in sensors.json ---
         # get vehicle info from sensors.json
         if not os.path.exists("/sensors.json"):
             raise RuntimeError(
@@ -123,8 +117,8 @@ def main():
                     tm_list.extend(["--number-of-vehicles", str(int(len(spawn_points)*vehicle_occupancy))])
 
         # spawn traffic if it is set (filter out twowheeled vehicle which have no boundingbox)
-        #if "--number-of-vehicles" in tm_list or "--number-of-walkers" in tm_list:
-        #    subprocess.run(["python", "ika_scripts/set_environment.py", "--asynch", "--filterv", 'vehicle.*[!vehicle.bh.crossbike][!vehicle.diamondback.century][!vehicle.harley-davidson.low_rider][!vehicle.gazelle.omafiets][!vehicle.kawasaki.ninja][!vehicle.yamaha.yzf]'] + tm_list)
+        if "--number-of-vehicles" in tm_list or "--number-of-walkers" in tm_list:
+            subprocess.run(["python", "set_environment.py", "--asynch", "--filterv", 'vehicle.*[!vehicle.bh.crossbike][!vehicle.diamondback.century][!vehicle.harley-davidson.low_rider][!vehicle.gazelle.omafiets][!vehicle.kawasaki.ninja][!vehicle.yamaha.yzf]'] + tm_list)
 
         while True:
             world.wait_for_tick()

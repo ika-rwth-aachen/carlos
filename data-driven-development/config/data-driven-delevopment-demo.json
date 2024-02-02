@@ -7,19 +7,19 @@
         "convert_services": [],
         "record_topics": 
             {
-                "topic_rgb": "/carla/ego_vehicle/rgb_view/image",
-                "topic_segmentation": "/carla/ego_vehicle/semantic_segmentation/image",
+                "topic_rgb": "/carla/ego_vehicle/rgb/image",
+                "topic_segmentation": "/carla/ego_vehicle/segmentation/image",
                 "topic_tf": "/tf"
             },
-        "output_path": "./data/temp/"
+        "output_path": "./data/"
     },
     "simulation_configs":
     {
         "permutation_configs":
         {
             "num_executions": 1,
-            "sensors_config_files": ["./config/sensors/semantic_camera.json"],
-            "spawn_point": ["1"],
+            "sensors_config_files": ["./config/sensors/rgb_segmentation_camera.json"],
+            "spawn_point": ["1", "2", "3"],
             "town": ["Town10HD"],
             "vehicle_occupancy": ["0.5"],
             "walker_number": ["50"],

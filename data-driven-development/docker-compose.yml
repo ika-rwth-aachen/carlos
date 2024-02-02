@@ -21,6 +21,7 @@ services:
     command: bash -ic "ros2 launch /demo.launch.py town:=${town}"
 
   # ----------------------------------------------------------------------------------------------
+  # checks
   time-health-check:
     extends:
       file: ../utils/components.yml
@@ -42,8 +43,8 @@ services:
       start_period: 10s
       retries: 3
 
-  # --------------------------------------
-  # possible simulations setup
+  # ----------------------------------------------------------------------------------------------
+  # modify simulations setup
   carla-simulation-controller:
     extends:
       file: ../utils/components.yml
@@ -53,11 +54,11 @@ services:
           condition: service_healthy
     volumes:
       - ./src/simulation_controller.py:/opt/carla/PythonAPI/simulation_controller.py
+      - ./src/set_environment.py:/opt/carla/PythonAPI/set_environment.py
       - *sensors-mount
     command: bash -ic "python simulation_controller.py --host carla-simulator ${key_config_string}"
 
   # --------------------------------------
-  
   rosbag-record:
     extends:
       file: ../utils/components.yml
