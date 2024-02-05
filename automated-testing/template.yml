@@ -10,12 +10,10 @@ services:
                 capabilities: [gpu]
     environment:
       DISPLAY: $DISPLAY
-      XAUTHORITY: /.Xauthority
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
-      - $XAUTHORITY:/.Xauthority:ro
     privileged: True
-    image: carla-health # TODO: Change to rwthika/carla-simulator:server
+    image: rwthika/carla-simulator:server
     command: bash -ic './CarlaUE4.sh -nosound $SIMULATOR_FLAGS 2>/dev/null'
 
   carla-scenario-runner:
