@@ -9,11 +9,9 @@ services:
                 count: 1
                 capabilities: [gpu]
     environment:
-      DISPLAY: $DISPLAY_X11_DOCKER
-      XAUTHORITY: /.Xauthority
+      DISPLAY: $DISPLAY
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
-      - $XAUTHORITY_DOCKER:/.Xauthority:ro
     privileged: True
     image: $SIMULATOR_IMAGE
     command: bash -ic './CarlaUE4.sh -nosound $SIMULATOR_FLAGS 2>/dev/null'
