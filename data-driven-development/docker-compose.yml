@@ -1,0 +1,86 @@
+x-scenario-mount: &scenario-mount ./${scenario_folder}:/scenarios
+x-sensors-mount:  &sensors-mount  ./${sensors_config}:/sensors.json
+
+# ==============================================================================
+
+services:
+
+  # --- core services ----------------------------------------------------------
+  
+  carla-simulator:
+    extends:
+      file: ../utils/components.yml
+      service: carla-simulator-offscreen
+
+  carla-ros-bridge:
+    extends:
+      file: ../utils/components.yml
+      service: carla-ros-bridge
+    volumes:
+      - *sensors-mount
+      - ./launch/demo.launch.py:/demo.launch.py
+    command: bash -ic "ros2 launch /demo.launch.py town:=${town}"
+
+  # ----------------------------------------------------------------------------
+  # --- checking services ------------------------------------------------------
+
+  time-health-check:
+    extends:
+      file: ../utils/components.yml
+      service: carla-client
+    volumes:
+      - ./src/time_controller.py:/opt/carla/PythonAPI/time_controller.py
+    command: bash -ic "python time_controller.py --host carla-simulator ${max_simulation_time} ${max_real_time}"
+
+  spawned-vehicle-check:
+    extends:
+      file: ../utils/components.yml
+      service: carla-client
+    volumes:
+      - ./src/spawned_vehicle_check.py:/opt/carla/PythonAPI/spawned_vehicle_check.py
+    command: sleep infinity
+    healthcheck:
+      test: ["CMD-SHELL", "bash -ic \"python spawned_vehicle_check.py --host carla-simulator --role_name_list ${role_names}\""]
+      interval: 1s
+      start_period: 10s
+      retries: 3
+
+  # ----------------------------------------------------------------------------
+  # --- Option A: apply random permutation setups ------------------------------
+  carla-simulation-controller:
+    extends:
+      file: ../utils/components.yml
+      service: carla-client
+    depends_on:
+      spawned-vehicle-check:
+        condition: service_healthy
+    volumes:
+      - ./src/simulation_controller.py:/opt/carla/PythonAPI/simulation_controller.py
+      - ./src/set_environment.py:/opt/carla/PythonAPI/set_environment.py
+      - *sensors-mount
+    command: bash -ic "python simulation_controller.py --host carla-simulator ${key_config_string}"
+
+  # --- Option B: apply concrete scenario setups -------------------------------
+  carla-scenario-runner:
+    extends:
+      file: ../utils/components.yml
+      service: carla-scenario-runner
+    depends_on:
+      spawned-vehicle-check:
+        condition: service_healthy
+    volumes:
+      - *scenario-mount
+    command: bash -ic "python ./scenario_runner.py --host carla-simulator --openscenario /scenarios/${scenario} --waitForEgo --output"
+
+  # ----------------------------------------------------------------------------
+  # --- recording services -----------------------------------------------------
+  rosbag-record:
+    extends:
+      file: ../utils/components.yml
+      service: ros-monitoring-offscreen
+    depends_on:
+      spawned-vehicle-check:
+          condition: service_healthy
+    volumes:
+      - ${output_path}:/docker-ros/ws/data
+    command: bash -ic "ros2 bag record -o /docker-ros/ws/data/bags/${run_name}_$(date +%Y-%m-%d-%H-%M) ${record_topics_arg}"

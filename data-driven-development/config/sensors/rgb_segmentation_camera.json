@@ -1,0 +1,49 @@
+{   
+    "objects": 
+    [
+        {
+            "type": "vehicle.tesla.model3",
+            "id": "ego_vehicle",
+            "sensors": 
+            [  
+                {
+                    "type": "sensor.camera.rgb",
+                    "id": "rgb",
+                    "spawn_point": {"x": 1.0, "y": 0.0, "z": 1.7, "roll": 0.0, "pitch": 0.0, "yaw": 0.0},
+                    "fov": 90,
+                    "image_size_x": 1024,
+                    "image_size_y": 512
+                },
+                {
+                    "type": "sensor.camera.semantic_segmentation",
+                    "id": "segmentation",
+                    "spawn_point": {"x": 1.0, "y": 0.0, "z": 1.7, "roll": 0.0, "pitch": 0.0, "yaw": 0.0},
+                    "fov": 90,
+                    "image_size_x": 1024,
+                    "image_size_y": 512
+                },
+                {
+                    "type": "sensor.pseudo.tf",
+                    "id": "tf"
+                },
+                {
+                    "type": "sensor.pseudo.objects",
+                    "id": "objects"
+                },
+                {
+                    "type": "sensor.pseudo.odom",
+                    "id": "odometry"
+                },
+                {
+                    "type": "sensor.pseudo.speedometer",
+                    "id": "speedometer"
+                },
+                {
+                    "type": "actor.pseudo.control",
+                    "id": "control"
+                }
+            ]
+        }
+    ]
+}
+
