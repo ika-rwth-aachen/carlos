@@ -1,0 +1,28 @@
+services:
+
+  carla-simulator:
+    deploy:
+      resources:
+          reservations:
+            devices:
+              - driver: nvidia
+                count: 1
+                capabilities: [gpu]
+    environment:
+      DISPLAY: $DISPLAY_X11_DOCKER
+      XAUTHORITY: /.Xauthority
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - $XAUTHORITY_DOCKER:/.Xauthority:ro
+    privileged: True
+    image: $SIMULATOR_IMAGE
+    command: bash -ic './CarlaUE4.sh -nosound $SIMULATOR_FLAGS 2>/dev/null'
+
+  carla-scenario-runner:
+    depends_on:
+      carla-simulator:
+        condition: service_healthy
+    volumes:
+      - $SCENARIO_FOLDER_PATH:/scenarios
+    image: $SCENARIO_RUNNER_IMAGE
+    command: bash -ic "python ./scenario_runner.py --host carla-simulator --openscenario /scenarios/$SCENARIO_FILE_NAME --output"
