@@ -63,7 +63,7 @@ All scenarios are executed sequentially and data is generated. Following on that
 
 The JSON configuration file for the data generation pipeline consists of two main sections: `settings` and `simulation_configs`. The `settings` section specifies general parameters. The `simulation_configs` section must either contain `permutation_configs` for permutation-based simulations or `scenario_configs` for scenario-based simulations.
 
-### General settings (`settings`)
+#### General settings (`settings`)
 
 | Name | Description | Note | required | default
 | --- | --- | --- | --- | --- |
@@ -73,7 +73,7 @@ The JSON configuration file for the data generation pipeline consists of two mai
 | `record_topics` | Dict of ROS 2 topics to be recorded | | not required | - |
 | `output_path` | Path for storing generated data |  | not required | `./data/` |
 
-### Permutation settings (`permutation_configs`)
+#### Permutation settings (`permutation_configs`)
 | Name | Description | Note | required | default
 | --- | --- | --- | --- | --- |
 | `num_executions` | Number of times a simulation based on a single permutation is executed | Must be an integer | not required | 1 |
@@ -85,7 +85,7 @@ The JSON configuration file for the data generation pipeline consists of two mai
 | `vehicle_occupancy` | List of numbers between 0 and 1 that spawn vehicles proportionally to the number of available spawn points | vehicles are spawned via generate_traffic.py | not required | - |
 | `weather` | List of weather conditions | [Weather conditions list](https://github.com/carla-simulator/carla/blob/master/PythonAPI/docs/weather.yml#L158) | not required | depends on town, in general "ClearSunset" |
 
-### Scenario settings
+#### Scenario settings
 | Name | Description | Note | required | default
 | --- | --- | --- | --- | --- |
 | `num_executions` | Number of times a simulation based on a single permutation is executed | Must be an integer | not required | 1 |
