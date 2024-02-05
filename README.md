@@ -28,7 +28,6 @@ This repository contains CARLOS, the official reference implementation of the op
   - [Citation](#citation)
   - [Acknowledgements](#acknowledgements)
 
-</br></br>
 
 ## Publication
 
