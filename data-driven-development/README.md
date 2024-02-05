@@ -5,12 +5,16 @@
 >[!NOTE]
 > **Background**: The *data-driven development* use case covers development processes using large amounts of data, which are not effectively obtainable in real-world settings, thus motivating simulations. For many applications, simulative data can be sufficiently accurate to be integrated into the data-driven development process. This includes training data for machine learning algorithms but also closed-loop reinforcement learning. Potentially interesting data includes raw sensor but also dynamic vehicle data in a wide variety at large scale. Simulations additionally enable data generation beyond the physical limits of vehicle dynamics or sensor configurations. To accumulate large amounts of data, relevant simulation parameters can be automatically sampled along different dimensions. Subsequently, automation and parallelization empower a cost-effective execution of multiple simulations, especially when using already established orchestration tools.
 
+The subsequent demonstration showcases rapid *data driven development* and specifically addresses the following requirements:
+- high simulation **fidelity**
+- flexibility and containerization
+- automation and scalability
 
 ## Getting Started
 
 > [!IMPORTANT]  
 > Make sure that all [system requirements](../utils/requirements.md) are fulfilled.
-> Additionally, a python installation is required on the host for this use case. We recommend using [conda](https://docs.conda.io/projects/conda/en/stable/index.html).
+> Additionally, a Python installation is required on the host for this use case. We recommend using [conda](https://docs.conda.io/projects/conda/en/stable/index.html).
 
 Install and activate the conda environment:
 
@@ -25,7 +29,9 @@ Alternatively, you can also use pip:
 pip install -r requirements.txt
 ```
 
-### Permutation-based data generation
+In the following data driven development is showcased with two different approaches. The first addresses the need of random data generation to generate training data for an image segmentation model. The second example coveres a concrete scenario execution, using predefined OpenSCENARIO configuration files. 
+
+### Permutation-based Data Generation
 
 This example picks up where the [software-prototyping](../software-prototyping/README.md) example left off. In the previous example an image segmentation perception function was introduced. As this function is based on a neural network, it needs sufficient training data to work reliable. Here comes this demo into play. Upon execution, a large data set of a vehicle's front camera images along with their corresponding semantic segmentations are generated.
 
@@ -42,8 +48,10 @@ In addition to the already known components, we are introducing the `carla-clien
 
 ### Scenario-based data generation
 
-It is also possible to pass a list of OpenScenario files to the demo, from which the data are generated.
+In the second scenario we want to challenge our function (e.g. our image segmentation) in specific and concrete scenarios. Hence, we need to generate data in those situations, which can be utilized with the scenario-based data generation feature. In this example, we show that a list of concrete OpenSCENARIO files can be passed to the data generation pipeline as well.
 
 ```bash
 python ./data_generation.py --config data-driven-delevopment-demo-scenario-execution.json
 ```
+
+All scenarios are executed sequentially and data is generated. Following on that, in the third, [automatic testing demo](../automated-testing/README.md), concrete scenarios are used together with predefined metrics and automatically processed in a CI pipeline.
