@@ -29,7 +29,7 @@ jobs:
         with:
           scenario-folder-path: ${{ matrix.filedir }}
           scenario-file-name: ${{ matrix.filename }}
-          simulator-image: carla-health # TODO: Change to rwthika/carla-simulator:server
+          simulator-image: rwthika/carla-simulator:server
           simulator-offscreen: false
 
   generate-opt-scenario-job-matrix:
@@ -62,5 +62,5 @@ jobs:
         with:
           scenario-folder-path: ${{ matrix.filedir }}
           scenario-file-name: ${{ matrix.filename }}
-          simulator-image: carla-health # TODO: Change to rwthika/carla-simulator:server
+          simulator-image: rwthika/carla-simulator:server
           simulator-offscreen: false
