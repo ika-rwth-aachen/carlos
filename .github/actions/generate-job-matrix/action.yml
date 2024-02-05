@@ -1,0 +1,34 @@
+name: 'generate-job-matrix'
+description: 'Generates a matrix from files/directories selected by a query string to dynamically create jobs'
+
+inputs:
+
+  starting-point:
+    description: 'Location from which recursive search starts'
+    default: '.'
+
+  query-string:
+    description: 'Shell pattern that is used for matching and selecting file/directory names'
+    default: ''
+
+  max-depth:
+    description: 'How many levels to descend at most for selection of results (1 targets the directory of the starting-point)'
+    default: 100
+
+  exclude-string:
+    description: 'Shell pattern that is used to exclude file/directory names from the final result'
+    default: ''
+
+outputs:
+
+  matrix:
+    description: 'JSON string which can be turned to a matrix definition by using fromJson()'
+    value: ${{ steps.generator.outputs.matrix }}
+
+runs:
+
+  using: 'composite'
+  steps:
+    - id: generator
+      run: ${GITHUB_ACTION_PATH}/scripts/generate.sh -d ${{ inputs.max-depth }} -e "${{ inputs.exclude-string }}" ${{ inputs.starting-point }} "${{ inputs.query-string }}"
+      shell: bash
