@@ -8,10 +8,6 @@ services:
               - driver: nvidia
                 count: 1
                 capabilities: [gpu]
-    environment:
-      DISPLAY: $DISPLAY
-    volumes:
-      - /tmp/.X11-unix:/tmp/.X11-unix
     privileged: True
     image: $SIMULATOR_IMAGE
     command: bash -ic './CarlaUE4.sh -nosound $SIMULATOR_FLAGS 2>/dev/null'
