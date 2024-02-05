@@ -21,7 +21,9 @@ trap cleanup 0
 
 function cleanup() {
   echo "Cleaning up..."
-  $docker_compose_command -f $selected_demo/docker-compose.yml down
+  if [ "$selected_demo" != "data-driven-development" ]; then
+    $docker_compose_command -f $selected_demo/docker-compose.yml down
+  fi
   xhost -local:
   echo "Done cleaning up."
 }
@@ -30,4 +32,17 @@ xhost +local:
 
 echo "Running demo: $selected_demo"
 
-$docker_compose_command -f $selected_demo/docker-compose.yml up 
+if [ "$selected_demo" = "data-driven-development" ]; then
+  env_name=$(grep 'name:' $selected_demo/env/environment.yml | awk '{print $2}')
+  conda_bin_dir=$(dirname $(which conda))
+  conda env list | grep "^${env_name} " > /dev/null 2>&1
+  if [ $? -ne 0 ]; then
+    echo "Conda environment '$env_name' does not exist. Creating it..."
+    conda env create -f $selected_demo/env/environment.yml
+  fi
+  source $conda_bin_dir/activate $env_name
+  cd $selected_demo
+  python data_generation.py
+else
+  $docker_compose_command -f $selected_demo/docker-compose.yml up
+fi
