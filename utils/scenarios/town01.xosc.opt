@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <OpenSCENARIO>
-  <FileHeader revMajor="1" revMinor="0" date="2023-02-26T10:38:22" description="town10" author=""/>
+  <FileHeader revMajor="1" revMinor="0" date="2023-02-26T10:38:22" description="town01" author=""/>
   <CatalogLocations>
     <VehicleCatalog>
       <Directory path="catalogs"/>
     </VehicleCatalog>
   </CatalogLocations>
   <RoadNetwork>
-    <LogicFile filepath="Town10HD"/>
+    <LogicFile filepath="Town01"/>
     <SceneGraphFile filepath=""/>
   </RoadNetwork>
   <Entities>
@@ -25,31 +25,7 @@
       <CatalogReference catalogName="VehicleCatalog" entryName="vehicle.volkswagen.t2"/> 
     </ScenarioObject>
 
-    <ScenarioObject name="challenger_vehicle_3">
-      <CatalogReference catalogName="VehicleCatalog" entryName="vehicle.tesla.model3"/> 
-    </ScenarioObject>
-
-    <ScenarioObject name="challenger_vehicle_4">
-      <CatalogReference catalogName="VehicleCatalog" entryName="vehicle.lincoln.mkz_2017"/> 
-    </ScenarioObject>
-
-    <ScenarioObject name="challenger_vehicle_5">
-      <CatalogReference catalogName="VehicleCatalog" entryName="vehicle.volkswagen.t2"/> 
-    </ScenarioObject>
-
-    <ScenarioObject name="challenger_vehicle_6">
-      <CatalogReference catalogName="VehicleCatalog" entryName="vehicle.tesla.model3"/> 
-    </ScenarioObject>
-
-    <ScenarioObject name="challenger_vehicle_7">
-      <CatalogReference catalogName="VehicleCatalog" entryName="vehicle.volkswagen.t2"/> 
-    </ScenarioObject>
-
-    <ScenarioObject name="challenger_vehicle_8">
-      <CatalogReference catalogName="VehicleCatalog" entryName="vehicle.lincoln.mkz_2017"/> 
-    </ScenarioObject>
-
-    <ScenarioObject name="challenger_vehicle_9">
+    <ScenarioObject name="stopping_vehicle_3">
       <CatalogReference catalogName="VehicleCatalog" entryName="vehicle.tesla.model3"/> 
     </ScenarioObject>
 
@@ -76,7 +52,7 @@
           <PrivateAction>
             <TeleportAction>
               <Position>
-                <LanePosition roadId="5" laneId="-1" s="1" offset="0"/>
+                <LanePosition roadId="23" laneId="-1" s="5" offset="0"/>
               </Position>
             </TeleportAction>
           </PrivateAction>
@@ -86,7 +62,7 @@
           <PrivateAction>
             <TeleportAction>
               <Position>
-                <LanePosition roadId="5" laneId="-2" s="15" offset="0"/>
+                <LanePosition roadId="12" laneId="1" s="50" offset="0"/>
               </Position>
             </TeleportAction>
           </PrivateAction>
@@ -96,77 +72,17 @@
           <PrivateAction>
             <TeleportAction>
               <Position>
-                <LanePosition roadId="5" laneId="-1" s="25" offset="0"/>
+                <LanePosition roadId="12" laneId="-1" s="50" offset="0"/>
               </Position>
             </TeleportAction>
           </PrivateAction>
         </Private>
 
-        <Private entityRef="challenger_vehicle_3">
+        <Private entityRef="stopping_vehicle_3">
           <PrivateAction>
             <TeleportAction>
               <Position>
-                <LanePosition roadId="5" laneId="1" s="50" offset="0"/>
-              </Position>
-            </TeleportAction>
-          </PrivateAction>
-        </Private>
-
-        <Private entityRef="challenger_vehicle_4">
-          <PrivateAction>
-            <TeleportAction>
-              <Position>
-                <LanePosition roadId="5" laneId="2" s="70" offset="0"/>
-              </Position>
-            </TeleportAction>
-          </PrivateAction>
-        </Private>
-
-        <Private entityRef="challenger_vehicle_5">
-          <PrivateAction>
-            <TeleportAction>
-              <Position>
-                <LanePosition roadId="5" laneId="1" s="90" offset="0"/>
-              </Position>
-            </TeleportAction>
-          </PrivateAction>
-        </Private>
-
-        <Private entityRef="challenger_vehicle_6">
-          <PrivateAction>
-            <TeleportAction>
-              <Position>
-                <LanePosition roadId="18" laneId="4" s="5" offset="0"/>
-              </Position>
-            </TeleportAction>
-          </PrivateAction>
-        </Private>
-
-        <Private entityRef="challenger_vehicle_7">
-          <PrivateAction>
-            <TeleportAction>
-              <Position>
-                <LanePosition roadId="18" laneId="5" s="5" offset="0"/>
-              </Position>
-            </TeleportAction>
-          </PrivateAction>
-        </Private>
-
-        <Private entityRef="challenger_vehicle_8">
-          <PrivateAction>
-            <TeleportAction>
-              <Position>
-                <LanePosition roadId="6" laneId="1" s="30" offset="0"/>
-              </Position>
-            </TeleportAction>
-          </PrivateAction>
-        </Private>
-
-        <Private entityRef="challenger_vehicle_9">
-          <PrivateAction>
-            <TeleportAction>
-              <Position>
-                <LanePosition roadId="6" laneId="2" s="8" offset="0"/>
+                <LanePosition roadId="12" laneId="-1" s="150" offset="0"/>
               </Position>
             </TeleportAction>
           </PrivateAction>
@@ -183,13 +99,6 @@
             <EntityRef entityRef="ego_vehicle"/>
             <EntityRef entityRef="challenger_vehicle_1"/>
             <EntityRef entityRef="challenger_vehicle_2"/>
-            <EntityRef entityRef="challenger_vehicle_3"/>
-            <EntityRef entityRef="challenger_vehicle_4"/>
-            <EntityRef entityRef="challenger_vehicle_5"/>
-            <EntityRef entityRef="challenger_vehicle_6"/>
-            <EntityRef entityRef="challenger_vehicle_7"/>
-            <EntityRef entityRef="challenger_vehicle_8"/>
-            <EntityRef entityRef="challenger_vehicle_9"/>
           </Actors>
           <Maneuver name="maneuver">
             <Event name="event" priority="overwrite" maximumExecutionCount="1" >
@@ -219,7 +128,7 @@
                   <RoutingAction>
                     <AcquirePositionAction>
                       <Position>
-                        <LanePosition roadId="21" laneId="4" s="2" offset="0"/>
+                        <LanePosition roadId="12" laneId="-1" s="100" offset="0"/>
                       </Position>
                     </AcquirePositionAction>
                   </RoutingAction>
@@ -279,6 +188,16 @@
           </ByValueCondition>
         </Condition>
         <Condition name="criteria_OnSidewalkTest" delay="0" conditionEdge="rising">
+          <ByValueCondition>
+            <ParameterCondition parameterRef="" value="" rule="lessThan"/>
+          </ByValueCondition>
+        </Condition>
+        <Condition name="criteria_DrivenDistanceTest" delay="0" conditionEdge="rising">
+          <ByValueCondition>
+            <ParameterCondition parameterRef="distance_success" value="25" rule="lessThan"/>
+          </ByValueCondition>
+        </Condition>
+        <Condition name="criteria_KeepLaneTest" delay="0" conditionEdge="rising">
           <ByValueCondition>
             <ParameterCondition parameterRef="" value="" rule="lessThan"/>
           </ByValueCondition>
