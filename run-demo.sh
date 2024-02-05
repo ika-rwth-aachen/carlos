@@ -9,10 +9,11 @@ if [ $# -eq 0 ]; then
   selected_demo=$default_demo
 else
   selected_demo=$1
-  if [ ! -f "$selected_demo/docker-compose.yml" ]; then
-    echo "No demo called $selected_demo exists. Please check available demos and run again."
-    exit 1
-  fi
+fi
+
+if [ "$selected_demo" != "data-driven-development" ] && [ "$selected_demo" != "automated-testing" ] && [ ! -f "$selected_demo/docker-compose.yml" ]; then
+  echo "No demo called $selected_demo exists. Please check available demos and run again."
+  exit 1
 fi
 
 # trap ctrl-c and killing the bash to call cleanup function
