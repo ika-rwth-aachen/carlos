@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSCENARIO>
+  <FileHeader revMajor="1" revMinor="0" date="2023-02-26T10:38:22" description="town01" author=""/>
+  <CatalogLocations>
+    <VehicleCatalog>
+      <Directory path="catalogs"/>
+    </VehicleCatalog>
+  </CatalogLocations>
+  <RoadNetwork>
+    <LogicFile filepath="Town01"/>
+    <SceneGraphFile filepath=""/>
+  </RoadNetwork>
+  <Entities>
+
+    <ScenarioObject name="ego_vehicle">
+
+      <CatalogReference catalogName="VehicleCatalog" entryName="vehicle.mercedes.coupe"/> 
+    </ScenarioObject>
+
+    <ScenarioObject name="challenger_vehicle_1">
+      <CatalogReference catalogName="VehicleCatalog" entryName="vehicle.lincoln.mkz_2017"/> 
+    </ScenarioObject>
+
+    <ScenarioObject name="challenger_vehicle_2">
+      <CatalogReference catalogName="VehicleCatalog" entryName="vehicle.volkswagen.t2"/> 
+    </ScenarioObject>
+
+    <ScenarioObject name="stopping_vehicle_3">
+      <CatalogReference catalogName="VehicleCatalog" entryName="vehicle.tesla.model3"/> 
+    </ScenarioObject>
+
+  </Entities>
+
+  <Storyboard>
+    <Init>
+      <Actions>
+        <GlobalAction>
+          <EnvironmentAction>
+            <Environment name="Environment">
+              <TimeOfDay animation="false" dateTime="2023-07-19T12:12:12"/>
+              <Weather cloudState="free">
+                <Sun intensity="0.85" azimuth="0" elevation="1.31"/>
+                <Fog visualRange="100000.0"/>
+                <Precipitation precipitationType="dry" intensity="0.0"/>
+              </Weather>
+              <RoadCondition frictionScaleFactor="1.0"/>
+            </Environment>
+          </EnvironmentAction>
+        </GlobalAction>
+
+        <Private entityRef="ego_vehicle">
+          <PrivateAction>
+            <TeleportAction>
+              <Position>
+                <LanePosition roadId="23" laneId="-1" s="5" offset="0"/>
+              </Position>
+            </TeleportAction>
+          </PrivateAction>
+        </Private>
+
+        <Private entityRef="challenger_vehicle_1">
+          <PrivateAction>
+            <TeleportAction>
+              <Position>
+                <LanePosition roadId="12" laneId="1" s="50" offset="0"/>
+              </Position>
+            </TeleportAction>
+          </PrivateAction>
+        </Private>
+
+        <Private entityRef="challenger_vehicle_2">
+          <PrivateAction>
+            <TeleportAction>
+              <Position>
+                <LanePosition roadId="12" laneId="-1" s="50" offset="0"/>
+              </Position>
+            </TeleportAction>
+          </PrivateAction>
+        </Private>
+
+        <Private entityRef="stopping_vehicle_3">
+          <PrivateAction>
+            <TeleportAction>
+              <Position>
+                <LanePosition roadId="12" laneId="-1" s="150" offset="0"/>
+              </Position>
+            </TeleportAction>
+          </PrivateAction>
+        </Private>
+        
+      </Actions>
+    </Init>
+
+    <Story name="story">
+
+      <Act name="act">
+        <ManeuverGroup name="maneuver_group" maximumExecutionCount="1">
+          <Actors selectTriggeringEntities="false">
+            <EntityRef entityRef="ego_vehicle"/>
+            <EntityRef entityRef="challenger_vehicle_1"/>
+            <EntityRef entityRef="challenger_vehicle_2"/>
+          </Actors>
+          <Maneuver name="maneuver">
+            <Event name="event" priority="overwrite" maximumExecutionCount="1" >
+              <Action name="action">
+                <PrivateAction>
+                  <ControllerAction>
+                    <AssignControllerAction>
+                      <Controller name="agent">
+                        <Properties>
+                          <Property name="module" value="carla_autopilot.py"/>
+                        </Properties>
+                      </Controller>
+                    </AssignControllerAction>
+                    <OverrideControllerValueAction>
+                      <Throttle value="0" active="false"/>
+                      <Brake value="0" active="false"/>
+                      <Clutch value="0" active="false"/>
+                      <ParkingBrake value="0" active="false"/>
+                      <SteeringWheel value="0" active="false"/>
+                      <Gear number="0" active="false"/>
+                    </OverrideControllerValueAction>
+                  </ControllerAction>
+                </PrivateAction>
+              </Action>
+              <Action name="aquire_global_position">
+                <PrivateAction>
+                  <RoutingAction>
+                    <AcquirePositionAction>
+                      <Position>
+                        <LanePosition roadId="12" laneId="-1" s="100" offset="0"/>
+                      </Position>
+                    </AcquirePositionAction>
+                  </RoutingAction>
+                </PrivateAction>
+              </Action>
+              <StartTrigger>
+                <ConditionGroup>
+                  <Condition conditionEdge="rising" delay="0" name="event_start_condition">
+                    <ByValueCondition>
+                      <SimulationTimeCondition rule="greaterThan" value="0" />
+                    </ByValueCondition>
+                  </Condition>
+                </ConditionGroup>
+              </StartTrigger>
+            </Event>
+          </Maneuver>
+        </ManeuverGroup>
+
+        <StartTrigger>
+          <ConditionGroup>
+            <Condition conditionEdge="rising" delay="0" name="act_start_condition">
+              <ByValueCondition>
+                <SimulationTimeCondition rule="greaterThan" value="0" />
+              </ByValueCondition>
+            </Condition>
+          </ConditionGroup>
+        </StartTrigger>
+
+        <StopTrigger>
+          <ConditionGroup>
+            <Condition conditionEdge="rising" delay="0" name="act_end_condition">
+              <ByValueCondition>
+                <SimulationTimeCondition rule="greaterThan" value="30" />
+              </ByValueCondition>
+            </Condition>
+          </ConditionGroup>
+        </StopTrigger>
+      </Act>
+
+    </Story>
+
+    <StopTrigger>
+      <ConditionGroup>
+        <Condition name="criteria_RunningStopTest" delay="0" conditionEdge="rising">
+          <ByValueCondition>
+            <ParameterCondition parameterRef="" value="" rule="lessThan"/>
+          </ByValueCondition>
+        </Condition>
+        <Condition name="criteria_RunningRedLightTest" delay="0" conditionEdge="rising">
+          <ByValueCondition>
+            <ParameterCondition parameterRef="" value="" rule="lessThan"/>
+          </ByValueCondition>
+        </Condition>
+        <Condition name="criteria_WrongLaneTest" delay="0" conditionEdge="rising">
+          <ByValueCondition>
+            <ParameterCondition parameterRef="" value="" rule="lessThan"/>
+          </ByValueCondition>
+        </Condition>
+        <Condition name="criteria_OnSidewalkTest" delay="0" conditionEdge="rising">
+          <ByValueCondition>
+            <ParameterCondition parameterRef="" value="" rule="lessThan"/>
+          </ByValueCondition>
+        </Condition>
+        <Condition name="criteria_DrivenDistanceTest" delay="0" conditionEdge="rising">
+          <ByValueCondition>
+            <ParameterCondition parameterRef="distance_success" value="25" rule="lessThan"/>
+          </ByValueCondition>
+        </Condition>
+        <Condition name="criteria_KeepLaneTest" delay="0" conditionEdge="rising">
+          <ByValueCondition>
+            <ParameterCondition parameterRef="" value="" rule="lessThan"/>
+          </ByValueCondition>
+        </Condition>
+        <Condition name="criteria_CollisionTest" delay="0" conditionEdge="rising">
+          <ByValueCondition>
+            <ParameterCondition parameterRef="" value="" rule="lessThan"/>
+          </ByValueCondition>
+        </Condition>
+      </ConditionGroup>
+    </StopTrigger>
+  </Storyboard>
+</OpenSCENARIO>
