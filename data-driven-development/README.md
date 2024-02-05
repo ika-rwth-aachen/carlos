@@ -53,11 +53,12 @@ In addition to the already known components, we are introducing the `carla-clien
 
 Thus, data generation at large scale becomes possible and helps developers to achive diverse and useful data for any application.
 
-#### Scenario-based Data Generation
+### Scenario-based Data Generation
 
 Assuming we improved our model, we are now aiming to evaluate its performance in targeted, real-world scenarios. Hence, we need to generate data in such concrete scenarios, for which the scenario-based data generation feature can be utilized. In this example, we demonstrate how a list of multiple OpenSCENARIO files can be integrated into the data generation pipeline as well to generate data under those specific conditions.
 
 ```bash
+# carlos/data-driven-development$
 python ./data_generation.py --config data-driven-delevopment-demo-scenario-execution.json
 ```
 
