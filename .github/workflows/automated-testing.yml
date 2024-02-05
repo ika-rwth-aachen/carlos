@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - id: generate
-        uses: ./.github/actions/generate-matrix
+        uses: ./.github/actions/generate-job-matrix
         with:
           starting-point: ./utils/scenarios
           query-string: '*.xosc'
@@ -25,7 +25,7 @@ jobs:
     steps:
       - run: rm -rf *
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/run-scenario
+      - uses: ./.github/actions/evaluate-scenario
         with:
           scenario-folder-path: ${{ matrix.filedir }}
           scenario-file-name: ${{ matrix.filename }}
@@ -41,7 +41,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - id: generate-opt
-        uses: ./.github/actions/generate-matrix
+        uses: ./.github/actions/generate-job-matrix
         with:
           starting-point: ./utils/scenarios
           query-string: '*.xosc.opt'
@@ -57,7 +57,7 @@ jobs:
     steps:
       - run: rm -rf *
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/run-scenario
+      - uses: ./.github/actions/evaluate-scenario
         continue-on-error: true
         with:
           scenario-folder-path: ${{ matrix.filedir }}
