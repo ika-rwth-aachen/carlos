@@ -9,6 +9,10 @@ services:
                 count: 1
                 capabilities: [gpu]
     privileged: True
+    environment:
+      DISPLAY: $DISPLAY
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
     image: $SIMULATOR_IMAGE
     command: bash -ic './CarlaUE4.sh -nosound $SIMULATOR_FLAGS 2>/dev/null'
 

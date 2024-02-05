@@ -20,4 +20,5 @@ echo "$(cat $COMPOSE_FILE_PATH)" >> $GITHUB_OUTPUT
 echo "EOF" >> $GITHUB_OUTPUT
 
 # start simulator
+xhost +local:
 docker compose -f $COMPOSE_FILE_PATH  up -d carla-simulator
