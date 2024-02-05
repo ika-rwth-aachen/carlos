@@ -16,7 +16,7 @@ The subsequent demonstration showcases *automated testing* and specifically addr
 > Make sure that all [system requirements](../utils/requirements.md) are fulfilled.
 > Additionally, this demo requires a [self-hosted GitHub Runner](https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/about-self-hosted-runners) to execute scenarios within a CI workflow. The specific requirements for such a runner are listed [below](#self-hosted-github-runner).
 
-This demo aims to automatically evaluate predefined test scenarios. For this purpose, a test catalog can be defined using OpenSCENARIO files as contained in the [scenarios](../utils/scenarios) folder. These scenarios can be simulated and evaluated using the [carla-scenario-runner](https://github.com/ika-rwth-aachen/carla-scenario-runner). Thus, a basic [docker-compose setup](./docker-compose.yml) only includes the `carla-simulator` and a `carla-scenario-runner` Docker service. So, in general, the demo enables the efficient execution of multiple scenario-based tests with CARLA, both in local environments and within an automated GitHub CI process.
+This demo aims to automatically evaluate predefined test scenarios. For this purpose, a test catalog can be defined using OpenSCENARIO files as contained in the [scenarios](../utils/scenarios) folder. These scenarios can be simulated and evaluated using the [carla-scenario-runner](https://github.com/ika-rwth-aachen/carla-scenario-runner). Thus, a basic [docker-compose template](./template.yml) only includes the `carla-simulator` and a `carla-scenario-runner` Docker service. So, in general, the demo enables the efficient execution of multiple scenario-based tests with CARLA, both in local environments and within an automated GitHub CI process.
 
 ### Manual Testing Pipeline
 
@@ -33,6 +33,10 @@ or
 ```
 
 ### Automatic CI Pipeline
+
+All scenarios within the test catalog are also simulated and evaluated in an automatic [CI pipeline on GitHub](https://github.com/ika-rwth-aachen/carlos/actions/workflows/automated-testing.yml). A detailed look in the [scenarios folder](../utils/scenarios/) shows that a few of them have the postfix `.opt` marking them as optional. This means a failure in test evaluation is allowed for those specific scenarios. The CI pipeline processes required scenarios first, and than considered all optional scenarios. In both cases a job matrix is generated before consecutive jobs are created to simulate the specific scenario. As an example, a workflow is shown below.
+
+<p align="center"><img src="../utils/images/automated-testing-workflow.png" width=800></p>
 
 #### Actions
 
