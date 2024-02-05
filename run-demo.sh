@@ -43,6 +43,9 @@ if [ "$selected_demo" = "data-driven-development" ]; then
   source $conda_bin_dir/activate $env_name
   cd $selected_demo
   python data_generation.py
+elif [ "$selected_demo" = "automated-testing" ]; then
+  cd $selected_demo
+  ./evaluate-scenarios.sh
 else
   $docker_compose_command -f $selected_demo/docker-compose.yml up
 fi
