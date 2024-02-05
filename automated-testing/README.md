@@ -40,19 +40,19 @@ All scenarios within the test catalog are also simulated and evaluated in an aut
 
 #### Actions
 
-- we provide open [GitHub actions](../.github/actions/) for CARLOS
-  - [evaluate-scenario](../.github/actions/evaluate-scenario/)
+We provide two [GitHub actions](../.github/actions/) for CARLOS:
   - [generate-job-matrix](../.github/actions/generate-job-matrix/)
+  - [evaluate-scenario](../.github/actions/evaluate-scenario/)
+
+They can be used within a GitHub CI workflow to aggregate a job list of simulation runs, and consecutively run all simulations.
 
 #### Workflow
 
-- analog to the local evaluation script, we provide a GitHub workflow
+The workflow combines the different actions and performs simulation evaluation  analog to the local `evaluation-scenarios.sh` script:
   - [automated-testing.yml](../.github/workflows/automated-testing.yml)
 
 #### Self-Hosted GitHub Runner
-
-- demo workflow
-  - example scenario catalogue
-  - screenshot
+- TODO
 
 ### Outlook - Scalability using Orchestration Tools
+- TODO
