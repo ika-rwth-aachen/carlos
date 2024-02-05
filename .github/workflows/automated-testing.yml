@@ -33,6 +33,7 @@ jobs:
           simulator-offscreen: false
 
   generate-opt-scenario-job-matrix:
+    needs: evaluate-required-scenarios
     runs-on: self-hosted
     outputs:
       opt-matrix: ${{ steps.generate-opt.outputs.matrix }}
@@ -46,7 +47,7 @@ jobs:
           query-string: '*.xosc.opt'
           exclude-string: '*/catalogs/*'
 
-  evaluate-required-scenarios:
+  evaluate-optional-scenarios:
     needs: generate-opt-scenario-job-matrix
     runs-on: self-hosted
     strategy:
