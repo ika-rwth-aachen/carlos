@@ -3,24 +3,20 @@
 set -e
 
 usage() {
-  echo "Usage: $0 [-d maxdepth] [-e exclude-path] STARTING-POINT QUERY-STRING"
-  echo "STARTING-POINT : Location from where search should start"
-  echo "QUERY-STRING : UNIX pattern used for matching and selecting results. Needs to be \"quoted\""
-  echo "max-depth : Descend at most max-depth levels from STARTING-POINT"
-  echo "exclude-string : Exclude paths matching this UNIX pattern from final result. Needs to be \"quoted\""
+  echo "Usage: $0 [-o][-p][-n] [COMPOSE_TEMPLATE_PATH] [SCENARIO_FOLDER_PATH]"
+  echo "COMPOSE_TEMPLATE_PATH : Location of Compose file which can be customized through environment variables"
+  echo "SCENARIO_FOLDER_PATH : Location of folder containing scenario files ending with .xosc*"
+  echo "o : Set the simulator to offscreen mode"
+  echo "p : Pull/Update images before starting the simulation"
+  echo "n : Do not restart the simulator after each scenario run"
   echo "-----"
-  echo "Example: $0 -d 3 . \"*.xosc\""
-}
-
-trap cleanup EXIT
-trap cleanup 0
-
-cleanup() {
-  echo "Cleaning up..."
-  docker compose -f $COMPOSE_TEMPLATE_PATH kill
-  docker compose -f $COMPOSE_TEMPLATE_PATH down
-  xhost -local:
-  echo "Done cleaning up."
+  echo "Environment variables for customization:"
+  echo "SIMULATOR_IMAGE : CARLA image that should be used"
+  echo "SCENARIO_RUNNER_IMAGE : CARLA Scenario Runner image that should be used"
+  echo "TIME_BETWEEN_EVALS" : Delay between each scenario run in seconds
+  echo "-----"
+  echo "Example:"
+  echo "SIMULATOR_IMAGE=rwthika/carla:dev $0 -r ./template.yml ./scenarios"
 }
 
 restart-simulator() {
@@ -30,11 +26,58 @@ restart-simulator() {
   docker compose -f $COMPOSE_TEMPLATE_PATH up -d carla-simulator
 }
 
-export SIMULATOR_IMAGE=rwthika/carla-simulator:server
-export SCENARIO_RUNNER_IMAGE=rwthika/carla-scenario-runner:latest
+update-simulator() {
+  echo "Updating simulator..."
+  docker compose -f $COMPOSE_TEMPLATE_PATH pull
+}
 
-export SCENARIO_FOLDER_PATH=$(realpath ${1:-"../utils/scenarios"})
-export COMPOSE_TEMPLATE_PATH="${2:-"../.github/actions/evaluate-scenario/files/template.yml"}"
+COMPOSE_TEMPLATE_PATH="../.github/actions/evaluate-scenario/files/template.yml"
+
+while getopts "hopn" flag; do
+case "$flag" in
+  h) 
+    usage
+    exit 0
+    ;;
+  o) 
+    export SIMULATOR_OFFSCREEN=true
+    ;;
+  p) 
+    update-simulator
+    ;;
+  n) 
+    export RESTART_SIMULATOR=false
+    ;;
+esac
+done
+
+shift $(($OPTIND-1)) # return to usual handling of positional args
+
+# default settings if no external overrides provided
+export SIMULATOR_IMAGE=${SIMULATOR_IMAGE:-"rwthika/carla-simulator:server"}
+export SCENARIO_RUNNER_IMAGE=${SCENARIO_RUNNER_IMAGE:-"rwthika/carla-scenario-runner:latest"}
+
+export COMPOSE_TEMPLATE_PATH=$(realpath ${1:-$COMPOSE_TEMPLATE_PATH})
+export SCENARIO_FOLDER_PATH=$(realpath ${2:-"../utils/scenarios"})
+
+export RESTART_SIMULATOR=${RESTART_SIMULATOR:-true}
+export TIME_BETWEEN_EVALS=${TIME_BETWEEN_EVALS:-5}
+
+export SIMULATOR_FLAGS=""
+export SCENARIO_FILE_NAME=""
+
+trap cleanup EXIT
+trap cleanup 0
+
+cleanup() {
+  echo "Cleaning up..."
+  RESTART_SIMULATOR=false
+  docker compose -f $COMPOSE_TEMPLATE_PATH kill
+  docker compose -f $COMPOSE_TEMPLATE_PATH down
+  xhost -local:
+  echo "Done cleaning up."
+  exit
+}
 
 echo "Searching for scenarios in $SCENARIO_FOLDER_PATH  ..."
 scenarios=($(find $SCENARIO_FOLDER_PATH -maxdepth 1 -type f -name "*.xosc*" -exec basename {} \;))
@@ -61,4 +104,6 @@ for scenario in "${scenarios[@]}"; do
   if [ "$RESTART_SIMULATOR" = true ]; then
     restart-simulator
   fi
+
+  sleep $TIME_BETWEEN_EVALS
 done
