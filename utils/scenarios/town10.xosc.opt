@@ -76,7 +76,7 @@
           <PrivateAction>
             <TeleportAction>
               <Position>
-                <LanePosition roadId="5" laneId="-1" s="1" offset="0"/>
+                <LanePosition roadId="5" laneId="-1" s="5" offset="0"/>
               </Position>
             </TeleportAction>
           </PrivateAction>
@@ -86,7 +86,7 @@
           <PrivateAction>
             <TeleportAction>
               <Position>
-                <LanePosition roadId="5" laneId="-2" s="15" offset="0"/>
+                <LanePosition roadId="5" laneId="-2" s="12" offset="0"/>
               </Position>
             </TeleportAction>
           </PrivateAction>
@@ -96,7 +96,7 @@
           <PrivateAction>
             <TeleportAction>
               <Position>
-                <LanePosition roadId="5" laneId="-1" s="25" offset="0"/>
+                <LanePosition roadId="5" laneId="-1" s="30" offset="0"/>
               </Position>
             </TeleportAction>
           </PrivateAction>
@@ -106,7 +106,7 @@
           <PrivateAction>
             <TeleportAction>
               <Position>
-                <LanePosition roadId="5" laneId="1" s="50" offset="0"/>
+                <LanePosition roadId="5" laneId="1" s="60" offset="0"/>
               </Position>
             </TeleportAction>
           </PrivateAction>
@@ -116,7 +116,7 @@
           <PrivateAction>
             <TeleportAction>
               <Position>
-                <LanePosition roadId="5" laneId="2" s="70" offset="0"/>
+                <LanePosition roadId="5" laneId="2" s="75" offset="0"/>
               </Position>
             </TeleportAction>
           </PrivateAction>
@@ -136,7 +136,7 @@
           <PrivateAction>
             <TeleportAction>
               <Position>
-                <LanePosition roadId="18" laneId="4" s="5" offset="0"/>
+                <LanePosition roadId="18" laneId="4" s="10" offset="0"/>
               </Position>
             </TeleportAction>
           </PrivateAction>
@@ -146,7 +146,7 @@
           <PrivateAction>
             <TeleportAction>
               <Position>
-                <LanePosition roadId="18" laneId="5" s="5" offset="0"/>
+                <LanePosition roadId="18" laneId="5" s="10" offset="0"/>
               </Position>
             </TeleportAction>
           </PrivateAction>
@@ -166,7 +166,7 @@
           <PrivateAction>
             <TeleportAction>
               <Position>
-                <LanePosition roadId="6" laneId="2" s="8" offset="0"/>
+                <LanePosition roadId="6" laneId="2" s="15" offset="0"/>
               </Position>
             </TeleportAction>
           </PrivateAction>

@@ -30,24 +30,32 @@ restart-simulator() {
   docker compose -f $COMPOSE_TEMPLATE_PATH up -d carla-simulator
 }
 
-export SCENARIO_DIRECTORY="${1:-"../utils/scenarios"}"
-export COMPOSE_TEMPLATE_PATH="${2:-"./template.yml"}"
-echo $SCENARIO_DIRECTORY
+export SIMULATOR_IMAGE=rwthika/carla-simulator:server
+export SCENARIO_RUNNER_IMAGE=rwthika/carla-scenario-runner:latest
 
-scenarios=($(find $SCENARIO_DIRECTORY -maxdepth 1 -type f -name "*.xosc*" -exec basename {} \;))
+export SCENARIO_FOLDER_PATH=$(realpath ${1:-"../utils/scenarios"})
+export COMPOSE_TEMPLATE_PATH="${2:-"../.github/actions/evaluate-scenario/files/template.yml"}"
+
+echo "Searching for scenarios in $SCENARIO_FOLDER_PATH  ..."
+scenarios=($(find $SCENARIO_FOLDER_PATH -maxdepth 1 -type f -name "*.xosc*" -exec basename {} \;))
 
 if [ ${#scenarios[@]} -eq 0 ]; then
   echo "No scenarios found. Exiting..."
   exit 1
 fi
+
+if [ "$SIMULATOR_OFFSCREEN" = true ]; then
+  export SIMULATOR_FLAGS="-RenderOffScreen"
+fi
+
 xhost +local:
 echo "Starting simulator..."
 docker compose -f $COMPOSE_TEMPLATE_PATH up -d carla-simulator
 
 for scenario in "${scenarios[@]}"; do
   echo "Evaluating $scenario ..."
-
-  export SCENARIO_NAME=$scenario 
+  export SCENARIO_FILE_NAME=$scenario 
+  
   docker compose -f $COMPOSE_TEMPLATE_PATH  run --rm carla-scenario-runner || true
 
   if [ "$RESTART_SIMULATOR" = true ]; then
