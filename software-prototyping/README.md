@@ -55,7 +55,7 @@ We have already included this entry in the provided file. The image segmentation
 <p align="center"><img src="../utils/images/software-prototyping-image-segmentation.png" width=800></p>
 
 
-## Interacting with the Containers
+### Interacting with the Containers
 
 Follow these steps to interact with the running containers:
 
