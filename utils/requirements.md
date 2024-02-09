@@ -2,7 +2,7 @@
 
 > [!IMPORTANT]  
 > The core requirements for using our simulation framework CARLOS are listed below:
-> - [Ubuntu 22.04 LTS Jammy](https://ubuntu.com/download/desktop) (or higher) with `sudo` permission
+> - [Ubuntu 20.04 LTS Focal](https://ubuntu.com/download/desktop) (or higher) with `sudo` permission
 > - enough hard disk storage, which depends on the workshop and use-case (~50 GB are recommended)
 > - NVIDIA GPU (at least 8 GB GPU memory are recommended)
 

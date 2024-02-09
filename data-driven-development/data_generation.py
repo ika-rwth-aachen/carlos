@@ -57,7 +57,9 @@ def start_permutation_simulations(docker, permutation_configs, setting_configs):
                 # update environment variables to pass to docker-compose-file
                 print("Starting data generation with Config: {}".format(simulation_args))
                 os.environ.update(simulation_args)
-                docker.compose.up(abort_on_container_exit=True, services=setting_configs["simulation_services"], pull='always')
+                # explicitely pull the images before to enable Ubuntu 20.04 compatibility
+                docker.compose.pull()
+                docker.compose.up(abort_on_container_exit=True, services=setting_configs["simulation_services"])
                 docker.compose.down()
 
                 print("Config finished!")
@@ -109,7 +111,9 @@ def start_scenario_runner_simulations(docker, scenario_configs, setting_configs)
 
                         print("Starting data generation with scenario: {}".format(filename))
                         os.environ.update(scenario_args)
-                        docker.compose.up(abort_on_container_exit=True, services=setting_configs["simulation_services"], pull='always')
+                        # explicitely pull the images before to enable Ubuntu 20.04 compatibility
+                        docker.compose.pull()
+                        docker.compose.up(abort_on_container_exit=True, services=setting_configs["simulation_services"])
                         docker.compose.down() 
                         print("Finished scenario: {} with sensors_config: {}".format(filename, sensors_config_filepath))
 
