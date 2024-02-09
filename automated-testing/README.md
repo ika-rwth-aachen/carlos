@@ -35,13 +35,6 @@ The script sequentially evaluates all scenario files in the selected folder. Aft
 
 <p align="center"><img src="../utils/images/automated-testing-cli.png" width=800></p>
 
-#### Self-Hosted GitHub Runner
-
-As mentioned before, a [self-hosted GitHub Runner](https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/about-self-hosted-runners) needs to be set up in order to run the following pipeline. Apart from ensuring the [system requirements](../utils/requirements.md), the runner currently also needs to be started in a **local session** (i.e. not via SSH, RPD or other tools) and has to have access to the primary "display" (see [X window system](https://en.wikipedia.org/wiki/X_Window_System)). You can validate this by running the following command in the same session where you want to start the runner:
-```bash
-echo $DISPLAY
-```
-The result should be something simple like `:1` . If there is anything in front of the colon, the session is most likely not local and thus not suitable for this setup.
 
 ### Automated CI Pipeline
 
@@ -62,8 +55,27 @@ They can be used within a GitHub CI workflow to create a job list of simulation 
 
 #### Workflow
 
-The workflow presented in [automated-testing.yml](../.github/workflows/automated-testing.yml) combines the different actions and performs simulation evaluation  analog to the local `evaluation-scenarios.sh` . It leverages the modularity and customizability of the provided actions by reusing them and configuring them differently. For example, the `generate-job-matrix` allows customizing the `query-string`, which is used for matching and collecting fitting scenarios as a job matrix for following pipeline steps.
+The workflow presented in [automated-testing.yml](../.github/workflows/automated-testing.yml) combines the different actions and performs simulation evaluation  analog to the local `evaluation-scenarios.sh`. It leverages the modularity and customizability of the provided actions by reusing them and configuring them differently. For example, the `generate-job-matrix` allows customizing the `query-string`, which is used for matching and collecting fitting scenarios as a job matrix for following pipeline steps.
 
-### Outlook - Scalability using Orchestration Tools
+#### Self-Hosted GitHub Runner
+
+As mentioned before, a [self-hosted GitHub Runner](https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/about-self-hosted-runners) needs to be set up in order to run the described CI pipeline in your custom repository fork. Apart from ensuring the [system requirements](../utils/requirements.md), the runner currently also needs to be started in a **local session** (i.e. not via SSH, RPD or other tools) and has to have access to the primary "display" (see [X window system](https://en.wikipedia.org/wiki/X_Window_System)). You can validate this by running the following command in the same session where you want to start the runner:
+```bash
+echo $DISPLAY
+```
+The result should be something simple like `:1` . If there is anything in front of the colon, the session is most likely not local and thus not suitable for this setup.
+
+### Setup Your Own Simulation Testing Pipeline
+
+Follow these steps to setup your own simulation testing pipeline:
+1. [Fork](https://docs.github.com/de/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) the CARLOS repository on GitHub.
+2. Add a self-hosted runner using the provided information [above](#self-hosted-github-runner).
+3. Push additional OpenSCENARIO test files in the [scenarios](../utils/scenarios/) folder.
+4. Observe the GitHub workflow and scenario test evaluations.
+
+You may now update the specific test metrics to enable comprehensive testing. In addition, custom ITS functions can be used to control the vehicle instead of the basic CARLA autopilot, enabling useful testing.
+
+
+## Outlook - Scalability using Orchestration Tools
 
 The principles and workflows demonstrated here already show the effectiveness of automating the simulation processes. Certainly, a much higher grade of automation can be achieved by incorporating more sophisticated orchestration tools like [Kubernetes](https://kubernetes.io/docs/concepts/overview/), [Docker Swarm](https://docs.docker.com/engine/swarm/) or others. These tools allow for better scalability, while also simplifying the deployment and monitoring of the services.
