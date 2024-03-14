@@ -34,6 +34,9 @@ services:
     extends:
       file: ../components.yml
       service: carla-client
+    depends_on:
+      carla-simulator:
+        condition: service_healthy
     command: sleep infinity
 
   # starts the carla-ros-bridge
@@ -41,6 +44,9 @@ services:
     extends:
       file: ../components.yml
       service: carla-ros-bridge
+    depends_on:
+      carla-simulator:
+        condition: service_healthy
     # ...and then execute them. Note the -ic flag for an interactive bash!
     # Without an interactive bash, many important env vars wouldn't be working or even set
     command: bash -ic 'ros2 launch carla_ros_bridge carla_ros_bridge_with_example_ego_vehicle.launch.py host:=carla-simulator'
@@ -51,6 +57,9 @@ services:
     extends:
       file: ../components.yml
       service: ros-monitoring
+    depends_on:
+      carla-simulator:
+        condition: service_healthy
     volumes:
       # you can mount custom rviz configs...
       - *rviz-config-mount
