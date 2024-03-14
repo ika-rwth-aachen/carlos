@@ -15,42 +15,27 @@ services:
   carla-client:
     extends:
       service: gpu-x11-service
-    depends_on:
-      carla-simulator:
-        condition: service_healthy
     image: rwthika/carla-simulator:client
     command: sleep infinity
 
   carla-scenario-runner:
     extends:
       service: gpu-x11-service
-    depends_on:
-      carla-simulator:
-        condition: service_healthy
     image: rwthika/carla-scenario-runner
 
   carla-ros-bridge:
     extends:
       service: gpu-x11-service
-    depends_on:
-      carla-simulator:
-        condition: service_healthy
     image: rwthika/carla-ros-bridge
 
   ros-monitoring:
     extends:
       service: gpu-x11-service
-    depends_on:
-      carla-simulator:
-        condition: service_healthy
     image: rwthika/ros2-cuda:humble-desktop-full
 
   ros-monitoring-offscreen:
     extends:
       service: gpu-service
-    depends_on:
-      carla-simulator:
-        condition: service_healthy
     image: rwthika/ros2-cuda:humble-desktop-full
 
   gpu-service:

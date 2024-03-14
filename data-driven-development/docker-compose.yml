@@ -16,6 +16,9 @@ services:
     extends:
       file: ../utils/components.yml
       service: carla-ros-bridge
+    depends_on:
+      carla-simulator:
+        condition: service_healthy
     volumes:
       - *sensors-mount
       - ./launch/demo.launch.py:/demo.launch.py
@@ -28,6 +31,9 @@ services:
     extends:
       file: ../utils/components.yml
       service: carla-client
+    depends_on:
+      carla-simulator:
+        condition: service_healthy
     volumes:
       - ./src/time_controller.py:/opt/carla/PythonAPI/time_controller.py
     command: bash -ic "python time_controller.py --host carla-simulator ${max_simulation_time} ${max_real_time}"
@@ -36,6 +42,9 @@ services:
     extends:
       file: ../utils/components.yml
       service: carla-client
+    depends_on:
+      carla-simulator:
+        condition: service_healthy
     volumes:
       - ./src/spawned_vehicle_check.py:/opt/carla/PythonAPI/spawned_vehicle_check.py
     command: sleep infinity
