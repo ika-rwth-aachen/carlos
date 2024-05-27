@@ -2,7 +2,7 @@
 
 # **CARLOS** - An Open, Modular, and Scalable Simulation Framework for the Development and Testing of Software for C-ITS
 
-This repository contains CARLOS, the official reference implementation of the open, modular and scalable simulation architecture presented in our [paper](TODO). We provide a containerized simulation framework based on the open-source simulator [CARLA](http://carla.org/) and enable a simple integration of custom ROS applications. Find below a brief description of the architecture as well as configurations and instructions for demos of three example use cases:
+This repository contains CARLOS, the official reference implementation of the open, modular and scalable simulation architecture presented in our [paper](http://arxiv.org/abs/2404.01836). We provide a containerized simulation framework based on the open-source simulator [CARLA](http://carla.org/) and enable a simple integration of custom ROS applications. Find below a brief description of the architecture as well as configurations and instructions for demos of three example use cases:
 - [Software Prototyping](./software-prototyping/)
 - [Data-Driven Development](./data-driven-development/)
 - [Automated Testing](./automated-testing/)
