@@ -47,15 +47,15 @@ All scenarios within the test catalog are also simulated and evaluated in an aut
 
 #### Actions
 
-We provide two [GitHub actions](../.github/actions/) for CARLOS:
+We provide two [GitHub actions](https://docs.github.com/en/actions/creating-actions/about-custom-actions) for CARLOS:
   - [generate-job-matrix](../.github/actions/generate-job-matrix/)
-  - [evaluate-scenario](../.github/actions/evaluate-scenario/)
+  - [carlos-ci-action](https://github.com/ika-rwth-aachen/carlos-ci-action)
 
 They can be used within a GitHub CI workflow to create a job list of simulation runs, and consecutively run all simulations. A demonstration of this is presented next.
 
 #### Workflow
 
-The workflow presented in [automated-testing.yml](../.github/workflows/automated-testing.yml) combines the different actions and performs simulation evaluation  analog to the local `evaluation-scenarios.sh`. It leverages the modularity and customizability of the provided actions by reusing them and configuring them differently. For example, the `generate-job-matrix` allows customizing the `query-string`, which is used for matching and collecting fitting scenarios as a job matrix for following pipeline steps.
+The workflow presented in [automated-testing.yml](../.github/workflows/automated-testing.yml) combines the different actions and performs simulation evaluation  analog to the local `evaluation-scenarios.sh`. It leverages the modularity and customizability of the provided actions by reusing them and configuring them differently. For example, `generate-job-matrix` allows customizing the `query-string`, which is used for matching and collecting fitting scenarios as a job matrix for following pipeline steps.
 
 #### Self-Hosted GitHub Runner
 
