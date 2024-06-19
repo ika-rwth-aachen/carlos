@@ -27,7 +27,7 @@ jobs:
       - shell: bash
         run: |
               xhost +local:
-      - uses: ika-rwth-aachen/carlos-ci-action@v0.1.0
+      - uses: ika-rwth-aachen/carlos-ci-action@hotfixes
         with:
           composefile-path: automated-testing/carla-sim.yml
           scenario-folder-path: ${{ matrix.filedir }}
@@ -63,7 +63,7 @@ jobs:
       - shell: bash
         run: |
               xhost +local:
-      - uses: ika-rwth-aachen/carlos-ci-action@v0.1.0
+      - uses: ika-rwth-aachen/carlos-ci-action@hotfixes
         continue-on-error: true
         with:
           composefile-path: automated-testing/carla-sim.yml
