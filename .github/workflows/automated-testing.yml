@@ -45,7 +45,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - id: generate-opt
-        uses: ./.github/actions/generate-job-matrix@v0.1.0
+        uses: ./.github/actions/generate-job-matrix
         with:
           starting-point: ./utils/scenarios
           query-string: '*.xosc.opt'
@@ -63,7 +63,7 @@ jobs:
       - shell: bash
         run: |
               xhost +local:
-      - uses: ika-rwth-aachen/carlos-ci-action
+      - uses: ika-rwth-aachen/carlos-ci-action@v0.1.0
         continue-on-error: true
         with:
           composefile-path: automated-testing/carla-sim.yml
