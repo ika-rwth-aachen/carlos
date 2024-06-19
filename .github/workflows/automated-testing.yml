@@ -27,7 +27,7 @@ jobs:
       - shell: bash
         run: |
               xhost +local:
-      - uses: ika-rwth-aachen/carlos-ci-action
+      - uses: ika-rwth-aachen/carlos-ci-action@v0.1.0
         with:
           composefile-path: automated-testing/carla-sim.yml
           scenario-folder-path: ${{ matrix.filedir }}
@@ -45,7 +45,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - id: generate-opt
-        uses: ./.github/actions/generate-job-matrix
+        uses: ./.github/actions/generate-job-matrix@v0.1.0
         with:
           starting-point: ./utils/scenarios
           query-string: '*.xosc.opt'
