@@ -55,7 +55,7 @@ They can be used within a GitHub CI workflow to create a job list of simulation 
 
 #### Workflow
 
-The workflow presented in [automated-testing.yml](../.github/workflows/automated-testing.yml) combines the different actions and performs simulation evaluation  analog to the local `evaluation-scenarios.sh`. It leverages the modularity and customizability of the provided actions by reusing them and configuring them differently. For example, `generate-job-matrix` allows customizing the `query-string`, which is used for matching and collecting fitting scenarios as a job matrix for following pipeline steps.
+The workflow presented in [automated-testing.yml](../.github/workflows/automated-testing.yml) combines the different actions and performs simulation evaluation analog to the local `evaluation-scenarios.sh`. It leverages the modularity and customizability of the provided actions by reusing them and configuring them differently. For example, `generate-job-matrix` allows customizing the `query-string`, which is used for matching and collecting fitting scenarios as a job matrix for following pipeline steps.
 
 #### Self-Hosted GitHub Runner
 
