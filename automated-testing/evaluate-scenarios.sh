@@ -31,7 +31,7 @@ update-simulator() {
   docker compose -f $COMPOSE_TEMPLATE_PATH pull
 }
 
-COMPOSE_TEMPLATE_PATH="../.github/actions/evaluate-scenario/files/template.yml"
+COMPOSE_TEMPLATE_PATH="./template.yml"
 
 while getopts "hopn" flag; do
 case "$flag" in

@@ -2,7 +2,7 @@ name: automated-testing
 on: push
 jobs:
   generate-scenario-job-matrix:
-    runs-on: self-hosted
+    runs-on: [self-hosted]
     outputs:
       matrix: ${{ steps.generate.outputs.matrix }}
     name: generate scenario job matrix
@@ -17,24 +17,28 @@ jobs:
 
   evaluate-required-scenarios:
     needs: generate-scenario-job-matrix
-    runs-on: self-hosted
+    runs-on: [self-hosted]
+    name: Run ${{ matrix.filename }}
     strategy:
       fail-fast: false
       matrix: ${{ fromJson(needs.generate-scenario-job-matrix.outputs.matrix) }}
-    name: Eval ${{ matrix.filename }}
     steps:
-      - run: rm -rf *
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/evaluate-scenario
+      - shell: bash
+        run: |
+              xhost +local:
+      - uses: ika-rwth-aachen/carlos-ci-action@v0.1.1
         with:
+          composefile-path: automated-testing/carla-sim.yml
           scenario-folder-path: ${{ matrix.filedir }}
           scenario-file-name: ${{ matrix.filename }}
-          simulator-image: rwthika/carla-simulator:server
-          simulator-offscreen: true
+      - shell: bash
+        run: |
+              xhost -local:
 
   generate-opt-scenario-job-matrix:
     needs: evaluate-required-scenarios
-    runs-on: self-hosted
+    runs-on: [self-hosted]
     outputs:
       opt-matrix: ${{ steps.generate-opt.outputs.matrix }}
     name: generate optional scenario job matrix
@@ -49,18 +53,22 @@ jobs:
 
   evaluate-optional-scenarios:
     needs: generate-opt-scenario-job-matrix
-    runs-on: self-hosted
+    runs-on: [self-hosted]
     strategy:
       fail-fast: false
       matrix: ${{ fromJson(needs.generate-opt-scenario-job-matrix.outputs.opt-matrix) }}
-    name: Eval ${{ matrix.filename }}
+    name: Run ${{ matrix.filename }}
     steps:
-      - run: rm -rf *
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/evaluate-scenario
+      - shell: bash
+        run: |
+              xhost +local:
+      - uses: ika-rwth-aachen/carlos-ci-action@v0.1.1
         continue-on-error: true
         with:
+          composefile-path: automated-testing/carla-sim.yml
           scenario-folder-path: ${{ matrix.filedir }}
           scenario-file-name: ${{ matrix.filename }}
-          simulator-image: rwthika/carla-simulator:server
-          simulator-offscreen: true
+      - shell: bash
+        run: |
+              xhost -local:
