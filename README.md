@@ -2,7 +2,7 @@
 
 # **CARLOS** - An Open, Modular, and Scalable Simulation Framework for the Development and Testing of Software for C-ITS
 
-This repository contains CARLOS, the official reference implementation of the open, modular and scalable simulation architecture presented in our [paper](http://arxiv.org/abs/2404.01836). We provide a containerized simulation framework based on the open-source simulator [CARLA](http://carla.org/) and enable a simple integration of custom ROS applications. Find below a brief description of the architecture as well as configurations and instructions for demos of three example use cases:
+This repository contains CARLOS, the official reference implementation of the open, modular and scalable simulation architecture presented in our [paper](https://ieeexplore.ieee.org/document/10588502). We provide a containerized simulation framework based on the open-source simulator [CARLA](http://carla.org/) and enable a simple integration of custom ROS applications. Find below a brief description of the architecture as well as configurations and instructions for demos of three example use cases:
 - [Software Prototyping](./software-prototyping/)
 - [Data-Driven Development](./data-driven-development/)
 - [Automated Testing](./automated-testing/)
@@ -32,9 +32,9 @@ This repository contains CARLOS, the official reference implementation of the op
 ## Publication
 
 > **CARLOS: An Open, Modular, and Scalable Simulation Framework for the Development and Testing of Software for C-ITS**  
-> > *([arXiv](http://arxiv.org/abs/2404.01836), [ResearchGate](https://www.researchgate.net/publication/379484629_CARLOS_An_Open_Modular_and_Scalable_Simulation_Framework_for_the_Development_and_Testing_of_Software_for_C-ITS))*  
+> > *([IEEEXplore](https://ieeexplore.ieee.org/document/10588502), [arXiv](http://arxiv.org/abs/2404.01836), [ResearchGate](https://www.researchgate.net/publication/379484629_CARLOS_An_Open_Modular_and_Scalable_Simulation_Framework_for_the_Development_and_Testing_of_Software_for_C-ITS))*  
 >
-> [Christian Geller](https://www.ika.rwth-aachen.de/de/institut/team/fahrzeugintelligenz-automatisiertes-fahren/geller.html), [Benedikt Haas](https://github.com/BenediktHaas96), [Amarin Kloeker](https://www.ika.rwth-aachen.de/en/institute/team/vehicle-intelligence-automated-driving/kloeker-amarin.html), [Jona Hermens](TODO), [Bastian Lampe](https://www.ika.rwth-aachen.de/en/institute/team/vehicle-intelligence-automated-driving/lampe.html), [Lutz Eckstein](https://www.ika.rwth-aachen.de/en/institute/team/univ-prof-dr-ing-lutz-eckstein.html)
+> [Christian Geller](https://www.ika.rwth-aachen.de/de/institut/team/fahrzeugintelligenz-automatisiertes-fahren/geller.html), [Benedikt Haas](https://github.com/BenediktHaas96), [Amarin Kloeker](https://www.ika.rwth-aachen.de/en/institute/team/vehicle-intelligence-automated-driving/kloeker-amarin.html), [Jona Hermens](TODO), [Bastian Lampe](https://www.ika.rwth-aachen.de/en/institute/team/vehicle-intelligence-automated-driving/lampe.html), [Till Beemelmanns](https://www.ika.rwth-aachen.de/en/institute/team/vehicle-intelligence-automated-driving/beemelmanns.html), [Lutz Eckstein](https://www.ika.rwth-aachen.de/en/institute/team/univ-prof-dr-ing-lutz-eckstein.html)
 > [Institute for Automotive Engineering (ika), RWTH Aachen University](https://www.ika.rwth-aachen.de/en/)
 > 
 > <sup>*Abstract* – Future mobility systems and their components are increasingly defined by their software. The complexity of these cooperative intelligent transport systems (C-ITS)  and the ever-changing requirements posed at the software require continual software updates. The dynamic nature of the system and the practically innumerable scenarios in which different software components work together necessitate efficient and automated development and testing procedures that use simulations as one core methodology. The availability of such simulation architectures is a common interest among many stakeholders, especially in the field of automated driving. That is why we propose CARLOS - an open, modular, and scalable simulation framework for the development and testing of software in C-ITS that leverages the rich CARLA and ROS ecosystems. We provide core building blocks for this framework and explain how it can be used and extended by the community. Its architecture builds upon modern microservice and DevOps principles such as containerization and continuous integration. In our paper, we motivate the architecture by describing important design principles and showcasing three major use cases - software prototyping, data-driven development, and automated testing. We make CARLOS and example implementations of the three use cases publicly available at [https://github.com/ika-rwth-aachen/carlos](https://github.com/ika-rwth-aachen/carlos).</sup>
@@ -128,10 +128,13 @@ To enable scenario-based testing and evaluation, the carla-scenario-runner is us
 We hope that our simulation framework CARLOS can help your research. If this is the case, please cite it using the following metadata.
 ```
 @inproceedings{CARLOS24,
-author = {Geller, Christian and Haas, Benedikt and Kloeker, Amarin and Hermens, Jona and Lampe, Bastian and Eckstein, Lutz},
+author = {Geller, Christian and Haas, Benedikt and Kloeker, Amarin and Hermens, Jona and Lampe, Bastian and Beemelmanns, Till and Eckstein, Lutz},
+booktitle={2024 IEEE Intelligent Vehicles Symposium (IV)}, 
 title = {{CARLOS: An Open, Modular, and Scalable Simulation Framework for the Development and Testing of Software for C-ITS}},
-url = {http://arxiv.org/abs/2404.01836},
-year = {2024}
+url = {https://ieeexplore.ieee.org/document/10588502},
+year = {2024},
+pages={3100-3106},
+doi={10.1109/IV55156.2024.10588502}
 }
 ```
 
