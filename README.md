@@ -18,7 +18,9 @@ This repository contains CARLOS, the official reference implementation of the op
 > &nbsp;&nbsp;&nbsp;&nbsp; *timo.woopen@ika.rwth-aachen.de*
 
 ## Content
-<img src="./utils/images/teaser.png" height=250 align="center">
+<p align="center">
+  <img src="./utils/images/teaser.png" height=300>
+</p>
 
 - [**CARLOS** - An Open, Modular, and Scalable Simulation Framework for the Development and Testing of Software for C-ITS](#carlos---an-open-modular-and-scalable-simulation-framework-for-the-development-and-testing-of-software-for-c-its)
   - [Publication](#publication)
