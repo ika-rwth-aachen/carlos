@@ -7,6 +7,11 @@ This repository contains CARLOS, the official reference implementation of the op
 - [Data-Driven Development](./data-driven-development/)
 - [Automated Testing](./automated-testing/)
 
+<p align="center">
+  <img src="./utils/images/teaser.png" height=300>
+</p>
+
+
 ## Notice
 
 > [!IMPORTANT]  
@@ -17,8 +22,10 @@ This repository contains CARLOS, the official reference implementation of the op
 > &nbsp;&nbsp;&nbsp;&nbsp; *+49 241 80 23549*  
 > &nbsp;&nbsp;&nbsp;&nbsp; *timo.woopen@ika.rwth-aachen.de*
 
+
+## Overview
 <p align="center">
-  <img src="./utils/images/teaser.png" height=300>
+  <img src="./utils/images/overview.gif" height=300>
 </p>
 
 
@@ -44,6 +51,7 @@ This repository contains CARLOS, the official reference implementation of the op
 > <sup>*Abstract* – Future mobility systems and their components are increasingly defined by their software. The complexity of these cooperative intelligent transport systems (C-ITS)  and the ever-changing requirements posed at the software require continual software updates. The dynamic nature of the system and the practically innumerable scenarios in which different software components work together necessitate efficient and automated development and testing procedures that use simulations as one core methodology. The availability of such simulation architectures is a common interest among many stakeholders, especially in the field of automated driving. That is why we propose CARLOS - an open, modular, and scalable simulation framework for the development and testing of software in C-ITS that leverages the rich CARLA and ROS ecosystems. We provide core building blocks for this framework and explain how it can be used and extended by the community. Its architecture builds upon modern microservice and DevOps principles such as containerization and continuous integration. In our paper, we motivate the architecture by describing important design principles and showcasing three major use cases - software prototyping, data-driven development, and automated testing. We make CARLOS and example implementations of the three use cases publicly available at [https://github.com/ika-rwth-aachen/carlos](https://github.com/ika-rwth-aachen/carlos).</sup>
 
 ---
+
 
 ## Quick Start
 
