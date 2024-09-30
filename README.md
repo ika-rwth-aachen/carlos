@@ -45,6 +45,10 @@ This repository contains CARLOS, the official reference implementation of the op
 
 ---
 
+<p align="center">
+  <img src="./utils/videos/CARLOS_compressed.gif" height=300>
+</p>
+
 ## Quick Start
 
 > [!TIP]
