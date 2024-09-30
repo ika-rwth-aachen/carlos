@@ -7,6 +7,11 @@ This repository contains CARLOS, the official reference implementation of the op
 - [Data-Driven Development](./data-driven-development/)
 - [Automated Testing](./automated-testing/)
 
+<p align="center">
+  <img src="./utils/images/teaser.png" height=300>
+</p>
+
+
 ## Notice
 
 > [!IMPORTANT]  
@@ -17,8 +22,10 @@ This repository contains CARLOS, the official reference implementation of the op
 > &nbsp;&nbsp;&nbsp;&nbsp; *+49 241 80 23549*  
 > &nbsp;&nbsp;&nbsp;&nbsp; *timo.woopen@ika.rwth-aachen.de*
 
+
+## Overview
 <p align="center">
-  <img src="./utils/images/teaser.png" height=300>
+  <img src="./utils/videos/CARLOS_compressed.gif" height=300>
 </p>
 
 
@@ -45,9 +52,6 @@ This repository contains CARLOS, the official reference implementation of the op
 
 ---
 
-<p align="center">
-  <img src="./utils/videos/CARLOS_compressed.gif" height=300>
-</p>
 
 ## Quick Start
 
