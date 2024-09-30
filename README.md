@@ -25,7 +25,7 @@ This repository contains CARLOS, the official reference implementation of the op
 
 ## Overview
 <p align="center">
-  <img src="./utils/videos/CARLOS_compressed.gif" height=300>
+  <img src="./utils/images/overview.gif" height=300>
 </p>
 
 
