@@ -181,8 +181,8 @@ def main():
     argparser.add_argument(
         '--config',
         metavar='C',
-        default='./config/data-driven-delevopment-demo-image-segmentation.json',
-        help='Config file which should be used (default: ./config/data-driven-delevopment-demo-image-segmentation.json)'
+        default='./config/data-driven-development-demo-image-segmentation.json',
+        help='Config file which should be used (default: ./config/data-driven-development-demo-image-segmentation.json)'
     )
     args = argparser.parse_args()
 

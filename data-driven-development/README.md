@@ -20,14 +20,14 @@ The subsequent demonstration showcases rapid *data driven development* and speci
 Install and activate the conda environment:
 
 ```bash
-conda env install -f env/environment.yml
+conda env create -f env/environment.yml
 conda activate carlos_data_driven_development
 ```
 
 Alternatively, you can also use Pip:
 
 ```bash
-pip install -r requirements.txt
+pip install -r env/requirements.txt
 ```
 
 In the initial demo [software-prototyping](../software-prototyping), we demonstrated the integration of a Function Under Test (FUT) with CARLOS, exploring its capabilities through practical experimentation. While these tests validated the general functionality of our image segmentation module,  it became clear that there is considerable potential to improve its performance. Given that this module, like many AD functions, relies heavily on machine learning models trained with specific datasets, the quality and quantity of this training data are crucial.
