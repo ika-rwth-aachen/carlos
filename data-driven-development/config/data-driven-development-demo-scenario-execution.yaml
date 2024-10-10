@@ -1,0 +1,24 @@
+settings:
+  max_simulation_time: 60
+  max_real_time: 300
+  simulation_services:
+    - carla-simulator
+    - time-health-check
+    - spawned-vehicle-check
+    - carla-ros-bridge
+    - carla-simulation-controller
+    - rosbag-record
+  convert_services: [""]
+  record_topics:
+    topic_rgb: /carla/ego_vehicle/rgb/image
+    topic_segmentation: /carla/ego_vehicle/segmentation/image
+    topic_tf: /tf
+  output_path: ./data/
+simulation_configs:
+  scenario_configs:
+    execution_number: 1
+    scenario_files:
+      - ../utils/scenarios/town01.xosc
+      - ../utils/scenarios/town10.xosc.opt
+    sensors_config_files:
+      - ./config/sensors/rgb_segmentation_camera.json
