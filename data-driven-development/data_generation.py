@@ -98,16 +98,16 @@ def set_sensor_config(permutation_configs):
 def get_file_path_list(configs, file_configs, folder_config, file_extension):
     filepaths = []
 
-    if file_configs in configs:
-        for file_config in configs[file_configs]:
-            filepaths.append(file_config)
+    # Add files from the file_configs section if present
+    filepaths.extend(configs.get(file_configs, []))
 
-    if folder_config in configs and os.path.exists(configs[folder_config]):
-        folder_contents = os.listdir(configs[folder_config])
-        for item in folder_contents:
-            if item.endswith(file_extension):
-                item_path = os.path.join(configs[folder_config], item)
-                filepaths.append(item_path)
+    # Check if folder_config exists and is valid
+    folder_path = configs.get(folder_config)
+    if folder_path and os.path.exists(folder_path):
+        filepaths.extend(
+            os.path.join(folder_path, item) for item in os.listdir(folder_path)
+            if item.endswith(file_extension))
+
     return filepaths
 
 
