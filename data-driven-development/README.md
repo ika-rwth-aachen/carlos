@@ -42,7 +42,7 @@ Run the demo for permutation-based data generation:
 
 ```bash
 # carlos/data-driven-development$
-python ./data_generation.py --config data-driven-development-demo-image-segmentation.yaml
+python ./data_generation.py --config config/data-driven-development-demo-image-segmentation.yaml
 ```
 
 or use the top-level `run-demo.sh` script:
