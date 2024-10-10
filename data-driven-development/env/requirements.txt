@@ -1,1 +1,2 @@
 python-on-whales==0.68.0
+pyyaml
