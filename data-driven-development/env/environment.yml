@@ -4,3 +4,4 @@ channels:
 dependencies:
   - python=3.12.1
   - python-on-whales=0.68.0
+  - pyyaml
