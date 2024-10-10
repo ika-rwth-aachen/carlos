@@ -261,7 +261,6 @@ def yaml_setup(config_file_path):
     if "output_path" not in setting_configs:
         setting_configs["output_path"] = "./data/"
 
-    #TODO: Warum output_path und output_bag_path miot gleichem Wert??
     if "record_topics" in setting_configs:
         output_bag_path = setting_configs["output_path"]
         if not os.path.exists(output_bag_path):
