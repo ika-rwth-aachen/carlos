@@ -39,7 +39,7 @@ Given that the specific nature of the data is less critical, the main objective 
 Run the demo for permutation-based data generation:
 ```bash
 # carlos/data-driven-development$
-python ./data_generation.py --config data-driven-development-demo-image-segmentation.json
+python ./data_generation.py --config config/data-driven-development-demo-image-segmentation.yml
 ```
 
 or use the top-level `run-demo.sh` script:

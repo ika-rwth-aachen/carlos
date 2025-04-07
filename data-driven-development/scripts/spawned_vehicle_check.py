@@ -5,14 +5,15 @@ import sys
 import argparse
 
 try:
-    sys.path.append(glob.glob('../carla/dist/carla-*%d.%d-%s.egg' % (
-        sys.version_info.major,
-        sys.version_info.minor,
-        'win-amd64' if os.name == 'nt' else 'linux-x86_64'))[0])
+    sys.path.append(
+        glob.glob('../carla/dist/carla-*%d.%d-%s.egg' %
+                  (sys.version_info.major, sys.version_info.minor,
+                   'win-amd64' if os.name == 'nt' else 'linux-x86_64'))[0])
 except IndexError:
     pass
 
 import carla
+
 
 def main():
     argparser = argparse.ArgumentParser(description=__doc__)
@@ -21,22 +22,20 @@ def main():
         metavar='H',
         default='carla-simulator',
         help='IP of the host server (default: carla-simulator)')
-    argparser.add_argument(
-        '--role_name',
-        metavar='R',
-        default='ego_vehicle',
-        help='Name of vehicle to wait')
-    argparser.add_argument(
-        '--role_name_list',
-        metavar='RL',
-        default=None,
-        help='List of vehicle to wait')
-    
+    argparser.add_argument('--role_name',
+                           metavar='R',
+                           default='ego_vehicle',
+                           help='Name of vehicle to wait')
+    argparser.add_argument('--role_name_list',
+                           metavar='RL',
+                           default=None,
+                           help='List of vehicle to wait')
+
     args = argparser.parse_args()
 
     if args.role_name_list:
         role_names = args.role_name_list.split(",")
-    else: 
+    else:
         role_names = [args.role_name]
 
     client = carla.Client(args.host, 2000)
@@ -57,8 +56,9 @@ def main():
         else:
             print("Waiting for {} ...".format(role_name))
             return 1
-    
-    return 0  
+
+    return 0
+
 
 if __name__ == '__main__':
     sys.exit(main())

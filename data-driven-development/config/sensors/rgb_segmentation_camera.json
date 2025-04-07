@@ -1,11 +1,11 @@
-{   
-    "objects": 
+{
+    "objects":
     [
         {
             "type": "vehicle.tesla.model3",
             "id": "ego_vehicle",
-            "sensors": 
-            [  
+            "sensors":
+            [
                 {
                     "type": "sensor.camera.rgb",
                     "id": "rgb",
@@ -46,4 +46,3 @@
         }
     ]
 }
-
