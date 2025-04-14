@@ -71,21 +71,34 @@ def prepare_general_settings(
     return general_settings, simulation_services, convert_services
 
 
-def prepare_permutation(permutation: dict[str, Any]) -> str:
-    # Store all left over values of the permutation in a single argument for the simulation controller
+def prepare_controller(simulation_setup: dict[str, Any]) -> dict[str, Any]:
+    # Store relevant keys as simulation controller args
     controller_args = []
-    for key in list(permutation.keys()):
-        if key == "sensors_config_files":
-            continue
-        if key == "town":
-            # Add to controller_args but leave it in the dictionary.
-            controller_args.append(f"--{key} {permutation[key]}")
-        else:
-            value = permutation.pop(key)
-            controller_args.append(f"--{key} {value}")
-    controller_args_string = " ".join(controller_args)
-    permutation["controller_args"] = controller_args_string
-    return permutation
+    argument_list = ["spawn_point", "town", "weather", "vehicle_number", "vehicle_occupancy", "walker_number"]
+
+    for key in list(simulation_setup.keys()):
+        if key in argument_list:
+            controller_args.append(f"--{key} {simulation_setup[key]}")
+
+    simulation_setup["controller_args"] = " ".join(controller_args)
+    return simulation_setup
+
+
+def prepare_scenario(simulation_setup: dict[str, Any]) -> dict[str, Any]:
+    if "scenario_file" in simulation_setup:
+        scenario_file = simulation_setup.pop("scenario_file")
+
+        # split scenario_file in scenario_file and scenario_path
+        simulation_setup["scenario_folder"] = os.path.dirname(scenario_file)
+        simulation_setup["scenario_file"] = os.path.basename(scenario_file)
+
+        # get town from scenario file
+        tree = ET.parse(scenario_file)
+        root = tree.getroot()
+        elem = root.find('./RoadNetwork/LogicFile')
+        simulation_setup["town"] = elem.get('filepath')
+
+    return simulation_setup
 
 
 def setup_docker_client(docker_compose_file: Path = Path(
@@ -97,19 +110,20 @@ def setup_docker_client(docker_compose_file: Path = Path(
 
 
 def validate_sensors_config_files(
-        sensors_config_files: list[str]) -> list[str]:
+        sensors_config_files: str) -> str:
     if not sensors_config_files:
         logging.error("No sensors configuration file specified")
         sys.exit(1)
-    sensors_config_files = [
-        str(file) for file in map(Path, sensors_config_files)
-        if file.is_file() and file.suffix == ".json"
-    ]
-    return sensors_config_files
+
+    file = Path(sensors_config_files)
+    if not file.is_file() or file.suffix != ".json":
+        logging.error(f"Invalid sensors configuration file: {file}")
+        sys.exit(1)
+
+    return str(file)
 
 
 def get_role_names(sensor_config_file: str) -> str:
-    # The existence of the file is already checked in validate_sensors_config_files
     try:
         with open(sensor_config_file) as file:
             data = json.load(file)
@@ -120,15 +134,24 @@ def get_role_names(sensor_config_file: str) -> str:
         logging.error(f"Error reading JSON file: {e}")
         sys.exit(1)
 
-def simulate_single_permutation(docker_client: DockerClient,
+
+def simulate_setup(docker_client: DockerClient,
                                 general_settings: dict[Any],
-                                permutation: dict[Any],
+                                simulation_setup: dict[Any],
                                 simulation_services: list[str]) -> None:
-    run_name = '_'.join([str(value) for value in permutation.values()])
-    permutation = prepare_permutation(permutation)
-    role_names = get_role_names(permutation["sensors_config_files"])
-    simulation_args = {"run_name": run_name, "role_names": role_names, **general_settings, **permutation}
-    print(simulation_args)
+    run_name = '_'.join(
+        Path(str(value)).stem if Path(str(value)).parent != Path('.') else str(value)
+        for value in simulation_setup.values()
+    )
+
+    simulation_setup["sensors_config_files"] = validate_sensors_config_files(
+                simulation_setup["sensors_config_files"])
+    simulation_setup["role_names"] = get_role_names(simulation_setup["sensors_config_files"])
+
+    simulation_setup = prepare_controller(simulation_setup)
+    simulation_setup = prepare_scenario(simulation_setup)
+
+    simulation_args = {"run_name": run_name, **general_settings, **simulation_setup}
 
     os.environ.update(simulation_args)
     docker_client.compose.pull()
@@ -136,6 +159,27 @@ def simulate_single_permutation(docker_client: DockerClient,
                              services=simulation_services)
     docker_client.compose.down()
 
+
+def check_run_settings(run_settings: dict[Any], simulation_services: list[str]) -> None:
+    config_checks = {
+        "permutation_settings": {
+            "required_service": "carla-simulation-controller",
+            "forbidden_service": "carla-scenario-runner",
+            "error_message": "simulation-controller is required for permutation execution."
+        },
+        "scenario_settings": {
+            "required_service": "carla-scenario-runner",
+            "forbidden_service": "simulation-controller",
+            "error_message": "carla-scenario-runner is required for scenario execution."
+        }
+    }
+
+    for setting_key, config in config_checks.items():
+        if setting_key in run_settings:
+            if (config["required_service"] not in simulation_services or
+                config["forbidden_service"] in simulation_services):
+                logging.error(config["error_message"])
+                sys.exit(1)
 
 def main():
     args = parse_arguments()
@@ -145,29 +189,31 @@ def main():
     docker_client = setup_docker_client()
 
     try:
-        if "permutation_settings" in run_settings:
-            permutation_settings = run_settings["permutation_settings"]
-            permutation_settings[
-                "sensors_config_files"] = validate_sensors_config_files(
-                    permutation_settings["sensors_config_files"])
-            num_executions = int(permutation_settings.pop("num_executions", 1))
-            # Calculate all possible combinations of simulation configs
-            keys, values = zip(*permutation_settings.items())
-            permutations = [
-                dict(zip(keys, v)) for v in itertools.product(*values)
-            ]
-            logging.info(
-                f"Running {len(permutations) * num_executions} different simulation setups..."
-            )
-            for _ in range(num_executions):
-                for permutation in permutations:
-                    try:
-                        simulate_single_permutation(docker_client,
-                                                    general_settings,
-                                                    permutation,
-                                                    simulation_services)
-                    except DockerException:
-                        docker_client.compose.down()
+        num_executions = int(run_settings.pop("num_executions", 1))
+
+        check_run_settings(run_settings, simulation_services)
+
+        simulation_setups = []
+        for setting_key in ("permutation_settings", "scenario_settings"):
+            if setting_key in run_settings:
+                keys, values = zip(*run_settings[setting_key].items())
+                setups = [dict(zip(keys, v)) for v in itertools.product(*values)]
+                simulation_setups.extend(setups)
+
+        logging.info(
+            f"Running {len(simulation_setups) * num_executions} different simulation setups..."
+        )
+
+        for _ in range(num_executions):
+            for simulation_setup in simulation_setups:
+                try:
+                    simulate_setup(docker_client,
+                                                general_settings,
+                                                simulation_setup,
+                                                simulation_services)
+                except DockerException:
+                    docker_client.compose.down()
+
     except KeyboardInterrupt:
         docker_client.compose.kill()
 
