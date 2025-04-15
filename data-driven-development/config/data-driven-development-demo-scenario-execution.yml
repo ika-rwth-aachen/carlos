@@ -13,6 +13,7 @@ general_settings:
         topic_rgb: /carla/ego_vehicle/rgb/image
         topic_segmentation: /carla/ego_vehicle/segmentation/image
         topic_tf: /tf
+        topic_clock: /clock
     output_path: ./data/scenario-execution/
 
 run_settings:
