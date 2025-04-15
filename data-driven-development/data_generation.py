@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import argparse
-from ast import List
 import itertools
 import json
 import logging
@@ -23,9 +22,9 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument(
         '--config',
         metavar='C',
-        default='./config/data-driven-development-demo-image-segmentation.yml',
+        default='./config/data-driven-development-demo-permutation-execution.yml',
         help=('Config file which should be used (default:'
-              './config/data-driven-development-demo-image-segmentation.yml)'))
+              './config/data-driven-development-demo-permutation-execution.yml)'))
     args = parser.parse_args()
     return args
 
@@ -88,6 +87,9 @@ def prepare_scenario(simulation_setup: dict[str, Any]) -> dict[str, Any]:
     if "scenario_file" in simulation_setup:
         scenario_file = simulation_setup.pop("scenario_file")
 
+        # validate scenario_file
+        validate_file(scenario_file, ".xosc")
+
         # split scenario_file in scenario_file and scenario_path
         simulation_setup["scenario_folder"] = os.path.dirname(scenario_file)
         simulation_setup["scenario_file"] = os.path.basename(scenario_file)
@@ -109,15 +111,18 @@ def setup_docker_client(docker_compose_file: Path = Path(
     return DockerClient(compose_files=[docker_compose_file])
 
 
-def validate_sensors_config_files(
-        sensors_config_files: str) -> str:
-    if not sensors_config_files:
-        logging.error("No sensors configuration file specified")
+def validate_file(file: str, suffix: str = None) -> str:
+    if not file:
+        logging.error("No file specified")
         sys.exit(1)
 
-    file = Path(sensors_config_files)
-    if not file.is_file() or file.suffix != ".json":
-        logging.error(f"Invalid sensors configuration file: {file}")
+    file = Path(file)
+    if not file.is_file():
+        logging.error(f"File not found: {file}")
+        sys.exit(1)
+
+    if suffix and file.suffix != suffix:
+        logging.error(f"Invalid file suffix: {file}")
         sys.exit(1)
 
     return str(file)
@@ -144,8 +149,8 @@ def simulate_setup(docker_client: DockerClient,
         for value in simulation_setup.values()
     )
 
-    simulation_setup["sensors_config_files"] = validate_sensors_config_files(
-                simulation_setup["sensors_config_files"])
+    simulation_setup["sensors_config_files"] = validate_file(
+                simulation_setup["sensors_config_files"], ".json")
     simulation_setup["role_names"] = get_role_names(simulation_setup["sensors_config_files"])
 
     simulation_setup = prepare_controller(simulation_setup)

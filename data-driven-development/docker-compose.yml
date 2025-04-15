@@ -67,7 +67,7 @@ services:
       - ./scripts/simulation_controller.py:/opt/carla/PythonAPI/simulation_controller.py
       - ./scripts/set_environment.py:/opt/carla/PythonAPI/set_environment.py
       - *sensors-mount
-    command: bash -ic "python simulation_controller.py --host carla-simulator ${controller_args}"
+    command: bash -ic "python -u simulation_controller.py --host carla-simulator ${controller_args}"
 
   # --- Option B: apply concrete scenario setups -------------------------------
   carla-scenario-runner:
