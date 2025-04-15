@@ -149,9 +149,9 @@ def simulate_setup(docker_client: DockerClient,
         for value in simulation_setup.values()
     )
 
-    simulation_setup["sensors_config_files"] = validate_file(
-                simulation_setup["sensors_config_files"], ".json")
-    simulation_setup["role_names"] = get_role_names(simulation_setup["sensors_config_files"])
+    simulation_setup["sensors_file"] = validate_file(
+                simulation_setup["sensors_file"], ".json")
+    simulation_setup["role_names"] = get_role_names(simulation_setup["sensors_file"])
 
     simulation_setup = prepare_controller(simulation_setup)
     simulation_setup = prepare_scenario(simulation_setup)

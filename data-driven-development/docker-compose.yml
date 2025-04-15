@@ -1,5 +1,5 @@
 x-scenario-mount: &scenario-mount ./${scenario_folder}:/scenarios
-x-sensors-mount:  &sensors-mount  ./${sensors_config_files}:/sensors.json
+x-sensors-mount:  &sensors-mount  ./${sensors_file}:/sensors.json
 
 # ==============================================================================
 
