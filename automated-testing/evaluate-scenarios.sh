@@ -2,6 +2,10 @@
 
 set -e
 
+DEFAULT_SIMULATOR_IMAGE="rwthika/carla-simulator:server"
+DEFAULT_SCENARIO_RUNNER_IMAGE="rwthika/carla-scenario-runner:latest"
+COMPOSE_TEMPLATE_PATH="./template.yml"
+
 usage() {
   echo "Usage: $0 [-o][-p][-n] [COMPOSE_TEMPLATE_PATH] [SCENARIO_FOLDER_PATH]"
   echo "COMPOSE_TEMPLATE_PATH : Location of Compose file which can be customized through environment variables"
@@ -23,15 +27,13 @@ restart-simulator() {
   echo "Restarting simulator..."
   docker compose -f $COMPOSE_TEMPLATE_PATH kill
   docker compose -f $COMPOSE_TEMPLATE_PATH down
-  docker compose -f $COMPOSE_TEMPLATE_PATH up -d carla-simulator
+  docker compose -f $COMPOSE_TEMPLATE_PATH up -d carla-server
 }
 
 update-simulator() {
   echo "Updating simulator..."
   docker compose -f $COMPOSE_TEMPLATE_PATH pull
 }
-
-COMPOSE_TEMPLATE_PATH="./template.yml"
 
 while getopts "hopn" flag; do
 case "$flag" in
@@ -54,8 +56,8 @@ done
 shift $(($OPTIND-1)) # return to usual handling of positional args
 
 # default settings if no external overrides provided
-export SIMULATOR_IMAGE=${SIMULATOR_IMAGE:-"rwthika/carla-simulator:server"}
-export SCENARIO_RUNNER_IMAGE=${SCENARIO_RUNNER_IMAGE:-"rwthika/carla-scenario-runner:latest"}
+export SIMULATOR_IMAGE=${SIMULATOR_IMAGE:-DEFAULT_SIMULATOR_IMAGE}
+export SCENARIO_RUNNER_IMAGE=${SCENARIO_RUNNER_IMAGE:-DEFAULT_SCENARIO_RUNNER_IMAGE}
 
 export COMPOSE_TEMPLATE_PATH=$(realpath ${1:-$COMPOSE_TEMPLATE_PATH})
 export SCENARIO_FOLDER_PATH=$(realpath ${2:-"../utils/scenarios"})
@@ -93,7 +95,7 @@ fi
 
 xhost +local:
 echo "Starting simulator..."
-docker compose -f $COMPOSE_TEMPLATE_PATH up -d carla-simulator
+docker compose -f $COMPOSE_TEMPLATE_PATH up -d carla-server
 
 for scenario in "${scenarios[@]}"; do
   echo "Evaluating $scenario ..."

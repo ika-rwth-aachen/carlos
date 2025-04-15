@@ -66,7 +66,6 @@ jobs:
       - uses: ika-rwth-aachen/carlos-ci-action@v0.1.1
         continue-on-error: true
         with:
-          composefile-path: automated-testing/carla-sim.yml
           scenario-folder-path: ${{ matrix.filedir }}
           scenario-file-name: ${{ matrix.filename }}
       - shell: bash

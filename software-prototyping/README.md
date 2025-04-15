@@ -24,13 +24,13 @@ Directly start the use case demonstration using the top-level `run-demo.sh` scri
 This example demonstrates a basic CARLA simulation in tandem with the widely used Robot Operations System ([ROS](https://www.ros.org/)). We only cover ROS 2 with this demo. In addition to a CARLA simulation core, a ROS bridge enables communication between CARLA and ROS by translating simulation outputs (e.g. sensor data) to ROS topics. In addition, RViz is used as a visualization component.
 
 Specifically, there are three main components used in the `software-prototyping` demo:
-- [carla-simulator](https://github.com/ika-rwth-aachen/carla-simulator)
+- [carla-server](https://github.com/ika-rwth-aachen/carla-simulator)
 - [carla-ros-bridge](https://github.com/ika-rwth-aachen/carla-ros-bridge)
-- [ros-monitoring](https://github.com/ika-rwth-aachen/carlos/blob/main/utils/components.md#ros-monitoring)
+- [ros-monitoring](https://github.com/ika-rwth-aachen/carlos/blob/main/utils/carla-essentials/README.md#ros-monitoring)
 - A containerized image segmentation ROS node that serves as an example on how to attached a custom function to the simulation.
 
 > [!NOTE]
-> A detailed description of the individual components can be found in [components guide](../utils/components.md).
+> A detailed description of the individual components can be found in [components guide](../utils/carla-essentials/README.md).
 
 ### Quick Start
 After starting the `software-prototyping` demo, a CARLA GUI opens up where you can look around using <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd>, holding the left or right mouse button and moving the mouse in the desired direction. 

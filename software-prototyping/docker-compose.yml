@@ -6,18 +6,15 @@ x-rviz-config-mount: &rviz-config-mount ./config.rviz:/config.rviz
 
 services:
 
-  carla-simulator:
+  carla-server:
     extends:
-      file: ../utils/components.yml
-      service: carla-simulator
+      file: ../utils/carla-essentials/carla-services.yml
+      service: carla-server
 
   carla-ros-bridge:
     extends:
-      file: ../utils/components.yml
+      file: ../utils/carla-essentials/carla-services.yml
       service: carla-ros-bridge
-    depends_on:
-      carla-simulator:
-        condition: service_healthy
     volumes:
       - *launch-mount
       - *sensors-mount
@@ -25,10 +22,10 @@ services:
     
   ros-monitoring:
     extends:
-      file: ../utils/components.yml
+      file: ../utils/carla-essentials/carla-services.yml
       service: ros-monitoring
     depends_on:
-      carla-simulator:
+      carla-server:
         condition: service_healthy
     volumes:
       - *rviz-config-mount
@@ -36,7 +33,7 @@ services:
 
   image-segmentation:
     depends_on:
-      carla-simulator:
+      carla-server:
         condition: service_healthy
     image: rwthika/carlos-image-segmentation
     command: ros2 launch image_segmentation image_segmentation_launch.py image_topic:=/carla/ego_vehicle/rgb_front/image
