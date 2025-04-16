@@ -2,7 +2,7 @@ general_settings:
     max_simulation_time: 60
     max_real_time: 300
     simulation_services:
-        - carla-simulator
+        - carla-server
         - time-health-check
         - spawned-vehicle-check
         - carla-ros-bridge
