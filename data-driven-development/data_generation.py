@@ -126,7 +126,7 @@ def get_role_names(sensor_config_file: str) -> str:
         role_names = " ".join(role_names)
         return role_names
     except json.JSONDecodeError as e:
-        logging.error(f"Error reading JSON file: {e}")
+        logging.error(f"Error reading sensors JSON file: {e}")
         sys.exit(1)
 
 
