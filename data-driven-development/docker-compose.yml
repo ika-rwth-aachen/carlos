@@ -29,7 +29,7 @@ services:
       file: ../utils/carla-essentials/carla-services.yml
       service: carla-client
     volumes:
-      - ./src/time_controller.py:/opt/carla/PythonAPI/time_controller.py
+      - ./scripts/time_controller.py:/opt/carla/PythonAPI/time_controller.py
     command: bash -ic "python time_controller.py --host carla-server ${max_simulation_time} ${max_real_time}"
 
   spawned-vehicle-check:
