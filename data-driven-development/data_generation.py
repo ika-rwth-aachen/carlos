@@ -70,10 +70,71 @@ def prepare_general_settings(
     return general_settings, simulation_services, convert_services
 
 
+def setup_docker_client(docker_compose_file: Path = Path(
+        './docker-compose.yml')) -> DockerClient:
+    if not docker_compose_file.exists():
+        logging.error(f"Docker Compose file not found: {docker_compose_file}")
+        sys.exit(1)
+    return DockerClient(compose_files=[docker_compose_file])
+
+
+def check_run_settings(run_settings: dict[Any], simulation_services: list[str]) -> None:
+    config_checks = {
+        "permutation_settings": {
+            "required_service": "carla-simulation-controller",
+            "forbidden_service": "carla-scenario-runner",
+            "error_message": "simulation-controller is required for permutation execution."
+        },
+        "scenario_settings": {
+            "required_service": "carla-scenario-runner",
+            "forbidden_service": "simulation-controller",
+            "error_message": "carla-scenario-runner is required for scenario execution."
+        }
+    }
+
+    for setting_key, config in config_checks.items():
+        if setting_key in run_settings:
+            if (config["required_service"] not in simulation_services or
+                    config["forbidden_service"] in simulation_services):
+                logging.error(config["error_message"])
+                sys.exit(1)
+
+
+def validate_file(file: str, suffix: str = None) -> str:
+    if not file:
+        logging.error("No file specified")
+        sys.exit(1)
+
+    file = Path(file)
+    if not file.is_file():
+        logging.error(f"File not found: {file}")
+        sys.exit(1)
+
+    if suffix and file.suffix != suffix:
+        logging.error(f"Invalid file suffix: {file}")
+        sys.exit(1)
+
+    return str(file)
+
+
+def get_role_names(sensor_config_file: str) -> str:
+    try:
+        with open(sensor_config_file) as file:
+            data = json.load(file)
+        role_names = [actor["id"] for actor in data["objects"]
+                      if actor["type"].startswith("vehicle.")]
+        role_names = " ".join(role_names)
+        return role_names
+    except json.JSONDecodeError as e:
+        logging.error(f"Error reading JSON file: {e}")
+        sys.exit(1)
+
+
 def prepare_controller(simulation_setup: dict[str, Any]) -> dict[str, Any]:
     # Store relevant keys as simulation controller args
     controller_args = []
-    argument_list = ["spawn_point", "town", "weather", "vehicle_number", "vehicle_occupancy", "walker_number"]
+    argument_list = ["spawn_point", "town", "weather",
+                     "vehicle_number", "vehicle_occupancy", "walker_number"]
 
     for key in list(simulation_setup.keys()):
         if key in argument_list:
@@ -103,60 +164,26 @@ def prepare_scenario(simulation_setup: dict[str, Any]) -> dict[str, Any]:
     return simulation_setup
 
 
-def setup_docker_client(docker_compose_file: Path = Path(
-    './docker-compose.yml')) -> DockerClient:
-    if not docker_compose_file.exists():
-        logging.error(f"Docker Compose file not found: {docker_compose_file}")
-        sys.exit(1)
-    return DockerClient(compose_files=[docker_compose_file])
-
-
-def validate_file(file: str, suffix: str = None) -> str:
-    if not file:
-        logging.error("No file specified")
-        sys.exit(1)
-
-    file = Path(file)
-    if not file.is_file():
-        logging.error(f"File not found: {file}")
-        sys.exit(1)
-
-    if suffix and file.suffix != suffix:
-        logging.error(f"Invalid file suffix: {file}")
-        sys.exit(1)
-
-    return str(file)
-
-
-def get_role_names(sensor_config_file: str) -> str:
-    try:
-        with open(sensor_config_file) as file:
-            data = json.load(file)
-        role_names = [actor["id"] for actor in data["objects"] if actor["type"].startswith("vehicle.")]
-        role_names = " ".join(role_names)
-        return role_names
-    except json.JSONDecodeError as e:
-        logging.error(f"Error reading JSON file: {e}")
-        sys.exit(1)
-
-
 def simulate_setup(docker_client: DockerClient,
-                                general_settings: dict[Any],
-                                simulation_setup: dict[Any],
-                                simulation_services: list[str]) -> None:
+                   general_settings: dict[Any],
+                   simulation_setup: dict[Any],
+                   simulation_services: list[str]) -> None:
     run_name = '_'.join(
-        Path(str(value)).stem if Path(str(value)).parent != Path('.') else str(value)
+        Path(str(value)).stem if Path(
+            str(value)).parent != Path('.') else str(value)
         for value in simulation_setup.values()
     )
 
     simulation_setup["sensors_file"] = validate_file(
-                simulation_setup["sensors_file"], ".json")
-    simulation_setup["role_names"] = get_role_names(simulation_setup["sensors_file"])
+        simulation_setup["sensors_file"], ".json")
+    simulation_setup["role_names"] = get_role_names(
+        simulation_setup["sensors_file"])
 
     simulation_setup = prepare_controller(simulation_setup)
     simulation_setup = prepare_scenario(simulation_setup)
 
-    simulation_args = {"run_name": run_name, **general_settings, **simulation_setup}
+    simulation_args = {"run_name": run_name, **
+                       general_settings, **simulation_setup}
 
     os.environ.update(simulation_args)
     logging.info(f"Running simulation setup {run_name}")
@@ -166,27 +193,6 @@ def simulate_setup(docker_client: DockerClient,
     docker_client.compose.down()
     logging.info(f"Simulation setup {run_name} completed")
 
-
-def check_run_settings(run_settings: dict[Any], simulation_services: list[str]) -> None:
-    config_checks = {
-        "permutation_settings": {
-            "required_service": "carla-simulation-controller",
-            "forbidden_service": "carla-scenario-runner",
-            "error_message": "simulation-controller is required for permutation execution."
-        },
-        "scenario_settings": {
-            "required_service": "carla-scenario-runner",
-            "forbidden_service": "simulation-controller",
-            "error_message": "carla-scenario-runner is required for scenario execution."
-        }
-    }
-
-    for setting_key, config in config_checks.items():
-        if setting_key in run_settings:
-            if (config["required_service"] not in simulation_services or
-                config["forbidden_service"] in simulation_services):
-                logging.error(config["error_message"])
-                sys.exit(1)
 
 def main():
     args = parse_arguments()
@@ -204,7 +210,8 @@ def main():
         for setting_key in ("permutation_settings", "scenario_settings"):
             if setting_key in run_settings:
                 keys, values = zip(*run_settings[setting_key].items())
-                setups = [dict(zip(keys, v)) for v in itertools.product(*values)]
+                setups = [dict(zip(keys, v))
+                          for v in itertools.product(*values)]
                 simulation_setups.extend(setups)
 
         logging.info(
@@ -215,9 +222,9 @@ def main():
             for simulation_setup in simulation_setups:
                 try:
                     simulate_setup(docker_client,
-                                                general_settings,
-                                                simulation_setup,
-                                                simulation_services)
+                                   general_settings,
+                                   simulation_setup,
+                                   simulation_services)
                 except DockerException:
                     docker_client.compose.down()
 
