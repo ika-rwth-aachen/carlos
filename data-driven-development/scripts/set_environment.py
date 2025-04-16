@@ -541,9 +541,8 @@ def parseArguments():
         "--config_file",
         metavar="F",
         default="",
-        help=
-        ("Path to the optional config file (json). Set arguments override the"
-         " corresponding value in the config file."),
+        help=("Path to the optional config file (json). Set arguments override the"
+              " corresponding value in the config file."),
     )
     argparser.add_argument(
         "--host",
@@ -588,9 +587,8 @@ def parseArguments():
         "--generationv",
         metavar="G",
         default="All",
-        help=
-        ('restrict to certain vehicle generation (values: "1","2","All" - default:'
-         ' "All")'),
+        help=('restrict to certain vehicle generation (values: "1","2","All" - default:'
+              ' "All")'),
     )
     argparser.add_argument(
         "--filterw",
@@ -624,8 +622,7 @@ def parseArguments():
         "--seed",
         metavar="S",
         type=int,
-        help=
-        "Set random device seed and deterministic mode for Traffic Manager",
+        help="Set random device seed and deterministic mode for Traffic Manager",
     )
     argparser.add_argument(
         "--seedw",
