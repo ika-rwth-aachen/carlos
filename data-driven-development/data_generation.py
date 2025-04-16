@@ -159,10 +159,12 @@ def simulate_setup(docker_client: DockerClient,
     simulation_args = {"run_name": run_name, **general_settings, **simulation_setup}
 
     os.environ.update(simulation_args)
+    logging.info(f"Running simulation setup {run_name}")
     docker_client.compose.pull()
     docker_client.compose.up(abort_on_container_exit=True,
                              services=simulation_services)
     docker_client.compose.down()
+    logging.info(f"Simulation setup {run_name} completed")
 
 
 def check_run_settings(run_settings: dict[Any], simulation_services: list[str]) -> None:
