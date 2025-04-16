@@ -10,6 +10,7 @@ import time
 
 import carla
 
+
 def main():
     argparser = argparse.ArgumentParser(description=__doc__)
     argparser.add_argument(
@@ -47,7 +48,7 @@ def main():
         metavar='W',
         default=None,
         help='')
-    
+
     args = argparser.parse_args()
 
     config_list = ["--host", args.host]
@@ -112,17 +113,20 @@ def main():
             if 0 < vehicle_occupancy < 1:
                 if "--number-of-vehicles" in tm_list:
                     index = tm_list.index("--number-of-vehicles")
-                    tm_list[index + 1] = str(int(len(spawn_points)*vehicle_occupancy))
+                    tm_list[index +
+                            1] = str(int(len(spawn_points)*vehicle_occupancy))
                 else:
-                    tm_list.extend(["--number-of-vehicles", str(int(len(spawn_points)*vehicle_occupancy))])
+                    tm_list.extend(
+                        ["--number-of-vehicles", str(int(len(spawn_points)*vehicle_occupancy))])
 
         # spawn traffic if it is set (filter out twowheeled vehicle which have no boundingbox)
         if "--number-of-vehicles" in tm_list or "--number-of-walkers" in tm_list:
-            subprocess.run(["python", "set_environment.py", "--asynch", "--filterv", 'vehicle.*[!vehicle.bh.crossbike][!vehicle.diamondback.century][!vehicle.harley-davidson.low_rider][!vehicle.gazelle.omafiets][!vehicle.kawasaki.ninja][!vehicle.yamaha.yzf]'] + tm_list)
+            subprocess.run(["python", "set_environment.py", "--asynch", "--filterv",
+                           'vehicle.*[!vehicle.bh.crossbike][!vehicle.diamondback.century][!vehicle.harley-davidson.low_rider][!vehicle.gazelle.omafiets][!vehicle.kawasaki.ninja][!vehicle.yamaha.yzf]'] + tm_list)
 
         while True:
             world.wait_for_tick()
-    
+
     except:
         print('error destroying actors ...')
         for actor in actor_list:

@@ -1,0 +1,37 @@
+general_settings:
+    max_simulation_time: 60
+    max_real_time: 300
+    simulation_services:
+        - carla-simulator
+        - time-health-check
+        - spawned-vehicle-check
+        - carla-ros-bridge
+        - carla-simulation-controller
+        - rosbag-record
+    convert_services: []
+    record_topics:
+        topic_rgb: /carla/ego_vehicle/rgb/image
+        topic_segmentation: /carla/ego_vehicle/segmentation/image
+        topic_tf: /tf
+        topic_clock: /clock
+    output_path: ./data/permutation-execution/
+
+run_settings:
+    num_executions: 1
+    permutation_settings:
+        sensors_file:
+            - ./config/sensors/rgb_segmentation_camera.json
+        spawn_point:
+            - "1"
+            - "2"
+            - "3"
+        town:
+            - Town01
+            - Town10HD
+        vehicle_occupancy:
+            - "0.5"
+        walker_number:
+            - "50"
+        weather:
+            - ClearSunset
+            - WetCloudyNoon

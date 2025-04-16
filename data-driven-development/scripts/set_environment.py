@@ -8,15 +8,11 @@ import yaml
 # Differentiate between windows and linux
 try:
     sys.path.append(
-        glob.glob(
-            "../carla/dist/carla-*%d.%d-%s.egg"
-            % (
-                sys.version_info.major,
-                sys.version_info.minor,
-                "win-amd64" if os.name == "nt" else "linux-x86_64",
-            )
-        )[0]
-    )
+        glob.glob("../carla/dist/carla-*%d.%d-%s.egg" % (
+            sys.version_info.major,
+            sys.version_info.minor,
+            "win-amd64" if os.name == "nt" else "linux-x86_64",
+        ))[0])
 except IndexError:
     pass
 
@@ -60,7 +56,8 @@ def main():
         args = argparse.Namespace(**args_dict)
 
     # Configure logging
-    logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.INFO)
+    logging.basicConfig(format="%(levelname)s: %(message)s",
+                        level=logging.INFO)
 
     # Set up actor lists
     vehicles_list = []
@@ -100,7 +97,8 @@ def main():
 
             # Set weather by preset
             if args.use_weather_preset:
-                print("Setting weather to preset: " + args.weather_preset_name + "\n")
+                print("Setting weather to preset: " +
+                      args.weather_preset_name + "\n")
                 selected_weather = weather_presets[args.weather_preset_name]
 
             # Set weather by parameters
@@ -137,8 +135,7 @@ def main():
             DEFAULT_GLOBAL_DISTANCE_TO_LEADING_VEHICLE,
         )
         traffic_manager.set_global_distance_to_leading_vehicle(
-            global_distance_to_leading_vehicle
-        )
+            global_distance_to_leading_vehicle)
 
         # All vehicles can only differ a certain percentage from their set speed
         global_percentage_speed_difference = getattr(
@@ -147,8 +144,7 @@ def main():
             DEFAULT_GLOBAL_PERCENTAGE_SPEED_DIFFERENCE,
         )
         traffic_manager.global_percentage_speed_difference(
-            global_percentage_speed_difference
-        )
+            global_percentage_speed_difference)
 
         # Enable hybrid physics mode
         if args.hybrid:
@@ -156,30 +152,31 @@ def main():
                 logging.warning(
                     "You are using hybrid physics mode. However none of the spawned"
                     " vehicles is a hero vehicle. This will result in no vehicles being"
-                    " simulated, unless you define a separate hero vehicle."
-                )
+                    " simulated, unless you define a separate hero vehicle.")
             traffic_manager.set_hybrid_physics_mode(
                 True
             )  # Only actors in a given radius around a hero vehicle are simulated, if there is no hero vehicle, no actors are simulated.
 
             # Set the spawn radius
             traffic_manager.set_hybrid_physics_radius(
-                getattr(args, "physics_enable_radius", DEFAULT_PHYSICS_ENABLE_RADIUS)
+                getattr(args, "physics_enable_radius",
+                        DEFAULT_PHYSICS_ENABLE_RADIUS)
             )  # The radius in meters around the hero vehicle in which other actors are simulated
 
             # Set the actor active distance
             settings = world.get_settings()
             settings.actor_active_distance = getattr(
-                args, "actor_active_distance", DFAULT_ACTOR_ACTIVE_DISTANCE
-            )
+                args, "actor_active_distance", DFAULT_ACTOR_ACTIVE_DISTANCE)
             # Apply world settings
             world.apply_settings(settings)
 
-
             # Set Spawn Boundaries
-            lower_bound = getattr(args, "respawn_lower_bound", DEFAULT_RESPAWN_LOWER_BOUND)
-            upper_bound = getattr(args, "respawn_upper_bound", DEFAULT_RESPAWN_UPPER_BOUND)
-            traffic_manager.set_boundaries_respawn_dormant_vehicles(lower_bound, upper_bound)
+            lower_bound = getattr(args, "respawn_lower_bound",
+                                  DEFAULT_RESPAWN_LOWER_BOUND)
+            upper_bound = getattr(args, "respawn_upper_bound",
+                                  DEFAULT_RESPAWN_UPPER_BOUND)
+            traffic_manager.set_boundaries_respawn_dormant_vehicles(
+                lower_bound, upper_bound)
 
         # Respawn vehicles that are dormant (outside the range of the hero vehicle)
         if args.respawn:
@@ -190,8 +187,7 @@ def main():
             traffic_manager.set_random_device_seed(args.seed)
             msg = (
                 "Random seed set to %s. This will result in the same traffic every"
-                " time."
-            )
+                " time.")
             logging.warning(msg, str(args.seed))
 
         # Get world settings
@@ -202,8 +198,7 @@ def main():
             logging.warning(
                 "You are currently in synchronous mode. If you want to use the"
                 " traffic manager alogside the ros-bridge (active ticking part)"
-                " make sure to start this script with the --asynch argument."
-            )
+                " make sure to start this script with the --asynch argument.")
             traffic_manager.set_synchronous_mode(True)
             if not settings.synchronous_mode:
                 synchronous_master = True
@@ -217,8 +212,7 @@ def main():
                 " simulation, you could experience some issues. If it's not"
                 " working correctly, switch to synchronous mode by using"
                 " traffic_manager.set_synchronous_mode(True) or see documentation for"
-                " help."
-            )
+                " help.")
 
         # Set render mode
         if args.no_rendering:
@@ -231,8 +225,10 @@ def main():
         world.apply_settings(settings)
 
         # Get blueprints for vehicles and walkers TODO: More fine grained control over the blueprints
-        blueprints = get_actor_blueprints(world, args.filterv, args.generationv)
-        blueprintsWalkers = get_actor_blueprints(world, args.filterw, args.generationw)
+        blueprints = get_actor_blueprints(world, args.filterv,
+                                          args.generationv)
+        blueprintsWalkers = get_actor_blueprints(world, args.filterw,
+                                                 args.generationw)
 
         # Set safe spawning for vehicles
         if args.safe:
@@ -247,17 +243,21 @@ def main():
         vehicle_distribution_absolute = dict()
         if hasattr(args, 'filter_by_type') and args.filter_by_type:
             # Check if distribution is valid
-            if hasattr(args, 'vehicle_distribution') and args.vehicle_distribution is not None:
+            if hasattr(args, 'vehicle_distribution'
+                       ) and args.vehicle_distribution is not None:
                 if sum(args.vehicle_distribution.values()) != 100:
-                    logging.warning("Your Vehicle distribution does not sum to 100%. Vehicles will be spawned in following Priority: Car, Truck, Motorcycle, Bicycle")
+                    logging.warning(
+                        "Your Vehicle distribution does not sum to 100%. Vehicles will be spawned in following Priority: Car, Truck, Motorcycle, Bicycle"
+                    )
 
                 # Get the number of vehicles to spawn from the distribution
-                vehicle_distribution_absolute.update((x, round(float(y)/100*args.number_of_vehicles)) for x, y in args.vehicle_distribution.items())
+                vehicle_distribution_absolute.update(
+                    (x, round(float(y) / 100 * args.number_of_vehicles))
+                    for x, y in args.vehicle_distribution.items())
             else:
                 raise ValueError(
                     "You have specified a vehicle distribution, but no distribution"
-                    " was given. Please specify a distribution."
-                )
+                    " was given. Please specify a distribution.")
 
         # Get spawn points for vehicles
         spawn_points = world.get_map().get_spawn_points()
@@ -267,7 +267,8 @@ def main():
             random.shuffle(spawn_points)
         elif args.number_of_vehicles > number_of_spawn_points:
             msg = "requested %d vehicles, but could only find %d spawn points"
-            logging.warning(msg, args.number_of_vehicles, number_of_spawn_points)
+            logging.warning(msg, args.number_of_vehicles,
+                            number_of_spawn_points)
             args.number_of_vehicles = number_of_spawn_points
 
         SpawnActor = carla.command.SpawnActor
@@ -293,45 +294,50 @@ def main():
                 break
 
             # If Distribution is requested, get the blueprint from the class
-            if hasattr(args, 'filter_by_type') and hasattr(args, 'vehicle_distribution') and args.filter_by_type and args.vehicle_distribution is not None:
+            if hasattr(args, 'filter_by_type') and hasattr(
+                    args, 'vehicle_distribution'
+            ) and args.filter_by_type and args.vehicle_distribution is not None:
 
                 while current_type_id < len(args.vehicle_distribution):
                     # Get the current type
-                    current_type = list(args.vehicle_distribution.keys())[current_type_id]
+                    current_type = list(
+                        args.vehicle_distribution.keys())[current_type_id]
 
                     # Check if the current type has been spawned enough
-                    if current_type_count >= vehicle_distribution_absolute[current_type]:
+                    if current_type_count >= vehicle_distribution_absolute[
+                            current_type]:
                         current_type_id += 1
                         current_type_count = 0
                     else:
-                        break # Found a type that can be spawned
+                        break  # Found a type that can be spawned
 
                 # Filter Blueprints by Type
-                selected_blueprints = [x for x in blueprints if x.get_attribute("object_type") == current_type]
+                selected_blueprints = [
+                    x for x in blueprints
+                    if x.get_attribute("object_type") == current_type
+                ]
 
                 if selected_blueprints == []:
                     raise ValueError(
                         "The vehicle distribution is not compatible with the filter."
                     )
-                              
+
                 # Increase the current type count
                 current_type_count += 1
             else:
                 # If no distribution is requested, select all blueprints
                 selected_blueprints = blueprints
-                
+
             # Chose a random blueprint and configure it
             blueprint = random.choice(selected_blueprints)
 
             if blueprint.has_attribute("color"):
                 color = random.choice(
-                    blueprint.get_attribute("color").recommended_values
-                )
+                    blueprint.get_attribute("color").recommended_values)
                 blueprint.set_attribute("color", color)
             if blueprint.has_attribute("driver_id"):
                 driver_id = random.choice(
-                    blueprint.get_attribute("driver_id").recommended_values
-                )
+                    blueprint.get_attribute("driver_id").recommended_values)
                 blueprint.set_attribute("driver_id", driver_id)
             if hero:
                 blueprint.set_attribute(
@@ -344,9 +350,8 @@ def main():
             # Spawn the cars and set their autopilot and light state all together
             batch.append(
                 SpawnActor(blueprint, transform).then(
-                    SetAutopilot(FutureActor, True, traffic_manager.get_port())
-                )
-            )
+                    SetAutopilot(FutureActor, True,
+                                 traffic_manager.get_port())))
 
         # Apply the batch
         for response in client.apply_batch_sync(batch, synchronous_master):
@@ -367,7 +372,8 @@ def main():
 
         # Specify pedestrian behavior
         percentagePedestriansRunning = getattr(
-            args, "percentagePedestriansRunning", DEFAULT_PERCENTAGE_PEDESTRIANS_RUNNING
+            args, "percentagePedestriansRunning",
+            DEFAULT_PERCENTAGE_PEDESTRIANS_RUNNING
         )  # how many pedestrians will run
         percentagePedestriansCrossing = getattr(
             args,
@@ -381,8 +387,7 @@ def main():
             random.seed(args.seedw)
             msg = (
                 "Random seed for pedestrians set to %s. This will result in the same"
-                " pedestrian config all the time."
-            )
+                " pedestrian config all the time.")
             logging.warning(msg, str(args.seedw))
 
         # Define spawn points for walkers randomly
@@ -409,13 +414,11 @@ def main():
                 if random.random() > percentagePedestriansRunning:
                     # walking
                     walker_speed.append(
-                        walker_bp.get_attribute("speed").recommended_values[1]
-                    )
+                        walker_bp.get_attribute("speed").recommended_values[1])
                 else:
                     # running
                     walker_speed.append(
-                        walker_bp.get_attribute("speed").recommended_values[2]
-                    )
+                        walker_bp.get_attribute("speed").recommended_values[2])
             else:
                 print("Walker has no speed")
                 walker_speed.append(0.0)
@@ -437,14 +440,11 @@ def main():
         # Get AI walker controllers
         batch = []
         walker_controller_bp = world.get_blueprint_library().find(
-            "controller.ai.walker"
-        )
+            "controller.ai.walker")
         for i in range(len(walkers_list)):
             batch.append(
-                SpawnActor(
-                    walker_controller_bp, carla.Transform(), walkers_list[i]["id"]
-                )
-            )
+                SpawnActor(walker_controller_bp, carla.Transform(),
+                           walkers_list[i]["id"]))
         results = client.apply_batch_sync(batch, True)
         for i in range(len(results)):
             if results[i].error:
@@ -471,17 +471,16 @@ def main():
             # Start walker
             all_actors[i].start()
             # Set walk to random point
-            all_actors[i].go_to_location(world.get_random_location_from_navigation())
+            all_actors[i].go_to_location(
+                world.get_random_location_from_navigation())
             # Max speed
             all_actors[i].set_max_speed(float(walker_speed[int(i / 2)]))
 
         ###########################################
         # Finish up traffic generation
         ###########################################
-        print(
-            "Spawned %d vehicles and %d walkers, press Ctrl+C to exit."
-            % (len(vehicles_list), len(walkers_list))
-        )
+        print("Spawned %d vehicles and %d walkers, press Ctrl+C to exit." %
+              (len(vehicles_list), len(walkers_list)))
 
         # Run until interrupted by the user
         while True:
@@ -509,7 +508,8 @@ def main():
 
         # Destroy vehicles
         print("\ndestroying %d vehicles" % len(vehicles_list))
-        client.apply_batch([carla.command.DestroyActor(x) for x in vehicles_list])
+        client.apply_batch(
+            [carla.command.DestroyActor(x) for x in vehicles_list])
 
         # Stop walker controllers (list is [controller, actor, controller, actor ...])
         for i in range(0, len(all_id), 2):
@@ -541,10 +541,8 @@ def parseArguments():
         "--config_file",
         metavar="F",
         default="",
-        help=(
-            "Path to the optional config file (json). Set arguments override the"
-            " corresponding value in the config file."
-        ),
+        help=("Path to the optional config file (json). Set arguments override the"
+              " corresponding value in the config file."),
     )
     argparser.add_argument(
         "--host",
@@ -576,9 +574,9 @@ def parseArguments():
         type=int,
         help="Number of walkers (default: 10)",
     )
-    argparser.add_argument(
-        "--safe", action="store_true", help="Avoid spawning vehicles prone to accidents"
-    )
+    argparser.add_argument("--safe",
+                           action="store_true",
+                           help="Avoid spawning vehicles prone to accidents")
     argparser.add_argument(
         "--filterv",
         metavar="PATTERN",
@@ -589,10 +587,8 @@ def parseArguments():
         "--generationv",
         metavar="G",
         default="All",
-        help=(
-            'restrict to certain vehicle generation (values: "1","2","All" - default:'
-            ' "All")'
-        ),
+        help=('restrict to certain vehicle generation (values: "1","2","All" - default:'
+              ' "All")'),
     )
     argparser.add_argument(
         "--filterw",
@@ -606,8 +602,7 @@ def parseArguments():
         default="2",
         help=(
             'restrict to certain pedestrian generation (values: "1","2","All" -'
-            ' default: "2")'
-        ),
+            ' default: "2")'),
     )
     argparser.add_argument(
         "--tm-port",
@@ -616,12 +611,12 @@ def parseArguments():
         type=int,
         help="Port to communicate with TM (default: 8000)",
     )
-    argparser.add_argument(
-        "--asynch", action="store_true", help="Activate asynchronous mode execution"
-    )
-    argparser.add_argument(
-        "--hybrid", action="store_true", help="Activate hybrid mode for Traffic Manager"
-    )
+    argparser.add_argument("--asynch",
+                           action="store_true",
+                           help="Activate asynchronous mode execution")
+    argparser.add_argument("--hybrid",
+                           action="store_true",
+                           help="Activate hybrid mode for Traffic Manager")
     argparser.add_argument(
         "-s",
         "--seed",
@@ -722,13 +717,11 @@ def parseConfigFile(config_file_path):
     print("\nParsed config file:")
     for key, value in config.items():
         if key in given_args_dict.keys():
-            print(
-                "\033[91m {:<20} {:<20} {:<20} \033[0m".format(
-                    key,
-                    str(given_args_dict[key]),
-                    "[argument overwrites config_file value]",
-                )
-            )
+            print("\033[91m {:<20} {:<20} {:<20} \033[0m".format(
+                key,
+                str(given_args_dict[key]),
+                "[argument overwrites config_file value]",
+            ))
         else:
             print(" {:<20} {:<20}".format(key, str(value)))
     print("\n")
@@ -765,14 +758,17 @@ def get_actor_blueprints(world, filter, generation):
         # Check if generation is in available generations
         if int_generation in [1, 2]:
             bps = [
-                x for x in bps if int(x.get_attribute("generation")) == int_generation
+                x for x in bps
+                if int(x.get_attribute("generation")) == int_generation
             ]
             return bps
         else:
-            logging.warning("Actor Generation is not valid. No actor will be spawned.")
+            logging.warning(
+                "Actor Generation is not valid. No actor will be spawned.")
             return []
     except:
-        logging.warning("Actor Generation is not valid. No actor will be spawned.")
+        logging.warning(
+            "Actor Generation is not valid. No actor will be spawned.")
         return []
 
 
