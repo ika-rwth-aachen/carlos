@@ -56,8 +56,8 @@ done
 shift $(($OPTIND-1)) # return to usual handling of positional args
 
 # default settings if no external overrides provided
-export SIMULATOR_IMAGE=${SIMULATOR_IMAGE:-DEFAULT_SIMULATOR_IMAGE}
-export SCENARIO_RUNNER_IMAGE=${SCENARIO_RUNNER_IMAGE:-DEFAULT_SCENARIO_RUNNER_IMAGE}
+export SIMULATOR_IMAGE=${SIMULATOR_IMAGE:-$DEFAULT_SIMULATOR_IMAGE}
+export SCENARIO_RUNNER_IMAGE=${SCENARIO_RUNNER_IMAGE:-$DEFAULT_SCENARIO_RUNNER_IMAGE}
 
 export COMPOSE_TEMPLATE_PATH=$(realpath ${1:-$COMPOSE_TEMPLATE_PATH})
 export SCENARIO_FOLDER_PATH=$(realpath ${2:-"../utils/scenarios"})
