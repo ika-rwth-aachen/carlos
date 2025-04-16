@@ -1,31 +1,31 @@
 # Components
 
-This document aims to give a brief overview of the various Docker services provided by [components.yml](./components.yml) and utilized within the CARLOS use cases. 
+This document aims to give a brief overview of the various Docker services provided by [carla-services.yml](./carla-services.yml) and utilized within the CARLOS use cases. 
 
 ## Component List
 
 | Service Name | Repository | Docker Image |
 | --- | --- | --- |
-| `carla-simulator` | [ika-rwth-aachen/carla](https://github.com/ika-rwth-aachen/carla) | rwthika/carla-simulator:server |
-| `carla-client` | [ika-rwth-aachen/carla](https://github.com/ika-rwth-aachen/carla) | rwthika/carla-simulator:client |
-| `carla-ros-bridge` | [ika-rwth-aachen/ros-bridge](https://github.com/ika-rwth-aachen/ros-bridge) | rwthika/carla-ros-bridge |
-| `carla-scenario-runner` | [ika-rwth-aachen/carla_scenario_runner_ros](https://github.com/ika-rwth-aachen/carla_scenario_runner_ros) | rwthika/carla-scenario-runner |
+| `carla-server` | [ika-rwth-aachen/carla-simulator](https://github.com/ika-rwth-aachen/carla-simulator) | rwthika/carla-simulator:server |
+| `carla-client` | [ika-rwth-aachen/carla-simulator](https://github.com/ika-rwth-aachen/carla-simulator) | rwthika/carla-simulator:client |
+| `carla-ros-bridge` | [ika-rwth-aachen/carla-ros-bridge](https://github.com/ika-rwth-aachen/ros-bridge) | rwthika/carla-ros-bridge |
+| `carla-scenario-runner` | [ika-rwth-aachen/carla-scenario-runner](https://github.com/ika-rwth-aachen/carla-scenario-runner) | rwthika/carla-scenario-runner |
 | `ros-monitoring` | [ika-rwth-aachen/docker-ros-ml-images](https://github.com/ika-rwth-aachen/docker-ros-ml-images?tab=readme-ov-file#rwthikaros2-cuda-ros-2--cuda) | rwthika/ros2-cuda:humble-desktop-full |
 
 
-## carla-simulator
+## carla-server
 
 This Docker service represents a single instance of a [CARLA](http://carla.org/) simulator and constitutes the central element of the framework that aim to simulate and test automated driving features.
 
-Starting this service (e.g. by `docker compose up carla-simulator` in this folder) should open up a new GUI window in which you can move around the currently loaded map and follow what is happening in simulations.
+Starting this service (e.g. by `docker compose up carla-server` in this folder) should open up a new GUI window in which you can move around the currently loaded map and follow what is happening in simulations.
 
 In addition, the Docker services provides a continuous health check monitoring if the CARLA server is running and connection can be established. Since the health of this service depends on the availability of the CARLA simulator, other services can depend on this services health to ensure a correct startup and shutdown order and thus preventing them from attempting to connect to the simulator before it is started or after it is stopped.
 
 **Note:** This only helps with startup and shutdown order. Your applications still need to have their own logic for handling connection fails during operation
 
 
-### carla-simulator-offscreen
-This Docker service is a variation of the previous carla-simulator service, with the exception that no GUI window is opened and thus one cannot directly follow what is happening on the map.
+### carla-server-offscreen
+This Docker service is a variation of the previous carla-server service, with the exception that no GUI window is opened and thus one cannot directly follow what is happening on the map.
 
 The upside to this is that this service is a bit lighter on the GPU and does not clutter up your screen as much. Especially useful when only interested in simulation without direct graphical output.
 

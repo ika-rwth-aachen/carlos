@@ -5,41 +5,35 @@ x-rviz-config-mount: &rviz-config-mount ./config.rviz:/config.rviz
 
 services:
 
-  # starts a CARLA simulator instance named 'carla-simulator' with a GUI window 
-  carla-simulator:
+  # starts a CARLA simulator instance named 'carla-server' with a GUI window 
+  carla-server:
     extends:
-      file: ../components.yml
-      service: carla-simulator  
+      file: ../carla-essentials/carla-services.yml
+      service: carla-server  
       
   carla-client:
     extends:
-      file: ../components.yml
+      file: ../carla-essentials/carla-services.yml
       service: carla-client
-    depends_on:
-      carla-simulator:
-        condition: service_healthy
     command: sleep infinity
 
   # starts the carla-ros-bridge
   carla-ros-bridge:
     extends:
-      file: ../components.yml
+      file: ../carla-essentials/carla-services.yml
       service: carla-ros-bridge
-    depends_on:
-      carla-simulator:
-        condition: service_healthy
     # ...and then execute them. Note the -ic flag for an interactive bash!
     # Without an interactive bash, many important env vars wouldn't be working or even set
-    command: bash -ic 'ros2 launch carla_ros_bridge carla_ros_bridge_with_example_ego_vehicle.launch.py host:=carla-simulator'
-    # .. note that the host name is explictly set to the name of the carla-simulator Docker service!
+    command: bash -ic 'ros2 launch carla_ros_bridge carla_ros_bridge_with_example_ego_vehicle.launch.py host:=carla-server'
+    # .. note that the host name is explictly set to the name of the carla-server Docker service!
 
   # starts rviz with a GUI window named 'ros-monitoring'
   ros-monitoring:
     extends:
-      file: ../components.yml
+      file: ../carla-essentials/carla-services.yml
       service: ros-monitoring
     depends_on:
-      carla-simulator:
+      carla-server:
         condition: service_healthy
     volumes:
       # you can mount custom rviz configs...

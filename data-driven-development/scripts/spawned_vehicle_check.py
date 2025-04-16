@@ -20,8 +20,8 @@ def main():
     argparser.add_argument(
         '--host',
         metavar='H',
-        default='carla-simulator',
-        help='IP of the host server (default: carla-simulator)')
+        default='carla-server',
+        help='IP of the host server (default: carla-server)')
     argparser.add_argument('--role_name',
                            metavar='R',
                            default='ego_vehicle',

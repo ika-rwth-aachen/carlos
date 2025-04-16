@@ -1,6 +1,6 @@
 services:
 
-  carla-simulator:
+  carla-server:
     deploy:
       resources:
           reservations:
@@ -18,9 +18,9 @@ services:
 
   carla-scenario-runner:
     depends_on:
-      carla-simulator:
+      carla-server:
         condition: service_healthy
     volumes:
       - $SCENARIO_FOLDER_PATH:/scenarios
     image: $SCENARIO_RUNNER_IMAGE
-    command: bash -ic "python ./scenario_runner.py --host carla-simulator --openscenario /scenarios/$SCENARIO_FILE_NAME --output"
+    command: bash -ic "python ./scenario_runner.py --host carla-server --openscenario /scenarios/$SCENARIO_FILE_NAME --output"

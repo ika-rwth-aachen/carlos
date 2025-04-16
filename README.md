@@ -72,9 +72,9 @@ Each link below provides a detailed description of a provided use case and instr
 
 | Use Case | Integrated Components | Description |
 | ------ | ------                | ------ 
-| [***software-prototyping***](./software-prototyping/README.md) | carla-simulator, carla-ros-bridge, rviz | Transfers simulation data into the ROS ecosystem. |
-| [***data-driven-development***](./data-driven-development/README.md) | carla-simulator, carla-ros-bridge, carla-scenario-runner | Automated simulation configuration to capture sensor data at large scale. |
-| [***automated-testing***](./automated-testing/README.md) | carla-simulator, carla-scenario-runner | Sequential simulation of multiple scenarios in OpenSCENARIO format with automated evaluation. |
+| [***software-prototyping***](./software-prototyping/README.md) | carla-server, carla-ros-bridge, rviz | Transfers simulation data into the ROS ecosystem. |
+| [***data-driven-development***](./data-driven-development/README.md) | carla-server, carla-ros-bridge, carla-scenario-runner | Automated simulation configuration to capture sensor data at large scale. |
+| [***automated-testing***](./automated-testing/README.md) | carla-server, carla-scenario-runner | Sequential simulation of multiple scenarios in OpenSCENARIO format with automated evaluation. |
 
 ## Simulation Architecture
 
@@ -134,7 +134,7 @@ To enable scenario-based testing and evaluation, the carla-scenario-runner is us
 
 
 > [!NOTE]
-> For all provided use case examples we use predefined Docker services, listed in [carla-components.yml](./utils/components.yml) and further described in the [carla-components overview](./utils/components.md).
+> For all provided use case examples we use predefined Docker services, listed in [carla-services.yml](./utils/carla-essentials/carla-services.yml) and further described in the [carla-components overview](./utils/carla-essentials/README.md).
 
 ## Citation
 We hope that our simulation framework CARLOS can help your research. If this is the case, please cite it using the following metadata.

@@ -7,18 +7,15 @@ services:
 
   # --- core services ----------------------------------------------------------
   
-  carla-simulator:
+  carla-server:
     extends:
-      file: ../utils/components.yml
-      service: carla-simulator-offscreen
+      file: ../utils/carla-essentials/carla-services.yml
+      service: carla-server-offscreen
 
   carla-ros-bridge:
     extends:
-      file: ../utils/components.yml
+      file: ../utils/carla-essentials/carla-services.yml
       service: carla-ros-bridge
-    depends_on:
-      carla-simulator:
-        condition: service_healthy
     volumes:
       - *sensors-mount
       - ./launch/demo.launch.py:/demo.launch.py
@@ -27,38 +24,35 @@ services:
   # ----------------------------------------------------------------------------
   # --- checking services ------------------------------------------------------
 
-  spawned-vehicle-check:
-    extends:
-      file: ../utils/components.yml
-      service: carla-client
-    depends_on:
-      carla-simulator:
-        condition: service_healthy
-    volumes:
-      - ./scripts/spawned_vehicle_check.py:/opt/carla/PythonAPI/spawned_vehicle_check.py
-    command: sleep infinity
-    healthcheck:
-      test: ["CMD-SHELL", "bash -ic \"python spawned_vehicle_check.py --host carla-simulator --role_name_list ${role_names}\""]
-      interval: 1s
-      start_period: 10s
-      retries: 3
-
   time-health-check:
     extends:
-      file: ../utils/components.yml
+      file: ../utils/carla-essentials/carla-services.yml
       service: carla-client
     depends_on:
       spawned-vehicle-check:
         condition: service_healthy
     volumes:
       - ./scripts/time_controller.py:/opt/carla/PythonAPI/time_controller.py
-    command: bash -ic "python time_controller.py --host carla-simulator ${max_simulation_time} ${max_real_time}"
+    command: bash -ic "python time_controller.py --host carla-server ${max_simulation_time} ${max_real_time}"
+
+  spawned-vehicle-check:
+    extends:
+      file: ../utils/carla-essentials/carla-services.yml
+      service: carla-client
+    volumes:
+      - ./scripts/spawned_vehicle_check.py:/opt/carla/PythonAPI/spawned_vehicle_check.py
+    command: sleep infinity
+    healthcheck:
+      test: ["CMD-SHELL", "bash -ic \"python spawned_vehicle_check.py --host carla-server --role_name_list ${role_names}\""]
+      interval: 1s
+      start_period: 10s
+      retries: 3
 
   # ----------------------------------------------------------------------------
   # --- Option A: apply random permutation setups ------------------------------
   carla-simulation-controller:
     extends:
-      file: ../utils/components.yml
+      file: ../utils/carla-essentials/carla-services.yml
       service: carla-client
     depends_on:
       spawned-vehicle-check:
@@ -67,25 +61,25 @@ services:
       - ./scripts/simulation_controller.py:/opt/carla/PythonAPI/simulation_controller.py
       - ./scripts/set_environment.py:/opt/carla/PythonAPI/set_environment.py
       - *sensors-mount
-    command: bash -ic "python -u simulation_controller.py --host carla-simulator ${controller_args}"
+    command: bash -ic "python -u simulation_controller.py --host carla-server ${controller_args}"
 
   # --- Option B: apply concrete scenario setups -------------------------------
   carla-scenario-runner:
     extends:
-      file: ../utils/components.yml
+      file: ../utils/carla-essentials/carla-services.yml
       service: carla-scenario-runner
     depends_on:
       spawned-vehicle-check:
         condition: service_healthy
     volumes:
       - *scenario-mount
-    command: bash -ic "python ./scenario_runner.py --host carla-simulator --openscenario /scenarios/${scenario_file} --waitForEgo --output"
+    command: bash -ic "python ./scenario_runner.py --host carla-server --openscenario /scenarios/${scenario_file} --waitForEgo --output"
 
   # ----------------------------------------------------------------------------
   # --- recording services -----------------------------------------------------
   rosbag-record:
     extends:
-      file: ../utils/components.yml
+      file: ../utils/carla-essentials/carla-services.yml
       service: ros-monitoring-offscreen
     depends_on:
       spawned-vehicle-check:
