@@ -33,7 +33,7 @@ services:
         condition: service_healthy
     volumes:
       - ./scripts/time_controller.py:/opt/carla/PythonAPI/time_controller.py
-    command: bash -ic "python time_controller.py --host carla-server ${max_simulation_time} ${max_real_time}"
+    command: bash -ic "python3 time_controller.py --host carla-server ${max_simulation_time} ${max_real_time}"
 
   spawned-vehicle-check:
     extends:
@@ -43,7 +43,7 @@ services:
       - ./scripts/spawned_vehicle_check.py:/opt/carla/PythonAPI/spawned_vehicle_check.py
     command: sleep infinity
     healthcheck:
-      test: ["CMD-SHELL", "bash -ic \"python spawned_vehicle_check.py --host carla-server --role_name_list ${role_names}\""]
+      test: ["CMD-SHELL", "bash -ic \"python3 spawned_vehicle_check.py --host carla-server --role_name_list ${role_names}\""]
       interval: 1s
       start_period: 10s
       retries: 3
@@ -61,7 +61,7 @@ services:
       - ./scripts/simulation_controller.py:/opt/carla/PythonAPI/simulation_controller.py
       - ./scripts/set_environment.py:/opt/carla/PythonAPI/set_environment.py
       - *sensors-mount
-    command: bash -ic "python -u simulation_controller.py --host carla-server ${controller_args}"
+    command: bash -ic "python3 -u simulation_controller.py --host carla-server ${controller_args}"
 
   # --- Option B: apply concrete scenario setups -------------------------------
   carla-scenario-runner:

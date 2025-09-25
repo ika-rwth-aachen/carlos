@@ -75,7 +75,7 @@ def main():
 
         # --- set weather ---
         # setup the carla simulation config
-        res = subprocess.call(["python", "util/config.py"] + config_list)
+        res = subprocess.call(["python3", "util/config.py"] + config_list)
         print("Setups in config.py done")
 
         # --- enable autopilot for main vehicles in sensors.json ---
@@ -121,7 +121,7 @@ def main():
 
         # spawn traffic if it is set (filter out twowheeled vehicle which have no boundingbox)
         if "--number-of-vehicles" in tm_list or "--number-of-walkers" in tm_list:
-            subprocess.run(["python", "set_environment.py", "--asynch", "--filterv",
+            subprocess.run(["python3", "set_environment.py", "--asynch", "--filterv",
                            'vehicle.*[!vehicle.bh.crossbike][!vehicle.diamondback.century][!vehicle.harley-davidson.low_rider][!vehicle.gazelle.omafiets][!vehicle.kawasaki.ninja][!vehicle.yamaha.yzf]'] + tm_list)
 
         while True:

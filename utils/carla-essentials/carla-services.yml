@@ -6,6 +6,7 @@ services:
     privileged: True
     image: rwthika/carla-simulator:server
     command: bash -ic './CarlaUE4.sh -nosound 2>/dev/null'
+    runtime: nvidia
   
   carla-server-offscreen:
     extends:
@@ -35,17 +36,17 @@ services:
     depends_on:
       carla-server:
         condition: service_healthy
-    image: rwthika/carla-scenario-runner
+    image: rwthika/carla-scenario-runner:latest
 
   ros-monitoring:
     extends:
       service: gpu-x11-service
-    image: rwthika/ros2-cuda:humble-desktop-full
+    image: rwthika/ros2-cuda:jazzy-desktop-full
 
   ros-monitoring-offscreen:
     extends:
       service: gpu-service
-    image: rwthika/ros2-cuda:humble-desktop-full
+    image: rwthika/ros2-cuda:jazzy-desktop-full
 
   gpu-service:
     deploy:
