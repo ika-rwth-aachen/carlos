@@ -197,11 +197,6 @@
             <ParameterCondition parameterRef="distance_success" value="25" rule="lessThan"/>
           </ByValueCondition>
         </Condition>
-        <Condition name="criteria_KeepLaneTest" delay="0" conditionEdge="rising">
-          <ByValueCondition>
-            <ParameterCondition parameterRef="" value="" rule="lessThan"/>
-          </ByValueCondition>
-        </Condition>
         <Condition name="criteria_CollisionTest" delay="0" conditionEdge="rising">
           <ByValueCondition>
             <ParameterCondition parameterRef="" value="" rule="lessThan"/>

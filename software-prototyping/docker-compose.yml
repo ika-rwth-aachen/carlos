@@ -36,9 +36,9 @@ services:
   #   command: <custom-command>
 
   # e.g. ... 
-  # image-segmentation:
-  #   depends_on:
-  #     carla-server:
-  #       condition: service_healthy
-  #   image: rwthika/carlos-image-segmentation
-  #   command: ros2 launch image_segmentation image_segmentation_launch.py image_topic:=/carla/ego_vehicle/rgb_front/image
+  image-segmentation:
+    depends_on:
+      carla-server:
+        condition: service_healthy
+    image: rwthika/carlos-image-segmentation
+    command: ros2 launch image_segmentation image_segmentation_launch.py image_topic:=/carla/ego_vehicle/rgb_front/image

@@ -5,6 +5,18 @@
 > - [Ubuntu 20.04 LTS Focal](https://ubuntu.com/download/desktop) (or higher) with `sudo` permission
 > - enough hard disk storage, which depends on the workshop and use-case (~50 GB are recommended)
 > - NVIDIA GPU (at least 8 GB GPU memory are recommended)
+> - Docker needs access to the GPU. The following must be added to the `/etc/docker/daemon.json`:
+> ```bash
+> {
+>     "runtimes": {
+>         "nvidia": {
+>             "path": "nvidia-container-runtime",
+>             "runtimeArgs": []
+>         }
+>     }
+> }
+> ```
+> To apply the changes, restart Docker with `sudo systemctl restart docker`
 
 > [!NOTE]  
 > Make sure to install all prerequisites and that GUI access is available: 
