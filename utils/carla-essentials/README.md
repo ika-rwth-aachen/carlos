@@ -8,7 +8,7 @@ This document aims to give a brief overview of the various Docker services provi
 | --- | --- | --- |
 | `carla-server` | [ika-rwth-aachen/carla-simulator](https://github.com/ika-rwth-aachen/carla-simulator) | rwthika/carla-simulator:server |
 | `carla-client` | [ika-rwth-aachen/carla-simulator](https://github.com/ika-rwth-aachen/carla-simulator) | rwthika/carla-simulator:client |
-| `carla-ros-bridge` | [ika-rwth-aachen/carla-ros-bridge](https://github.com/ika-rwth-aachen/ros-bridge) | rwthika/carla-ros-bridge |
+| `carla-ros-bridge` | [ika-rwth-aachen/carla-ros-bridge](https://github.com/ika-rwth-aachen/carla-ros-bridge) | rwthika/carla-ros-bridge |
 | `carla-scenario-runner` | [ika-rwth-aachen/carla-scenario-runner](https://github.com/ika-rwth-aachen/carla-scenario-runner) | rwthika/carla-scenario-runner |
 | `ros-monitoring` | [ika-rwth-aachen/docker-ros-ml-images](https://github.com/ika-rwth-aachen/docker-ros-ml-images?tab=readme-ov-file#rwthikaros2-cuda-ros-2--cuda) | rwthika/ros2-cuda:humble-desktop-full |
 
