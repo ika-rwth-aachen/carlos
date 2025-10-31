@@ -1,7 +1,7 @@
 # Tutorial: Simulative Development and Testing with CARLA and ROS
 
 > [!NOTE]
-> This repository provides CARLOS, an open, modular and scalable simulation framework based on the open-source [CARLA simulator](https://github.com/ika-rwth-aachen/carla-simulator). The framework can be used to develop and test C-ITS software in a closed-loop simulation environment. Have a closer look at the top-level [README](../README.md) to get a first overview of the provided demo use cases.
+> This repository provides CARLOS, an open, modular and scalable simulation framework based on the open-source [CARLA simulator](https://github.com/ika-rwth-aachen/carla-simulator). The framework can be used to develop and test C-ITS software in a closed-loop simulation environment. Have a closer look at the top-level [README](../../README.md) to get a first overview of the provided demo use cases.
 
 ---
 
@@ -9,11 +9,11 @@
 
 ### Requirements
 
-The core requirements for using and testing the simulation framework are provided within the [requirements guide](./requirements.md).
+The core requirements for using and testing the simulation framework are provided within the [requirements guide](../requirements.md).
 
 ### Creating a Compose File
 
-The backbone of the proposed simulation framework is based on Docker Compose, enabling modular plugging of different Docker services. All described [components](../components.md) can be integrated in a custom Docker Compose file. Feel free to set up your own custom [`docker-compose.yml`](./docker-compose.yml) within the directory of this tutorial:
+The backbone of the proposed simulation framework is based on Docker Compose, enabling modular plugging of different Docker services. All described [components](../carla-essentials/README.md) can be integrated in a custom Docker Compose file. Feel free to set up your own custom [`docker-compose.yml`](./docker-compose.yml) within the directory of this tutorial:
 
 ```yml
 # you can utilize yaml features to avoid repeating yourself and centralizing configurations
@@ -126,7 +126,7 @@ Inside of the container, we can interact with the `carla-server` container:
 
 ```bash
 # changes weather settings dynamically
-./examples/dynamic_weather.py --host carla-server
+python3 examples/dynamic_weather.py --host carla-server
 ```
 [<p align="center"><img src="../images/tutorial-dynamic-weather.png" width="800"/>](../images/tutorial-dynamic-weather.png)
 
@@ -142,7 +142,7 @@ docker compose down
 
 After observing the CARLA server, we investigate some additional Docker Compose services to bridge information into the ROS 2 world.
 
-The following command launches all defined services from  `docker-compose.yml` file. In addition to the previous container, it launches a `carla-ros-bridge`, and a `ros-monitoring` container. A comprehensive overview about all available Docker services can be found in the [components guide](./components.md).
+The following command launches all defined services from `docker-compose.yml` file. In addition to the previous container, it launches a `carla-ros-bridge`, and a `ros-monitoring` container. A comprehensive overview about all available Docker services can be found in the [components guide](../carla-essentials/README.md).
 
 ```bash
 # launch all services defined in docker-compose.yml
@@ -156,7 +156,7 @@ Check out the `rviz` setup to get familiar with the simulation setup and all ava
 [<p align="center"><img src="../images/tutorial-rviz-overview.png" width="800"/>](../images/tutorial-rviz-overview.png)
 
 > [!TIP]
-> Feel free to observe the available topics within `rviz` or change the [sensors.json](../software-prototyping/sensors.json) file within the container to customize additional sensors.
+> Feel free to observe the available topics within `rviz` or change the [sensors.json](../../software-prototyping/sensors.json) file within the container to customize additional sensors.
 
 Within this tutorial, the `carla-ros-bridge` container offers another GUI, enabling direct control of the ego vehicle in the simulation. A PyGame window allows to drive the vehicle around with the <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> keys or toggling the autopilot with <kbd>P</kbd>. While driving around, have a look in RViz to capture the generated sensor data. The setup should look similar to this:
 
