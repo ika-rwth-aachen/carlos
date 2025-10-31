@@ -142,7 +142,7 @@ docker compose down
 
 After observing the CARLA server, we investigate some additional Docker Compose services to bridge information into the ROS 2 world.
 
-The following command launches all defined services from  `docker-compose.yml` file. In addition to the previous container, it launches a `carla-ros-bridge`, and a `ros-monitoring` container. A comprehensive overview about all available Docker services can be found in the [components guide](../carla-essentials/README.md).
+The following command launches all defined services from `docker-compose.yml` file. In addition to the previous container, it launches a `carla-ros-bridge`, and a `ros-monitoring` container. A comprehensive overview about all available Docker services can be found in the [components guide](../carla-essentials/README.md).
 
 ```bash
 # launch all services defined in docker-compose.yml
